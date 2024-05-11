@@ -1,1 +1,1 @@
-package frontend.components.librarian;nnnn
+package frontend.components.librarian;
