@@ -1,1 +1,1 @@
-package frontend.components.user;nnnn
+package frontend.components.user;
