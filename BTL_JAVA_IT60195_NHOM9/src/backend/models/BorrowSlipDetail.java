@@ -2,17 +2,17 @@ package backend.models;
 
 import java.time.LocalDate;
 
-public class BorrowSkipDetail {
+public class BorrowSlipDetail {
     private String maSach;
     private String maPhieuMuon;
     private LocalDate ngayTraDuKien;
     private LocalDate ngayTraThucTe;
     private int soLuong;
 
-    public BorrowSkipDetail() {
+    public BorrowSlipDetail() {
     }
 
-    public BorrowSkipDetail(String maSach, String maPhieuMuon, LocalDate ngayTraDuKien, LocalDate ngayTraThucTe, int soLuong) {
+    public BorrowSlipDetail(String maSach, String maPhieuMuon, LocalDate ngayTraDuKien, LocalDate ngayTraThucTe, int soLuong) {
         this.maSach = maSach;
         this.maPhieuMuon = maPhieuMuon;
         this.ngayTraDuKien = ngayTraDuKien;
