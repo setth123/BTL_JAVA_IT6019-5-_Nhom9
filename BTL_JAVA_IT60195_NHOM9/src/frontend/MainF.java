@@ -1,5 +1,7 @@
 package frontend;
 
+import frontend.components.user.UserLogin;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -64,8 +66,16 @@ public class MainF {
 		});
 		btnNewButton.setBounds(192, 146, 166, 23);
 		frame.getContentPane().add(btnNewButton);
-		
+
 		JButton btnNewButton_1 = new JButton("Đăng nhập");
+		btnNewButton_1.addActionListener((e) -> {
+			// Create the second window (UserLogin)
+			UserLogin userLogin = new UserLogin(frame);
+			// Set the second window visible
+			userLogin.setVisible(true);
+			// Hide the main window
+			frame.setVisible(false);
+		});
 		btnNewButton_1.setBounds(192, 198, 166, 23);
 		frame.getContentPane().add(btnNewButton_1);
 		
