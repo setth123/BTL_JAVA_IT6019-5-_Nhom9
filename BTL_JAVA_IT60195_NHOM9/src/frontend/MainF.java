@@ -2,6 +2,8 @@ package frontend;
 
 import frontend.components.user.UserLogin;
 
+import frontend.components.librarian.*;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -81,6 +83,14 @@ public class MainF {
 		
 		JButton btnNewButton_2 = new JButton("Đăng nhập (Thủ thư)");
 		btnNewButton_2.setBounds(195, 243, 163, 23);
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AdminLogin admin=new AdminLogin(frame);
+				admin.setVisible(true);
+				frame.setVisible(false);
+				frame.dispose();
+			}
+		});
 		frame.getContentPane().add(btnNewButton_2);
 	}
 }

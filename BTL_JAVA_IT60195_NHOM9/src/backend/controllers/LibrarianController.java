@@ -1,5 +1,7 @@
 package backend.controllers;
 import backend.models.Book; 
+import backend.utils.ReadData;
+
 import backend.models.Librarian;
 import java.io.*;
 import java.text.ParseException;
@@ -7,30 +9,18 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ArrayList;
 public class LibrarianController {
-	    public static List<Book> books = new ArrayList<>();
-	    public static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-	    
-		public Librarian login(String l_accountName,String l_password) {
+	    public static List<Book> books;	    
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		public static Librarian login(String l_accountName,String l_password) {
 		//load database
-		 try (BufferedReader br = new BufferedReader(new FileReader("Librarian.txt"))) {
-	            String line;
-	            while ((line = br.readLine()) != null) {
-	                String[] parts = line.split(",");
-	                //authentication
-	                    String accountName = parts[0];
-	                    String password = parts[1];
-	                    String sdt=parts[2];
-	                    if(accountName.equals(l_accountName)&&password.equals(l_password)) {
-	                    Librarian l=new Librarian(accountName,password,sdt);
-	                    return l;
-	                   }
-	                
-	            }
-	        } catch (IOException e) {
-	            System.err.println("Error reading file: " + e.getMessage());
-	        }
+			
+		List<Librarian> librarians=ReadData.readLibrarian("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Librarian.txt");
+		for(Librarian l : librarians) {
+			if(l_accountName.equals(l.getAccountName()) && l_password.equals(l.getPassword())) {
+				return l;
+			}
+		}
 		return null;
 	}
 	    public boolean addBook(String maSach, String tenSach, String tieuDe, String NXB, Date nph, String theLoai, int soLuong, double gia) {
@@ -59,7 +49,7 @@ public class LibrarianController {
 	            books.add(new Book(maSach, tenSach, tieuDe, NXB, nph, theLoai, soLuong, gia));
 	        }
 
-	        try (BufferedWriter bw = new BufferedWriter(new FileWriter("Book.txt"))) {
+	        try (BufferedWriter bw = new BufferedWriter(new FileWriter("src/backend/DemoDB/Book.txt"))) {
 	            for (Book book : books) {
 	                bw.write(book.toString());
 	                bw.newLine();
@@ -71,7 +61,7 @@ public class LibrarianController {
 	        return false;
 	    }
 		public boolean delBook(String maSach) {
-			try (BufferedReader br = new BufferedReader(new FileReader("Book.txt"))) {
+			try (BufferedReader br = new BufferedReader(new FileReader("src/backend/DemoDB/Book.txt"))) {
 	            String line;
 	            while ((line = br.readLine()) != null) {
 	                String[] parts = line.split(",");
@@ -94,7 +84,7 @@ public class LibrarianController {
 			        }
 			    }
 		        if(bookFound) {
-		        try (BufferedWriter bw = new BufferedWriter(new FileWriter("Book.txt"))) {
+		        try (BufferedWriter bw = new BufferedWriter(new FileWriter("src/backend/DemoDB/Book.txt"))) {
 		            for (Book book : books) {
 		                bw.write(book.toString());
 		                bw.newLine();
@@ -107,7 +97,7 @@ public class LibrarianController {
 		        return false;
 		}
 		public boolean changeBook(String maSach,String n_masach,String n_tenSach, String n_tieuDe, String n_NXB, Date n_nph, String n_theLoai, double n_gia) {
-			try (BufferedReader br = new BufferedReader(new FileReader("Book.txt"))) {
+			try (BufferedReader br = new BufferedReader(new FileReader("src/backend/DemoDB/Book.txt"))) {
 	            String line;
 	            while ((line = br.readLine()) != null) {
 	                String[] parts = line.split(",");
@@ -133,7 +123,7 @@ public class LibrarianController {
 		            break; // Break the loop once the book is found and updated
 		        }
 		    if (bookFound) {
-		            try (BufferedWriter bw = new BufferedWriter(new FileWriter("Book.txt"))) {
+		            try (BufferedWriter bw = new BufferedWriter(new FileWriter("src/backend/DemoDB/Book.txt"))) {
 		                for (Book b : books) {
 		                    bw.write(b.toString());
 		                    bw.newLine();
