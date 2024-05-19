@@ -1,8 +1,7 @@
 package frontend;
 
+import frontend.components.user.Register;
 import frontend.components.user.UserLogin;
-
-import frontend.components.librarian.*;
 
 import java.awt.EventQueue;
 
@@ -58,14 +57,18 @@ public class MainF {
 		
 		JLabel lblNewLabel_1 = new JLabel("Đăng nhập để tiếp tục");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_1.setBounds(192, 94, 176, 14);
+		lblNewLabel_1.setBounds(195, 94, 176, 20);
 		frame.getContentPane().add(lblNewLabel_1);
-		
+
 		JButton btnNewButton = new JButton("Đăng ký");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Register.showRegisterLayout(frame); // Gọi phương thức showRegisterLayout từ class DangKi
+				frame.dispose();
 			}
 		});
+
+
 		btnNewButton.setBounds(192, 146, 166, 23);
 		frame.getContentPane().add(btnNewButton);
 
@@ -80,13 +83,13 @@ public class MainF {
 		});
 		btnNewButton_1.setBounds(192, 198, 166, 23);
 		frame.getContentPane().add(btnNewButton_1);
-		
+
 		JButton btnNewButton_2 = new JButton("Đăng nhập (Thủ thư)");
 		btnNewButton_2.setBounds(195, 243, 163, 23);
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AdminLogin admin=new AdminLogin(frame);
-				admin.setVisible(true);
+//				AdminLogin admin=new AdminLogin(frame);
+//				admin.setVisible(true);
 				frame.setVisible(false);
 				frame.dispose();
 			}
