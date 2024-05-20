@@ -1,23 +1,31 @@
 package backend.models;
 
 public class Account {
-    private String maTaiKhoan;
+    private static int nextId = 1;
+    private  String maTaiKhoan;
     private String tenNguoiDung;
     private String diaChi;
     private String soDienThoai;
-    private String email;
     private String tenDangNhap;
     private String matKhau;
 
     public Account() {
     }
 
-    public Account(String maTaiKhoan, String tenNguoiDung, String diaChi, String soDienThoai, String email, String tenDangNhap, String matKhau) {
+    public Account(String tenNguoiDung, String diaChi, String soDienThoai, String tenDangNhap, String matKhau) {
+        this.maTaiKhoan = "DG" + nextId++;
+        this.tenNguoiDung = tenNguoiDung;
+        this.diaChi = diaChi;
+        this.soDienThoai = soDienThoai;
+        this.tenDangNhap = tenDangNhap;
+        this.matKhau = matKhau;
+    }
+
+    public Account(String maTaiKhoan, String tenNguoiDung, String diaChi, String soDienThoai, String tenDangNhap, String matKhau) {
         this.maTaiKhoan = maTaiKhoan;
         this.tenNguoiDung = tenNguoiDung;
         this.diaChi = diaChi;
         this.soDienThoai = soDienThoai;
-        this.email = email;
         this.tenDangNhap = tenDangNhap;
         this.matKhau = matKhau;
     }
@@ -54,14 +62,6 @@ public class Account {
         this.soDienThoai = soDienThoai;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getTenDangNhap() {
         return tenDangNhap;
     }
@@ -80,7 +80,7 @@ public class Account {
 
     @Override
     public String toString() {
-        return String.format("| %-10s | %-30s | %-20s | %-10s | %-12s | %-10s | %6s |",
-                maTaiKhoan, tenNguoiDung, diaChi, soDienThoai, email, tenDangNhap, matKhau);
+        return String.format("| %-10s | %-30s | %-20s | %-12s | %-30s | %-30s |",
+                maTaiKhoan, tenNguoiDung, diaChi, soDienThoai, tenDangNhap, matKhau);
     }
 }

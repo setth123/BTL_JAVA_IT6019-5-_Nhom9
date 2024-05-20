@@ -1,19 +1,20 @@
 package backend.models;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 public class Book {
 	private String maSach;
 	private String tenSach;
 	private String tieuDe;
 	private String NXB;
-	private Date nph;
+	private LocalDate nph;
 	private String theLoai;
 	private int sl;
 	private double gia;
 	public Book() {
 	
 	}
-	public Book(String maSach, String tenSach, String tieuDe, String NXB, Date nph, String theLoai, int sl,
+	public Book(String maSach, String tenSach, String tieuDe, String NXB, LocalDate nph, String theLoai, int sl,
 			double gia) {
 		this.maSach = maSach;
 		this.tenSach = tenSach;
@@ -24,6 +25,13 @@ public class Book {
 		this.sl = sl;
 		this.gia = gia;
 	}
+
+	public Book(String maSach, String tenSach, String theLoai) {
+		this.maSach = maSach;
+		this.tenSach = tenSach;
+		this.theLoai = theLoai;
+	}
+
 	public String getMaSach() {
 		return maSach;
 	}
@@ -48,10 +56,10 @@ public class Book {
 	public void setNXB(String nXB) {
 		NXB = nXB;
 	}
-	public Date getNph() {
+	public LocalDate getNph() {
 		return nph;
 	}
-	public void setNph(Date nph) {
+	public void setNph(LocalDate nph) {
 		this.nph = nph;
 	}
 	public String getTheLoai() {
@@ -78,5 +86,4 @@ public class Book {
         return String.format("| %-10s | %-30s | %-20s | %-10s | %-12s | %-10s | %6d | %10.2f |",
                 maSach, tenSach, tieuDe, NXB, dateFormat.format(nph), theLoai, sl, gia);
     }
-	
 }
