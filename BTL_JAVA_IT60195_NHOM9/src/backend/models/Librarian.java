@@ -6,7 +6,7 @@ public class Librarian {
 	public Librarian() {
 		
 	}
-	public Librarian(String accountName, String password, String sđt) {
+	public Librarian(String accountName, String password) {
 		super();
 		this.accountName = accountName;
 		this.password = password;
@@ -27,8 +27,7 @@ public class Librarian {
 	
 	@Override
     public String toString() {
-        return String.format("| %-20s | %-30s |",
-                accountName, password);
+        return (accountName+"|"+password);
     }
 	
 }
