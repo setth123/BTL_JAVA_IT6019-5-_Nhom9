@@ -1,37 +1,37 @@
 package backend.models;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Date;
 public class Book {
 	private String maSach;
 	private String tenSach;
-	private String tieuDe;
 	private String NXB;
-	private LocalDate nph;
+	private String nph;
 	private String theLoai;
 	private int sl;
 	private double gia;
+	private boolean isBorrow;
 	public Book() {
 	
 	}
-	public Book(String maSach, String tenSach, String tieuDe, String NXB, LocalDate nph, String theLoai, int sl,
+	public Book(String maSach, String tenSach, String NXB, String nph, String theLoai, int sl,
+			double gia,boolean isBorrow) {
+		this.maSach = maSach;
+		this.tenSach = tenSach;
+		this.NXB = NXB;
+		this.nph = nph;
+		this.theLoai = theLoai;
+		this.sl = sl;
+		this.gia = gia;
+		this.isBorrow=isBorrow;
+	}
+	public Book(String maSach, String tenSach, String NXB, String nph, String theLoai, int sl,
 			double gia) {
 		this.maSach = maSach;
 		this.tenSach = tenSach;
-		this.tieuDe = tieuDe;
 		this.NXB = NXB;
 		this.nph = nph;
 		this.theLoai = theLoai;
 		this.sl = sl;
 		this.gia = gia;
 	}
-
-	public Book(String maSach, String tenSach, String theLoai) {
-		this.maSach = maSach;
-		this.tenSach = tenSach;
-		this.theLoai = theLoai;
-	}
-
 	public String getMaSach() {
 		return maSach;
 	}
@@ -44,22 +44,16 @@ public class Book {
 	public void setTenSach(String tenSach) {
 		this.tenSach = tenSach;
 	}
-	public String getTieuDe() {
-		return tieuDe;
-	}
-	public void setTieuDe(String tieuDe) {
-		this.tieuDe = tieuDe;
-	}
 	public String getNXB() {
 		return NXB;
 	}
 	public void setNXB(String nXB) {
 		NXB = nXB;
 	}
-	public LocalDate getNph() {
+	public String getNph() {
 		return nph;
 	}
-	public void setNph(LocalDate nph) {
+	public void setNph(String nph) {
 		this.nph = nph;
 	}
 	public String getTheLoai() {
@@ -80,10 +74,16 @@ public class Book {
 	public void setGia(double gia) {
 		this.gia = gia;
 	}
+	
+	public boolean getBorrow() {
+		return isBorrow;
+	}
+	public void setBorrow(boolean isBorrow) {
+		this.isBorrow = isBorrow;
+	}
 	@Override
     public String toString() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        return String.format("| %-10s | %-30s | %-20s | %-10s | %-12s | %-10s | %6d | %10.2f |",
-                maSach, tenSach, tieuDe, NXB, dateFormat.format(nph), theLoai, sl, gia);
+        return (this.getMaSach()+"|"+this.getTenSach()+"|"+this.getNXB()+"|"+this.getNph()+"|"+this.getTheLoai()+"|"+this.getSl()+"|"+this.getGia()+"|"+this.getBorrow());
     }
+	
 }
