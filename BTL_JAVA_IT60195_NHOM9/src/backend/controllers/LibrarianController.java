@@ -87,15 +87,4 @@ public class LibrarianController {
 		    }
 			return false;
 	}
-		public static ArrayList<Book> find(String keyword){
-			books=ReadData.readBook("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Book.txt");
-			ArrayList<Book> result=new ArrayList<>();
-			for(Book b : books) {
-				if(b.getTenSach().startsWith(keyword)) {
-					System.out.println(b.getTenSach().startsWith(keyword));
-					result.add(b);
-				}
-			}
-			return result;
-		}
 }		

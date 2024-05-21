@@ -5,7 +5,8 @@ import javax.swing.JFrame;
 
 import backend.controllers.LibrarianController;
 import frontend.utils.Animation;
-
+import backend.models.Category;
+import backend.utils.ReadData;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -18,6 +19,7 @@ import javax.swing.JSpinner;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
@@ -36,6 +38,10 @@ public class AddBook extends JFrame {
 	 */
 	public AddBook(JFrame parent) {
 		Initialize(parent);
+	}
+	
+	public static List<Category> fetchCate() {
+		return ReadData.readCategory("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Category.txt");
 	}
 	
 	private static int daysInMonth(int year, int month) {
@@ -161,14 +167,11 @@ public class AddBook extends JFrame {
 		getContentPane().add(lblNewLabel_1_1_1_2);
 		
 		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.addItem("Giáo trình");
-		comboBox.addItem("Văn học");
-		comboBox.addItem("Văn hoá - Xã hội");
-		comboBox.addItem("Tâm lý - Tình cảm");
-		comboBox.addItem("Tôn giáo");
-		comboBox.addItem("Khoa học - Công nghệ");
-		comboBox.addItem("Sách tự lực");
-		comboBox.setBounds(521, 137, 136, 22);
+		List<Category> cs=fetchCate();
+		for(Category c: cs) {
+			comboBox.addItem(c.getTenDanhMuc());
+		}
+		comboBox.setBounds(521,137,136,20);
 		getContentPane().add(comboBox);
 		
 		SpinnerNumberModel model2=new SpinnerNumberModel(1,1,100,1);

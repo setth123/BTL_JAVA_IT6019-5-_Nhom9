@@ -8,7 +8,8 @@ import backend.controllers.Statics;
 import backend.models.Librarian;
 import frontend.utils.Animation;
 import frontend.utils.ImageProcess;
-import frontend.utils.Search;
+import frontend.utils.SearchBook;
+import frontend.utils.SearchUser;
 import backend.controllers.Statics;
 
 import java.awt.Color;
@@ -102,7 +103,7 @@ public class LibrarianHP extends JFrame {
 		comboBox.setBounds(771, 47, 105, 22);
 		comboBox.addItem("Sách");
 		comboBox.addItem("Người dùng");
-		Animation.f_placeHolder(textField, comboBox);
+		//Animation.f_placeHolder(textField, comboBox);
 		panel.add(comboBox);
 		
 		JButton btnNewButton_1 = new JButton("Tìm kiếm");
@@ -110,10 +111,20 @@ public class LibrarianHP extends JFrame {
 		btnNewButton_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Search s=new Search(LibrarianHP.this,textField.getText(),(String)comboBox.getSelectedItem());
-				s.setVisible(true);
-				setVisible(false);
-				dispose();
+				String type=(String)comboBox.getSelectedItem();
+				if(type.equals("Sách")) {
+					SearchBook sb=new SearchBook(LibrarianHP.this,textField.getText());
+					sb.setVisible(true);
+					setVisible(false);
+					dispose();
+				}
+				else {
+					SearchUser su=new SearchUser(LibrarianHP.this,textField.getText());
+					su.setVisible(true);
+					setVisible(false);
+					dispose();
+				}
+				
 			}
 		});
 		btnNewButton_1.setBounds(1089, 47, 89, 23);
@@ -184,7 +195,7 @@ public class LibrarianHP extends JFrame {
 		panel_2_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Search s=new Search(LibrarianHP.this,"Sách",3);
+				SearchBook s=new SearchBook(LibrarianHP.this,3);
 				s.setVisible(true);
 				setVisible(false);
 				dispose();
@@ -214,7 +225,7 @@ public class LibrarianHP extends JFrame {
 		panel_2_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Search s=new Search(LibrarianHP.this,"Sách",2);
+				SearchBook s=new SearchBook(LibrarianHP.this,2);
 				s.setVisible(true);
 				setVisible(false);
 				dispose();
@@ -315,7 +326,7 @@ public class LibrarianHP extends JFrame {
 		
 		String[] b= {"Mã sách","Tên sách","Nhà xuất bản","Số lượng"};
 		DefaultTableModel model=new DefaultTableModel(b,0);
-		Search.fetchBook(model);
+		SearchBook.fetchBook(model);
 		table = new JTable(model);
 	    JScrollPane jsp = new JScrollPane(table);
 	    jsp.setBounds(173, 424, 567, 229);
@@ -356,7 +367,7 @@ public class LibrarianHP extends JFrame {
 		getContentPane().add(panel_4_2);
 		panel_4_2.setLayout(null);
 		
-		JLabel lblNewLabel_6_1 = new JLabel("20");
+		JLabel lblNewLabel_6_1 = new JLabel(String.valueOf(Statics.users()));
 		lblNewLabel_6_1.setForeground(Color.WHITE);
 		lblNewLabel_6_1.setFont(new Font("Tahoma", Font.BOLD, 50));
 		lblNewLabel_6_1.setBounds(10, 11, 151, 84);
@@ -415,16 +426,24 @@ public class LibrarianHP extends JFrame {
 		lblNewLabel_4_1.setBounds(794, 370, 172, 30);
 		getContentPane().add(lblNewLabel_4_1);
 		
-		table_1 = new JTable();
-		table_1.setBounds(779, 424, 558, 229);
-		getContentPane().add(table_1);
+		
+		String[] a= {"Mã người dùng","Tên người dùng","Số điện thoại","Tên đăng nhập"};
+		DefaultTableModel model1=new DefaultTableModel(a,0);
+		SearchUser.fetchUser(model1);
+		table_1 = new JTable(model1);
+		JScrollPane jsp1 = new JScrollPane(table_1);
+	    jsp1.setBounds(779, 424, 558, 229);
+		getContentPane().add(jsp1);
 		
 		btnNewButton_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				lblNewLabel_6.setText(String.valueOf(Statics.books()));
-				Search.fetchBook(model);
+				lblNewLabel_6_1.setText(String.valueOf(Statics.users()));
+				SearchBook.fetchBook(model);
 				table.setModel(model);
+				SearchUser.fetchUser (model1);
+				table_1.setModel(model1);
 			}
 		});
 	}

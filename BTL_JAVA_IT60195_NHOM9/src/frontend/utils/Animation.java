@@ -33,7 +33,7 @@ public class Animation {
 				t.setForeground(new Color(0,0,0));
 			}
 			public void focusLost(FocusEvent e) {
-				if(t.getText()==null) {
+				if(t.getText().equals("")) {
 				t.setText(text);
 				t.setForeground(new Color(192,192,192));
 				}

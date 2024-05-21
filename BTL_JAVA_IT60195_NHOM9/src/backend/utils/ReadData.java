@@ -47,7 +47,6 @@ public class ReadData {
         
         String path=f_path(fileName);
 
-        
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -61,7 +60,6 @@ public class ReadData {
         } catch (IOException e) {
             e.printStackTrace(System.err);
         }
-
         return books;
     }
 
