@@ -9,7 +9,6 @@ import javax.swing.JTextField;
 import backend.controllers.LibrarianController;
 import backend.models.Book;
 import backend.utils.SearchBE;
-//import frontend.components.librarian.EditBook;
 import frontend.components.librarian.EditBook;
 
 import javax.swing.JButton;
