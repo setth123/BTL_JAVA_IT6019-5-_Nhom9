@@ -1,0 +1,4 @@
+C1|Fantasy
+C2|Dystopian
+C3|Fiction
+C4|Romance
