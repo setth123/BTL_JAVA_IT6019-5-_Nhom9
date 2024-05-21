@@ -1,6 +1,5 @@
 package frontend.utils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
@@ -9,9 +8,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import backend.controllers.LibrarianController;
 import backend.models.Book;
-import backend.models.Account;
 import backend.utils.SearchBE;
 //import frontend.components.librarian.EditBook;
+import frontend.components.librarian.EditBook;
 
 import javax.swing.JButton;
 import javax.swing.JTable;
