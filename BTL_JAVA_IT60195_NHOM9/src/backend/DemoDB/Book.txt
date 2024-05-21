@@ -1,5 +1,5 @@
-|001|Harry Potter and the Philosopher's Stone|Bloomsbury|08-06-1948|Fantasy|10|15.99|true
-|002|The Hobbit|Allen & Unwin|08-06-1948|Fantasy|15|12.50|true
-|003|1984|George Orwell|Secker & Warburg|08-06-1948|Dystopian|20|10.00|true
-|004|To Kill a Mockingbird|J.B. Lippincott & Co.|08-06-1948|Fiction|25|18.75|true
-|005|Pride and Prejudice|T. Egerton, Whitehall|08-06-1948|Romance|30|9.99|true
+|001|Harry Potter and the Philosopher's Stone|Bloomsbury|Fantasy|08/06/1948|10|15.99|true
+|002|The Hobbit|Allen & Unwin|Fantasy|08/06/1948|15|12.50|true
+|003|1984|George Orwell|Secker & Warburg|Dystopian|08/06/1948|20|10.00|true
+|004|To Kill a Mockingbird|J.B. Lippincott & Co.|Fiction|08/06/1948|25|18.75|true
+|005|Pride and Prejudice|T. Egerton, Whitehall|Romance|08/06/1948|30|9.99|true
