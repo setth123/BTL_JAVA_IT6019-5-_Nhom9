@@ -275,7 +275,7 @@ public class LibrarianHP extends JFrame {
 		Animation.onHoover(panel_2_4_1, new Color(0,128,255) , new Color(0,128,192));
 		
 		JLabel lockacc = new JLabel("Khoá tài khoản");
-		lockacc.addMouseListener(new MouseAdapter() {
+		panel_2_4_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				SearchUser su=new SearchUser(LibrarianHP.this,"",1);

@@ -4,6 +4,8 @@ import backend.models.Book;
 import backend.utils.ReadData;
 import backend.utils.WriteData;
 import backend.models.Librarian;
+import backend.models.Violation;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -11,6 +13,7 @@ public class LibrarianController {
 	    public static List<Book> books;	    
 	    public static List<Librarian> librarians;
 	    public static List<Account> accounts;
+	    public static List<Violation> violations;
 	    
 		public static Librarian login(String l_accountName,String l_password) {
 		librarians=ReadData.readLibrarian("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Librarian.txt");
@@ -103,4 +106,21 @@ public class LibrarianController {
 			WriteData.writeAccount(accounts,"/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/user-account.txt");
 			return true;
 		}
+		
+		public static boolean addViolation(String maPhieuMuon,String maTaiKhoan,String loaiViPham,String soNgayViPham,String soTienPhat) {
+		     violations=ReadData.readViolation("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Violation.txt");
+		     int snvp=Integer.parseInt(soNgayViPham);
+		     double stp=Double.parseDouble(soTienPhat);
+		        for (Book book : books) {
+		            if (book.getMaSach().equals(maPhieuMuon)) {
+		                return false;
+		            }
+		        }
+			violations.add(new Violation(maPhieuMuon, maTaiKhoan, loaiViPham, snvp, stp));
+		    WriteData.writeViolation(violations,"/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Violation.txt");
+		    return true;
+		    }
+
 }		
+
+

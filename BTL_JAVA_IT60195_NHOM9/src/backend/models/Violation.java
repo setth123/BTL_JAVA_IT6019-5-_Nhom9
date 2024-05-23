@@ -3,7 +3,7 @@ package backend.models;
 public class Violation {
 	private static int vpNo=1;
     private String maViPham;
-    private String maSach;
+    private String maPhieuMuon;
     private String maTaiKhoan;
     private String loaiViPham;
     private int soNgayViPham;
@@ -12,16 +12,26 @@ public class Violation {
     public Violation() {
     }
 
-    public Violation( String maSach, String maTaiKhoan, String loaiViPham, int soNgayViPham, double soTienPhat) {
+    public Violation( String maPhieuMuon, String maTaiKhoan, String loaiViPham, int soNgayViPham, double soTienPhat) {
         this.maViPham = "VP-"+vpNo;
         vpNo++;
-        this.maSach = maSach;
+        this.maPhieuMuon = maPhieuMuon;
+        this.maTaiKhoan = maTaiKhoan;
+        this.loaiViPham = loaiViPham;
+        this.soNgayViPham = soNgayViPham;
+        this.soTienPhat = soTienPhat;
+    }
+    
+    public Violation(String maViPham, String maPhieuMuon, String maTaiKhoan, String loaiViPham, int soNgayViPham, double soTienPhat) {
+        this.maViPham =maViPham;
+        this.maPhieuMuon = maPhieuMuon;
         this.maTaiKhoan = maTaiKhoan;
         this.loaiViPham = loaiViPham;
         this.soNgayViPham = soNgayViPham;
         this.soTienPhat = soTienPhat;
     }
 
+    
     public String getMaViPham() {
         return maViPham;
     }
@@ -30,12 +40,12 @@ public class Violation {
         this.maViPham = maViPham;
     }
 
-    public String getMaSach() {
-        return maSach;
+    public String getMaPhieuMuon() {
+        return maPhieuMuon;
     }
 
-    public void setMaSach(String maSach) {
-        this.maSach = maSach;
+    public void setmaPhieuMuon(String maPhieuMuon) {
+        this.maPhieuMuon = maPhieuMuon;
     }
 
     public String getMaTaiKhoan() {
@@ -73,6 +83,6 @@ public class Violation {
     @Override
     public String toString() {
         return String.format("| %-10s | %-30s | %-20s | %-10s | %-12s | %-10s |",
-                maViPham, maSach, maTaiKhoan, loaiViPham, soNgayViPham, soTienPhat);
+                maViPham, maPhieuMuon, maTaiKhoan, loaiViPham, soNgayViPham, soTienPhat);
     }
 }
