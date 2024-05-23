@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -19,6 +20,7 @@ import javax.swing.event.ChangeListener;
 
 import backend.controllers.LibrarianController;
 import backend.models.Book;
+import backend.models.Category;
 import frontend.utils.Animation;
 
 public class EditBook extends JFrame{
@@ -163,14 +165,11 @@ public class EditBook extends JFrame{
 		getContentPane().add(lblNewLabel_1_1_1_2);
 		
 		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.addItem("Giáo trình");
-		comboBox.addItem("Văn học");
-		comboBox.addItem("Văn hoá - Xã hội");
-		comboBox.addItem("Tâm lý - Tình cảm");
-		comboBox.addItem("Tôn giáo");
-		comboBox.addItem("Khoa học - Công nghệ");
-		comboBox.addItem("Sách tự lực");
-		comboBox.setBounds(521, 137, 136, 22);
+		List<Category> cs=AddBook.fetchCate();
+		for(Category c: cs) {
+			comboBox.addItem(c.getTenDanhMuc());
+		}
+		comboBox.setBounds(521,137,136,20);
 		getContentPane().add(comboBox);
 		
 		SpinnerNumberModel model2=new SpinnerNumberModel(1,1,100,1);
@@ -180,7 +179,6 @@ public class EditBook extends JFrame{
 		
 		textField_3 = new JTextField();
 		textField_3.setBounds(521, 271, 136, 20);
-		Animation.placeHolder(textField_3, "Đơn vị: VND");
 		getContentPane().add(textField_3);
 		textField_3.setColumns(10);
 		

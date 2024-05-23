@@ -1,6 +1,7 @@
 package backend.models;
 
 public class Violation {
+	private static int vpNo=1;
     private String maViPham;
     private String maSach;
     private String maTaiKhoan;
@@ -11,8 +12,9 @@ public class Violation {
     public Violation() {
     }
 
-    public Violation(String maViPham, String maSach, String maTaiKhoan, String loaiViPham, int soNgayViPham, double soTienPhat) {
-        this.maViPham = maViPham;
+    public Violation( String maSach, String maTaiKhoan, String loaiViPham, int soNgayViPham, double soTienPhat) {
+        this.maViPham = "VP-"+vpNo;
+        vpNo++;
         this.maSach = maSach;
         this.maTaiKhoan = maTaiKhoan;
         this.loaiViPham = loaiViPham;

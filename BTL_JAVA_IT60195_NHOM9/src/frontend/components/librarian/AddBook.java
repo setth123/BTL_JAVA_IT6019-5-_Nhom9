@@ -181,7 +181,6 @@ public class AddBook extends JFrame {
 		
 		textField_3 = new JTextField();
 		textField_3.setBounds(521, 271, 136, 20);
-		Animation.placeHolder(textField_3, "Đơn vị: VND");
 		getContentPane().add(textField_3);
 		textField_3.setColumns(10);
 		
