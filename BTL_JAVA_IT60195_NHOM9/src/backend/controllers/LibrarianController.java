@@ -1,4 +1,5 @@
 package backend.controllers;
+import backend.models.Account;
 import backend.models.Book; 
 import backend.utils.ReadData;
 import backend.utils.WriteData;
@@ -9,6 +10,7 @@ import java.util.List;
 public class LibrarianController {
 	    public static List<Book> books;	    
 	    public static List<Librarian> librarians;
+	    public static List<Account> accounts;
 	    
 		public static Librarian login(String l_accountName,String l_password) {
 		librarians=ReadData.readLibrarian("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Librarian.txt");
@@ -48,6 +50,7 @@ public class LibrarianController {
 	    WriteData.writeBook(books,"/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Book.txt");
 	    return true;
 	    }
+	    
 		public static boolean delBook(String maSach) {
 			 books=ReadData.readBook("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Book.txt");
 			 boolean bookFound = false;
@@ -64,6 +67,7 @@ public class LibrarianController {
 			 }
 		     return false;
 		}
+		
 		public static boolean editBook(String maSach,String n_masach,String n_tenSach, String n_NXB, int year,int month,int day, String n_theLoai,int n_sl, double n_gia) {
 			String nph=String.format("%02d/%02d/%04d", day,month,year);
 			books=ReadData.readBook("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Book.txt");
@@ -87,4 +91,16 @@ public class LibrarianController {
 		    }
 			return false;
 	}
+		
+		public static boolean changeAccStatus(String maTaiKhoan) {
+			accounts=ReadData.readAccount("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/user-account.txt");
+			for(Account a : accounts) {
+				if(a.getMaTaiKhoan().equals(maTaiKhoan)) {
+					if(a.getIsActive())a.setIsActive(false);
+					else a.setIsActive(true);
+				}
+			}
+			WriteData.writeAccount(accounts,"/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/user-account.txt");
+			return true;
+		}
 }		

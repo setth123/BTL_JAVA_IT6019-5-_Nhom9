@@ -29,9 +29,11 @@ public class ReadData {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
             while ((line = br.readLine()) != null) {
-                line = line.substring(1, line.length() - 1);
                 String[] data = line.split("\\|");
-                Account account = new Account(data[0].trim(), data[1].trim(), data[2].trim(), data[3].trim(), data[4].trim(), data[5].trim());
+                boolean isActive;
+                if(data[6].equals("true"))isActive=true;
+                else isActive=false;
+                Account account = new Account(data[0].trim(), data[1].trim(), data[2].trim(), data[3].trim(), data[4].trim(), data[5].trim(),isActive);
                 accounts.add(account);
             }
         } catch (IOException e) {

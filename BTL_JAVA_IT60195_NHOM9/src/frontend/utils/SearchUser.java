@@ -6,6 +6,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+
+import backend.controllers.LibrarianController;
 import backend.models.Account;
 import backend.models.Book;
 import backend.utils.SearchBE;
@@ -57,7 +59,10 @@ public class SearchUser extends JFrame{
 		System.out.println(keyword);
 		List<Account> result=SearchBE.findA(keyword);
 		for (Account a : result) {
-			Object[] row= {a.getMaTaiKhoan(),a.getTenNguoiDung(),a.getDiaChi(),a.getSoDienThoai(),a.getTenDangNhap(),a.getMatKhau()};
+			String isActive;
+			if(a.getIsActive())isActive="Active";
+			else isActive="Inactive";
+			Object[] row= {a.getMaTaiKhoan(),a.getTenNguoiDung(),a.getDiaChi(),a.getSoDienThoai(),a.getTenDangNhap(),a.getMatKhau(),isActive};
 			m.addRow(row);
 		}
 	}
@@ -126,7 +131,7 @@ public class SearchUser extends JFrame{
 		getContentPane().add(title);
 	}
 	
-	//searchFor=1 equal to disable user,2 equal to 
+	//searchFor=1 equal to disable user
 	private void initialize(JFrame parent,String keyword,int searchFor) {
 		setTitle("Tìm kiếm");
 		Rectangle r=GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
@@ -146,7 +151,7 @@ public class SearchUser extends JFrame{
 		search.setBounds(1249, 20, 89, 30);
 		getContentPane().add(search);
 		
-		String[] u= {"Mã tài khoản ","Tên người dùng","Địa chỉ","Số điện thoại","Tên đăng nhập","Mật khẩu"};
+		String[] u= {"Mã tài khoản ","Tên người dùng","Địa chỉ","Số điện thoại","Tên đăng nhập","Mật khẩu","Trạng thái",};
 		DefaultTableModel model=new DefaultTableModel(u,0);
 		fetchUser(keyword,model);
 		
@@ -157,22 +162,6 @@ public class SearchUser extends JFrame{
 		});
 				
 		table = new JTable(model);
-		table.addMouseListener(new MouseAdapter() {
-			@Override 
-			public void mouseClicked(MouseEvent e) {
-				int selected=table.getSelectedRow();
-//				if(table.getValueAt(selected, 5).toString().equals("Avaiable")) {
-//					JOptionPane.showConfirmDialog(SearchUser.this,"Bạn có chắc chắn khoá tài khoản người dùng này");
-//					if
-//					else
-//				}
-//				else {
-//					if
-//					else
-//				}
-			}
-		});
-
 		JScrollPane sp=new JScrollPane(table);
 		
 		sp.setBounds(39, 117, 1257, 541);
@@ -191,11 +180,48 @@ public class SearchUser extends JFrame{
 		getContentPane().add(ql);
 		
 		
-		title = new JLabel("TÌM KIẾM NGƯỜI DÙNG");
-		title.setForeground(Color.GRAY);
-		title.setFont(new Font("Tahoma", Font.BOLD, 26));
-		title.setBounds(300, 33, 373, 35);
-		getContentPane().add(title);
+		//title = new JLabel("TÌM KIẾM NGƯỜI DÙNG");
+		
+		
+		switch(searchFor) {
+		case 1:
+			setTitle("Khoá người dùng");
+			title=new JLabel("Khoá người dùng");
+			title.setForeground(Color.GRAY);
+			title.setFont(new Font("Tahoma", Font.BOLD, 26));
+			title.setBounds(300, 33, 373, 35);
+			getContentPane().add(title);
+			table.addMouseListener(new MouseAdapter() {
+				@Override 
+				public void mouseClicked(MouseEvent e) {
+					int selected=table.getSelectedRow();
+					System.out.println(selected);
+					if(table.getValueAt(selected, 6).toString().equals("Active")) {
+						int confirm=JOptionPane.showConfirmDialog(SearchUser.this,"Bạn có chắc chắn khoá tài khoản người dùng này");
+						if(confirm==JOptionPane.YES_OPTION) {
+							table.setValueAt("Inactive",selected, 6);
+							if(LibrarianController.changeAccStatus(table.getValueAt(selected, 0).toString())) {
+								JOptionPane.showMessageDialog(SearchUser.this,"Khoá tài khoản thành công");
+							}
+							else JOptionPane.showMessageDialog(SearchUser.this,"Lỗi kết nối");
+						}
+					}
+					else {
+						if(table.getValueAt(selected, 6).toString().equals("Inactive")) {
+							int confirm=JOptionPane.showConfirmDialog(SearchUser.this,"Bạn có chắc chắn muốn mở khoá tài khoản người dùng này");
+							if(confirm==JOptionPane.YES_OPTION) {
+								table.setValueAt("Active",selected, 6);
+								if(LibrarianController.changeAccStatus(table.getValueAt(selected, 0).toString())) {
+									JOptionPane.showMessageDialog(SearchUser.this,"Mở khoá tài khoản thành công");
+								}
+								else JOptionPane.showMessageDialog(SearchUser.this,"Lỗi kết nối");
+							}
+						}
+					}
+				}
+			});
+			break;
+		}
 	}
 
 }

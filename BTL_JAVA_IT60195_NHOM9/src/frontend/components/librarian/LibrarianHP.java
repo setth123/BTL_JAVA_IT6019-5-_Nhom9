@@ -275,6 +275,15 @@ public class LibrarianHP extends JFrame {
 		Animation.onHoover(panel_2_4_1, new Color(0,128,255) , new Color(0,128,192));
 		
 		JLabel lockacc = new JLabel("Khoá tài khoản");
+		lockacc.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				SearchUser su=new SearchUser(LibrarianHP.this,"",1);
+				su.setVisible(true);
+				setVisible(false);
+				dispose();
+			}
+		});
 		lockacc.setForeground(Color.WHITE);
 		lockacc.setBounds(0, 0, 163, 40);
 		ImageIcon banned=ImageProcess.scaled("Assets/banned.png", 20, 20);
