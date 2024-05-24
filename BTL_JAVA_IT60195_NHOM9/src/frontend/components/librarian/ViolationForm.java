@@ -101,6 +101,10 @@ public class ViolationForm extends JFrame {
 		Submit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(SearchBE.findV(pminp.getText(), tkinp.getText())==false) {
+					JOptionPane.showMessageDialog(ViolationForm.this,"Mã phiếu mượn hoặc mã tài khoản không tồn tại");
+					return;
+				}
 				if(LibrarianController.addViolation(pminp.getText(),tkinp.getText(),lyDoInp.getText(),(Integer)songayInp.getValue(),stpInp.getText())) {
 					JOptionPane.showMessageDialog(ViolationForm.this,"Tạo phiếu vi phạm thành công");
 				}
