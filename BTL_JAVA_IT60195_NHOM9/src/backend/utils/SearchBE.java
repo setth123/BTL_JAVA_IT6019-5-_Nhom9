@@ -30,4 +30,14 @@ public class SearchBE {
 		}
 		return result;
 	}
+	public static boolean findV(String maPhieu,String maUser) {
+		bs=ReadData.readBorrowSlip("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/user-account.txt");
+		for(BorrowSlip b : bs) {
+			if(b.getMaPhieuMuon().equals(maPhieu)&&b.getMaTaiKhoan().equals(maUser)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 }
