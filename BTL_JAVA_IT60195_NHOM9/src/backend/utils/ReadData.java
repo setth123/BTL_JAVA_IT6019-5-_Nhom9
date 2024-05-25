@@ -56,7 +56,7 @@ public class ReadData {
                 Boolean isBorrow;
                 if(data[7].trim().equals("true"))isBorrow=true;
                 else isBorrow=false;
-                Book book = new Book(data[0].trim(), data[1].trim(), data[2].trim(), data[3].trim(), data[4].trim(), Integer.parseInt(data[5].trim()), Double.parseDouble(data[6].trim()),isBorrow);
+                Book book = new Book(data[0].trim(), data[1].trim(), data[2].trim(), LocalDate.parse(data[3].trim()), data[4].trim(), Integer.parseInt(data[5].trim()), Double.parseDouble(data[6].trim()),isBorrow);
                 books.add(book);
             }
         } catch (IOException e) {
