@@ -4,7 +4,6 @@ package frontend.components.librarian;
 import javax.swing.JFrame;
 
 import backend.controllers.LibrarianController;
-import frontend.utils.Animation;
 import backend.models.Category;
 import backend.utils.ReadData;
 import javax.swing.JLabel;

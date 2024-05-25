@@ -21,7 +21,7 @@ import javax.swing.event.ChangeListener;
 import backend.controllers.LibrarianController;
 import backend.models.Book;
 import backend.models.Category;
-import frontend.utils.Animation;
+
 
 public class EditBook extends JFrame{
 	private JTextField textField;

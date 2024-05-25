@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import backend.controllers.Statics;
 import backend.models.Librarian;
 import frontend.utils.Animation;
+import frontend.utils.FetchData;
 import frontend.utils.ImageProcess;
 import frontend.utils.SearchBook;
 import frontend.utils.SearchUser;
@@ -338,7 +339,7 @@ public class LibrarianHP extends JFrame {
 		
 		String[] b= {"Mã sách","Tên sách","Nhà xuất bản","Số lượng"};
 		DefaultTableModel model=new DefaultTableModel(b,0);
-		SearchBook.fetchBook(model);
+		FetchData.fetchBook(model);
 		table = new JTable(model);
 	    JScrollPane usp = new JScrollPane(table);
 	    usp.setBounds(173, 424, 567, 229);
@@ -441,7 +442,7 @@ public class LibrarianHP extends JFrame {
 		
 		String[] a= {"Mã người dùng","Tên người dùng","Số điện thoại","Tên đăng nhập"};
 		DefaultTableModel model1=new DefaultTableModel(a,0);
-		SearchUser.fetchUser(model1);
+		FetchData.fetchUser(model1);
 		table_1 = new JTable(model1);
 		JScrollPane jsp1 = new JScrollPane(table_1);
 	    jsp1.setBounds(779, 424, 558, 229);
@@ -452,9 +453,9 @@ public class LibrarianHP extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				bookNo.setText(String.valueOf(Statics.books()));
 				userNo.setText(String.valueOf(Statics.users()));
-				SearchBook.fetchBook(model);
+				FetchData.fetchBook(model);
 				table.setModel(model);
-				SearchUser.fetchUser (model1);
+				FetchData.fetchUser(model1);
 				table_1.setModel(model1);
 			}
 		});

@@ -1,6 +1,5 @@
 package frontend.utils;
 
-import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JFrame;
@@ -8,7 +7,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import backend.controllers.LibrarianController;
 import backend.models.Book;
-import backend.utils.SearchBE;
 import frontend.components.librarian.EditBook;
 
 import javax.swing.JButton;
@@ -50,28 +48,6 @@ public class SearchBook extends JFrame{
 		initialize(parent,searchFor);
 	}
 
-	public static void fetchBook(String keyword,DefaultTableModel m) {
-		System.out.println(keyword);
-		m.setRowCount(0);
-		List<Book> result=SearchBE.findB(keyword);
-		
-		for (Book b : result) {
-			Object[] row= {b.getMaSach(),b.getTenSach(),b.getNXB(),b.getNph(),b.getTheLoai(),b.getSl(),b.getGia()};
-			m.addRow(row);
-		}
-	}
-	public static void fetchBook(DefaultTableModel m) {
-		m.setRowCount(0);
-		List<Book> result = SearchBE.findB("");
-		int end = Math.min(10, result.size());
-		for (int i = result.size()-1; i >=result.size()-end; i--) {
-		    Book b = result.get(i);
-		    Object[] row = {b.getMaSach(), b.getTenSach(), b.getNXB(), b.getSl()};
-		    m.addRow(row);
-		}
-
-	}
-
 
 	/**
 	 * Initialize the contents of the frame.
@@ -97,11 +73,11 @@ public class SearchBook extends JFrame{
 
 		String[] b= {"Mã sách","Tên sách","Nhà xuất bản","Ngày phát hành","Thể loại","Số lượng","Giá"};
 		DefaultTableModel model=new DefaultTableModel(b,0);
-		fetchBook(keyword,model);
+		FetchData.fetchBook(keyword,model);
 
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					fetchBook(textField.getText(),model);
+					FetchData.fetchBook(textField.getText(),model);
 			}
 		});
 
@@ -156,10 +132,10 @@ public class SearchBook extends JFrame{
 		String[] b= {"Mã sách","Tên sách","Nhà xuất bản","Ngày phát hành","Thể loại","Số lượng","Giá"};
 
 		DefaultTableModel model=new DefaultTableModel(b,0);
-		fetchBook(textField.getText(),model);
+		FetchData.fetchBook(textField.getText(),model);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				fetchBook(textField.getText(),model);
+				FetchData.fetchBook(textField.getText(),model);
 				if(model.getRowCount()==0) {
 					JOptionPane.showMessageDialog(SearchBook.this,"Không tìm thấy sách");
 					}

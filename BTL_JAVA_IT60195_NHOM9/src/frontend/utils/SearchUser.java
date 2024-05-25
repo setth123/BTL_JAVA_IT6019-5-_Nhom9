@@ -1,6 +1,5 @@
 package frontend.utils;
 
-import java.util.List;
 
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JFrame;
@@ -8,7 +7,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import backend.controllers.LibrarianController;
-import backend.models.Account;
 import backend.utils.SearchBE;
 
 import javax.swing.JButton;
@@ -51,28 +49,7 @@ public class SearchUser extends JFrame{
 		initialize(parent,keyword);
 	}
 
-	public static void fetchUser(String keyword,DefaultTableModel m) {
-		m.setRowCount(0);
-		System.out.println(keyword);
-		List<Account> result=SearchBE.findA(keyword);
-		for (Account a : result) {
-			String isActive;
-			if(a.getIsActive())isActive="Active";
-			else isActive="Inactive";
-			Object[] row= {a.getMaTaiKhoan(),a.getTenNguoiDung(),a.getDiaChi(),a.getSoDienThoai(),a.getTenDangNhap(),a.getMatKhau(),isActive};
-			m.addRow(row);
-		}
-	}
-	public static void fetchUser(DefaultTableModel m) {
-		m.setRowCount(0);
-		List<Account> result=SearchBE.findA("");
-		int end = Math.min(10, result.size());
-		for (int i = result.size()-1; i >=result.size()-end; i--) {
-		    Account a = result.get(i);
-		    Object[] row = {a.getMaTaiKhoan(), a.getTenNguoiDung(), a.getSoDienThoai(), a.getTenDangNhap()};
-		    m.addRow(row);
-		}
-	}
+	
 	private void initialize(JFrame parent,String keyword) {
 		setTitle("Tìm kiếm");
 		Rectangle r=GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
@@ -94,11 +71,11 @@ public class SearchUser extends JFrame{
 		
 		String[] u= {"Mã tài khoản ","Tên người dùng","Địa chỉ","Số điện thoại","Tên đăng nhập","Mật khẩu"};
 		DefaultTableModel model=new DefaultTableModel(u,0);
-		fetchUser(keyword,model);
+		FetchData.fetchUser(keyword,model);
 		
 		search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				fetchUser(searchBar.getText(),model);
+				FetchData.fetchUser(searchBar.getText(),model);
 			}
 		});
 				
@@ -150,11 +127,11 @@ public class SearchUser extends JFrame{
 		
 		String[] u= {"Mã tài khoản ","Tên người dùng","Địa chỉ","Số điện thoại","Tên đăng nhập","Mật khẩu","Trạng thái"};
 		DefaultTableModel model=new DefaultTableModel(u,0);
-		fetchUser(keyword,model);
+		FetchData.fetchUser(keyword,model);
 		
 		search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				fetchUser(searchBar.getText(),model);
+				FetchData.fetchUser(searchBar.getText(),model);
 			}
 		});
 				
