@@ -8,6 +8,7 @@ import backend.models.Violation;
 
 import java.util.Iterator;
 import java.util.List;
+import java.time.LocalDate;
 public class LibrarianController {
 	    public static List<Book> books;	    
 	    public static List<Librarian> librarians;
@@ -36,7 +37,7 @@ public class LibrarianController {
 		}
 		
 	    public static boolean addBook(String maSach, String tenSach,String nxb, int nam,int thang,int ngay, String theLoai, int soLuong, double gia) {
-	     String nph=String.format("%02d/%02d/%04d", ngay,thang,nam);
+	     LocalDate nph = LocalDate.of(year,month,dayOfMonth);
 	     books=ReadData.readBook("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Book.txt");
 		 boolean bookFound = false;
 	        for (Book book : books) {
@@ -71,7 +72,7 @@ public class LibrarianController {
 		}
 		
 		public static boolean editBook(String maSach,String n_masach,String n_tenSach, String n_NXB, int year,int month,int day, String n_theLoai,int n_sl, double n_gia) {
-			String nph=String.format("%02d/%02d/%04d", day,month,year);
+			LocalDate nph = LocalDate.of(year,month,dayOfMonth);
 			books=ReadData.readBook("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Book.txt");
 			boolean bookFound = false;
 			for (Book book : books) {
