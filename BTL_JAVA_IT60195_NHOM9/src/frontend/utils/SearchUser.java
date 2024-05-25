@@ -9,10 +9,7 @@ import javax.swing.JTextField;
 
 import backend.controllers.LibrarianController;
 import backend.models.Account;
-import backend.models.Book;
 import backend.utils.SearchBE;
-//import frontend.components.librarian.EditBook;
-import frontend.components.librarian.EditBook;
 
 import javax.swing.JButton;
 import javax.swing.JTable;
@@ -151,7 +148,7 @@ public class SearchUser extends JFrame{
 		search.setBounds(1249, 20, 89, 30);
 		getContentPane().add(search);
 		
-		String[] u= {"Mã tài khoản ","Tên người dùng","Địa chỉ","Số điện thoại","Tên đăng nhập","Mật khẩu","Trạng thái",};
+		String[] u= {"Mã tài khoản ","Tên người dùng","Địa chỉ","Số điện thoại","Tên đăng nhập","Mật khẩu","Trạng thái"};
 		DefaultTableModel model=new DefaultTableModel(u,0);
 		fetchUser(keyword,model);
 		
@@ -191,6 +188,10 @@ public class SearchUser extends JFrame{
 			title.setFont(new Font("Tahoma", Font.BOLD, 26));
 			title.setBounds(300, 33, 373, 35);
 			getContentPane().add(title);
+			model.addColumn("Số lần vi phạm");
+			for (int i = 0; i < model.getRowCount(); i++) {
+	            model.setValueAt(SearchBE.findViolation(model.getValueAt(i, 0).toString()), i, model.getColumnCount() - 1);
+	        }
 			table.addMouseListener(new MouseAdapter() {
 				@Override 
 				public void mouseClicked(MouseEvent e) {

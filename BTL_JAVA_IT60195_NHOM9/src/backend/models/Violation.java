@@ -5,28 +5,28 @@ public class Violation {
     private String maViPham;
     private String maPhieuMuon;
     private String maTaiKhoan;
-    private String loaiViPham;
+    private String lyDo;
     private int soNgayViPham;
     private double soTienPhat;
 
     public Violation() {
     }
 
-    public Violation( String maPhieuMuon, String maTaiKhoan, String loaiViPham, int soNgayViPham, double soTienPhat) {
+    public Violation( String maPhieuMuon, String maTaiKhoan, String lyDo, int soNgayViPham, double soTienPhat) {
         this.maViPham = "VP-"+vpNo;
         vpNo++;
         this.maPhieuMuon = maPhieuMuon;
         this.maTaiKhoan = maTaiKhoan;
-        this.loaiViPham = loaiViPham;
+        this.lyDo = lyDo;
         this.soNgayViPham = soNgayViPham;
         this.soTienPhat = soTienPhat;
     }
     
-    public Violation(String maViPham, String maPhieuMuon, String maTaiKhoan, String loaiViPham, int soNgayViPham, double soTienPhat) {
+    public Violation(String maViPham, String maPhieuMuon, String maTaiKhoan, String lyDo, int soNgayViPham, double soTienPhat) {
         this.maViPham =maViPham;
         this.maPhieuMuon = maPhieuMuon;
         this.maTaiKhoan = maTaiKhoan;
-        this.loaiViPham = loaiViPham;
+        this.lyDo = lyDo;
         this.soNgayViPham = soNgayViPham;
         this.soTienPhat = soTienPhat;
     }
@@ -56,12 +56,12 @@ public class Violation {
         this.maTaiKhoan = maTaiKhoan;
     }
 
-    public String getLoaiViPham() {
-        return loaiViPham;
+    public String getlyDo() {
+        return lyDo;
     }
 
-    public void setLoaiViPham(String loaiViPham) {
-        this.loaiViPham = loaiViPham;
+    public void setlyDo(String lyDo) {
+        this.lyDo = lyDo;
     }
 
     public int getSoNgayViPham() {
@@ -83,6 +83,6 @@ public class Violation {
     @Override
     public String toString() {
         return String.format("| %-10s | %-30s | %-20s | %-10s | %-12s | %-10s |",
-                maViPham, maPhieuMuon, maTaiKhoan, loaiViPham, soNgayViPham, soTienPhat);
+                maViPham, maPhieuMuon, maTaiKhoan, lyDo, soNgayViPham, soTienPhat);
     }
 }

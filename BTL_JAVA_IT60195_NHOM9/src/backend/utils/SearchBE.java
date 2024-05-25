@@ -5,10 +5,14 @@ import java.util.List;
 
 import backend.models.Account;
 import backend.models.Book;
+import backend.models.BorrowSlip;
+import backend.models.Violation;
 
 public class SearchBE {
 	static List<Book> books=new ArrayList<>();
 	static List<Account> accounts=new ArrayList<>();
+	static List<BorrowSlip> bs=new ArrayList<>(); 
+	static List<Violation> violations=new ArrayList<>();
 	
 	public static List<Book> findB(String keyword){
 		books=ReadData.readBook("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Book.txt");
@@ -29,5 +33,22 @@ public class SearchBE {
 			}
 		}
 		return result;
+	}
+	public static boolean findV(String maPhieu,String maUser) {
+		bs=ReadData.readBorrowSlip("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/user-account.txt");
+		for(BorrowSlip b : bs) {
+			if(b.getMaPhieuMuon().equals(maPhieu)&&b.getMaTaiKhoan().equals(maUser)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public static int findViolation(String maTaiKhoan) {
+		violations=ReadData.readViolation("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Violation.txt");
+		int count=0;
+		for(Violation v : violations) {
+			if(v.getMaTaiKhoan().equals(maTaiKhoan))count++;
+		}
+		return count;
 	}
 }

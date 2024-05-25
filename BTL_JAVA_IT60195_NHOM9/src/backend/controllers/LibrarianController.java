@@ -6,7 +6,6 @@ import backend.utils.WriteData;
 import backend.models.Librarian;
 import backend.models.Violation;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 public class LibrarianController {
@@ -107,20 +106,19 @@ public class LibrarianController {
 			return true;
 		}
 		
-		public static boolean addViolation(String maPhieuMuon,String maTaiKhoan,String loaiViPham,String soNgayViPham,String soTienPhat) {
+		public static boolean addViolation(String maPhieuMuon,String maTaiKhoan,String lydo,int soNgayViPham,String soTienPhat) {
 		     violations=ReadData.readViolation("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Violation.txt");
-		     int snvp=Integer.parseInt(soNgayViPham);
 		     double stp=Double.parseDouble(soTienPhat);
 		        for (Book book : books) {
 		            if (book.getMaSach().equals(maPhieuMuon)) {
 		                return false;
 		            }
 		        }
-			violations.add(new Violation(maPhieuMuon, maTaiKhoan, loaiViPham, snvp, stp));
+			violations.add(new Violation(maPhieuMuon, maTaiKhoan, lydo, soNgayViPham, stp));
 		    WriteData.writeViolation(violations,"/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Violation.txt");
 		    return true;
 		    }
-
+		
 }		
 
 
