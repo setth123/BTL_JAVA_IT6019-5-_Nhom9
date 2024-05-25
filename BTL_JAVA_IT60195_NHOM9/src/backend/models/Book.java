@@ -3,7 +3,7 @@ public class Book {
 	private String maSach;
 	private String tenSach;
 	private String NXB;
-	private String nph;
+	private LocalDate nph;
 	private String theLoai;
 	private int sl;
 	private double gia;
@@ -11,7 +11,7 @@ public class Book {
 	public Book() {
 	
 	}
-	public Book(String maSach, String tenSach, String NXB, String nph, String theLoai, int sl,
+	public Book(String maSach, String tenSach, String NXB, LocalDate nph, String theLoai, int sl,
 			double gia,boolean isBorrow) {
 		this.maSach = maSach;
 		this.tenSach = tenSach;
@@ -22,7 +22,7 @@ public class Book {
 		this.gia = gia;
 		this.isBorrow=isBorrow;
 	}
-	public Book(String maSach, String tenSach, String NXB, String nph, String theLoai, int sl,
+	public Book(String maSach, String tenSach, String NXB, LocalDate nph, String theLoai, int sl,
 			double gia) {
 		this.maSach = maSach;
 		this.tenSach = tenSach;
@@ -50,10 +50,10 @@ public class Book {
 	public void setNXB(String nXB) {
 		NXB = nXB;
 	}
-	public String getNph() {
+	public LocalDate getNph() {
 		return nph;
 	}
-	public void setNph(String nph) {
+	public void setNph(LocalDate nph) {
 		this.nph = nph;
 	}
 	public String getTheLoai() {
