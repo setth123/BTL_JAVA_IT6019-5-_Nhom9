@@ -37,7 +37,7 @@ public class LibrarianController {
 		}
 		
 	    public static boolean addBook(String maSach, String tenSach,String nxb, int nam,int thang,int ngay, String theLoai, int soLuong, double gia) {
-	     LocalDate nph = LocalDate.of(year,month,dayOfMonth);
+	     LocalDate nph = LocalDate.of(nam,thang,ngay);
 	     books=ReadData.readBook("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Book.txt");
 		 boolean bookFound = false;
 	        for (Book book : books) {
@@ -72,7 +72,7 @@ public class LibrarianController {
 		}
 		
 		public static boolean editBook(String maSach,String n_masach,String n_tenSach, String n_NXB, int year,int month,int day, String n_theLoai,int n_sl, double n_gia) {
-			LocalDate nph = LocalDate.of(year,month,dayOfMonth);
+			LocalDate nph = LocalDate.of(year,month,day);
 			books=ReadData.readBook("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Book.txt");
 			boolean bookFound = false;
 			for (Book book : books) {

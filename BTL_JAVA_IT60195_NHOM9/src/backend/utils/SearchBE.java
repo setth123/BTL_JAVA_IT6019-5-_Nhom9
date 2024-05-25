@@ -18,7 +18,7 @@ public class SearchBE {
 		books=ReadData.readBook("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Book.txt");
 		ArrayList<Book> result=new ArrayList<>();
 		for(Book b : books) {
-			if(b.getTenSach().startsWith(keyword)) {
+			if(b.getTenSach().toLowerCase().startsWith(keyword.toLowerCase())) {
 				result.add(b);
 			}
 		}
@@ -28,7 +28,7 @@ public class SearchBE {
 		accounts=ReadData.readAccount("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/user-account.txt");
 		ArrayList<Account> result=new ArrayList<>();
 		for(Account a : accounts) {
-			if(a.getTenDangNhap().startsWith(keyword)) {
+			if(a.getTenDangNhap().toLowerCase().startsWith(keyword.toLowerCase())) {
 				result.add(a);
 			}
 		}
