@@ -43,4 +43,12 @@ public class SearchBE {
 		}
 		return false;
 	}
+	public static int countV(String maTaiKhoan) {
+		violations=ReadData.readViolation("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/violation.txt");
+		int count=0;
+		for(Violation v : violations) {
+			if(v.getMaTaiKhoan().equals(maTaiKhoan))count++;
+		}
+		return count;
+	}
 }

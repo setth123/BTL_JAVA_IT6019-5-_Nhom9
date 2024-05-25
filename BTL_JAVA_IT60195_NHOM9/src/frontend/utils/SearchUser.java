@@ -190,7 +190,7 @@ public class SearchUser extends JFrame{
 			getContentPane().add(title);
 			model.addColumn("Số lần vi phạm");
 			for (int i = 0; i < model.getRowCount(); i++) {
-	            model.setValueAt(SearchBE.findViolation(model.getValueAt(i, 0).toString()), i, model.getColumnCount() - 1);
+	            model.setValueAt(SearchBE.countV(model.getValueAt(i, 0).toString()), i, model.getColumnCount() - 1);
 	        }
 			table.addMouseListener(new MouseAdapter() {
 				@Override 

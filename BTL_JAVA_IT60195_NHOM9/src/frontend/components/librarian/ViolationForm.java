@@ -15,6 +15,7 @@ import javax.swing.SpinnerNumberModel;
 
 import backend.controllers.LibrarianController;
 import backend.models.BorrowSlip;
+import backend.utils.SearchBE;
 
 import javax.swing.JSpinner;
 import java.awt.event.MouseAdapter;
