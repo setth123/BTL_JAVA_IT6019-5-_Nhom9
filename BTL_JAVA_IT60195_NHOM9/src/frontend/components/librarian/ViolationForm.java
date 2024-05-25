@@ -4,30 +4,137 @@ package frontend.components.librarian;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Color;
+import javax.swing.JButton;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SpinnerNumberModel;
+
+import backend.controllers.LibrarianController;
+import backend.models.BorrowSlip;
+
+import javax.swing.JSpinner;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class ViolationForm extends JFrame {
 
 	private static final long serialVersionUID = 1L;
+	private JTextField pminp;
+	private JTextField tkinp;
+	private JTextField stpInp;
 
-
+	public ViolationForm(BorrowSlip br, JFrame parent) {
+		initialize(br,parent);
+	}
 
 	/**
 	 * Create the frame.
 	 */
-	public ViolationForm() {
+	private void initialize(BorrowSlip br,JFrame parent) {
 		setBounds(300,300,800,500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setTitle("Tạo phiếu vi phạm");
 		getContentPane().setLayout(null);
 		
-		JLabel Title = new JLabel("DANH SÁCH PHIẾU MƯỢN");
+		JLabel Title = new JLabel("TẠO PHIẾU VI PHẠM");
 		Title.setForeground(Color.GRAY);
 		Title.setFont(new Font("Tahoma", Font.BOLD, 25));
-		Title.setBounds(94, 92, 354, 31);
+		Title.setBounds(84, 96, 354, 31);
 		getContentPane().add(Title);
+		
+		JButton ql = new JButton("Quay lại");
+		ql.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				parent.setVisible(true);
+				setVisible(false);
+				dispose();
+			}
+		});
+		ql.setBounds(25, 23, 89, 23);
+		getContentPane().add(ql);
+		
+		JLabel pm = new JLabel("Mã phiếu mượn");
+		pm.setBounds(24, 189, 100, 14);
+		getContentPane().add(pm);
+		
+		pminp = new JTextField(br.getMaPhieuMuon());
+		pminp.setBounds(134, 186, 128, 20);
+		getContentPane().add(pminp);
+		pminp.setColumns(10);
+		
+		JLabel tk = new JLabel("Mã tài khoản");
+		tk.setBounds(25, 254, 100, 14);
+		getContentPane().add(tk);
+		
+		tkinp = new JTextField(br.getMaTaiKhoan());
+		tkinp.setColumns(10);
+		tkinp.setBounds(134, 251, 128, 20);
+		getContentPane().add(tkinp);
+		
+		JLabel lydo = new JLabel("Lý do");
+		lydo.setBounds(25, 334, 89, 14);
+		getContentPane().add(lydo);
+		
+		JTextArea lyDoInp = new JTextArea();
+		lyDoInp.setBounds(132, 329, 481, 23);
+		getContentPane().add(lyDoInp);
+		
+		JLabel songay = new JLabel("Số ngày vi phạm");
+		songay.setBounds(371, 189, 100, 14);
+		getContentPane().add(songay);
+		
+		JSpinner songayInp = new JSpinner(new SpinnerNumberModel(1, 1, 1000, 1));
+		songayInp.setBounds(462, 186, 30, 20);
+		getContentPane().add(songayInp);
+		
+		JLabel stp = new JLabel("Số tiền phạt");
+		stp.setBounds(371, 254, 100, 14);
+		getContentPane().add(stp);
+		
+		JButton Submit = new JButton("Tạo");
+		Submit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(SearchBE.findV(pminp.getText(), tkinp.getText())==false) {
+					JOptionPane.showMessageDialog(ViolationForm.this,"Mã phiếu mượn hoặc mã tài khoản không tồn tại");
+					return;
+				}
+				if(LibrarianController.addViolation(pminp.getText(),tkinp.getText(),lyDoInp.getText(),(Integer)songayInp.getValue(),stpInp.getText())) {
+					JOptionPane.showMessageDialog(ViolationForm.this,"Tạo phiếu vi phạm thành công");
+				}
+				else JOptionPane.showMessageDialog(ViolationForm.this,"Không thể kết nối");
+			}
+		});
+		Submit.setBounds(382, 385, 89, 23);
+		getContentPane().add(Submit);
+		
+		JButton btnHu = new JButton("Huỷ");
+		btnHu.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				pminp.setText(br.getMaPhieuMuon());
+				tkinp.setText(br.getMaTaiKhoan());
+				lyDoInp.setText("");
+				songayInp.setValue(1);
+				stpInp.setText("");
+			}
+		});
+		btnHu.setBounds(524, 385, 89, 23);
+		getContentPane().add(btnHu);
+		
+		JButton list = new JButton("Danh sách phiếu vi phạm");
+		list.setBounds(155, 23, 173, 23);
+		getContentPane().add(list);
+		
+		stpInp = new JTextField();
+		stpInp.setBounds(462, 251, 86, 20);
+		getContentPane().add(stpInp);
+		stpInp.setColumns(10);
 	}
-
 }
