@@ -8,26 +8,19 @@ public class Account {
     private String soDienThoai;
     private String tenDangNhap;
     private String matKhau;
+    private boolean isActive;
 
     public Account() {
     }
 
-    public Account(String tenNguoiDung, String diaChi, String soDienThoai, String tenDangNhap, String matKhau) {
-        this.maTaiKhoan = "DG" + nextId++;
-        this.tenNguoiDung = tenNguoiDung;
-        this.diaChi = diaChi;
-        this.soDienThoai = soDienThoai;
-        this.tenDangNhap = tenDangNhap;
-        this.matKhau = matKhau;
-    }
-
-    public Account(String maTaiKhoan, String tenNguoiDung, String diaChi, String soDienThoai, String tenDangNhap, String matKhau) {
+    public Account(String maTaiKhoan, String tenNguoiDung, String diaChi, String soDienThoai, String tenDangNhap, String matKhau, boolean isActive) {
         this.maTaiKhoan = maTaiKhoan;
         this.tenNguoiDung = tenNguoiDung;
         this.diaChi = diaChi;
         this.soDienThoai = soDienThoai;
         this.tenDangNhap = tenDangNhap;
         this.matKhau = matKhau;
+        this.isActive=isActive;
     }
 
     public String getMaTaiKhoan() {
@@ -77,12 +70,22 @@ public class Account {
     public void setMatKhau(String matKhau) {
         this.matKhau = matKhau;
     }
+
     public boolean validateCurrentPassword(String currentPassword) {
         return this.matKhau.equals(currentPassword);
     }
-    @Override
+//    @Override
+    
+    public boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	@Override
     public String toString() {
-        return String.format("| %-10s | %-30s | %-20s | %-12s | %-30s | %-30s |",
-                maTaiKhoan, tenNguoiDung, diaChi, soDienThoai, tenDangNhap, matKhau);
+        return (maTaiKhoan+"|"+tenNguoiDung+"|"+diaChi+"|"+soDienThoai+"|"+tenDangNhap+"|"+matKhau+"|"+isActive);
     }
 }

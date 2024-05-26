@@ -1,3 +1,1 @@
-| BS1716474784121           | 2024-05-23                | 2024-06-06                | t                         | Inactive                  | Harry Potter and the Philosopher's Stone |
-| BS1716475035700           | 2024-05-23                | 2024-06-06                | t                         | Active                  | The Hobbit                |
-| BS1716706682248           | 2024-05-26                | 2024-06-09                | t                         | Inactive                  | Harry Potter and the Philosopher's Stone |
+| BS1716728812597           | 2024-05-26                | 2024-06-09                | DG1                    | Inactive                  | 1984                      |

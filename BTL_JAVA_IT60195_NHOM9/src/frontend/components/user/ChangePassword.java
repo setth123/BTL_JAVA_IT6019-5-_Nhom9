@@ -1,7 +1,9 @@
 package frontend.components.user;
 
 import backend.models.Account;
+import backend.utils.ReadData;
 import backend.utils.SessionManager;
+import backend.utils.WriteData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -75,6 +77,16 @@ public class ChangePassword extends JFrame {
             // Update the password
             currentUser.setMatKhau(newPassword); // Assuming Account has a setPassword method
             SessionManager.login(currentUser); // Update the session
+            java.util.List<Account> accounts = ReadData.readAccount("src\\backend\\DemoDB\\user-account.txt");
+            // Find and update the current user's information
+            for (int i = 0; i < accounts.size(); i++) {
+                if (accounts.get(i).getMaTaiKhoan().equals(currentUser.getMaTaiKhoan())) {
+                    accounts.set(i, currentUser);
+                    break;
+                }
+            }
+
+            WriteData.writeAccount(accounts, "src\\backend\\DemoDB\\user-account.txt");
 
             // Show success message
             JOptionPane.showMessageDialog(this, "Mật khẩu đã được cập nhật", "Thông báo", JOptionPane.INFORMATION_MESSAGE);

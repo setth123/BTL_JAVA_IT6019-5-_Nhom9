@@ -1,7 +1,9 @@
 package frontend.components.user;
 
 import backend.models.Account;
+import backend.utils.ReadData;
 import backend.utils.SessionManager;
+import backend.utils.WriteData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,7 +43,15 @@ public class EditPersonalInfo extends JFrame {
             // Save other updated information as needed
             // Update the session user details
             SessionManager.login(currentUser);
+            java.util.List<Account> accounts = ReadData.readAccount("src\\backend\\DemoDB\\user-account.txt");
+            for (int i = 0; i < accounts.size(); i++) {
+                if (currentUser.getMaTaiKhoan().equals(accounts.get(i).getMaTaiKhoan())) {
+                    accounts.set(i, currentUser);
+                    break;
+                }
+            }
 
+            WriteData.writeAccount(accounts, "src\\backend\\DemoDB\\user-account.txt");
             // Show success message
             JOptionPane.showMessageDialog(this, "Thông tin đã được cập nhật", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 

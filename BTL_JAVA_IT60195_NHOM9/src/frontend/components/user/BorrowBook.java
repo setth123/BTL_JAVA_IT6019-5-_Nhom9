@@ -1,6 +1,8 @@
 package frontend.components.user;
 
+import backend.models.Account;
 import backend.models.Book;
+import backend.models.BorrowSlip;
 import backend.utils.ReadData;
 import backend.utils.SessionManager;
 
@@ -10,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,46 +93,47 @@ public class BorrowBook extends JFrame {
         setVisible(true);
 
         // Tải dữ liệu cho cả hai bảng
-        loadBorrowedBooks(SessionManager.getCurrentUser().getTenDangNhap());
+        loadBorrowedBooks();
         loadWaitingBooks();
     }
 
-    public void loadBorrowedBooks(String userName) {
-        List<BorrowedBook> borrowedBooks = getBorrowedBooks(userName);
+    public void loadBorrowedBooks() {
+        String userId = SessionManager.getCurrentUser().getMaTaiKhoan();
+        java.util.List<BorrowSlip> borrowedBooks = getBorrowedBooks(userId);
         updateBorrowedTable(borrowedBooks);
     }
 
-    public static List<BorrowedBook> getBorrowedBooks(String userName) {
-        List<BorrowedBook> borrowedBooks = new ArrayList<>();
+    public static java.util.List<BorrowSlip> getBorrowedBooks(String userId) {
+        List<backend.models.BorrowSlip> borrowSlips = new ArrayList<>();
         try (BufferedReader brSlip = new BufferedReader(new FileReader(ReadData.f_path("src\\backend\\DemoDB\\borrow-slip.txt")))) {
             String line;
             while ((line = brSlip.readLine()) != null) {
                 line = line.substring(1, line.length() - 1);
                 String[] parts = line.split("\\|");
-                if (parts.length >= 6 && parts[3].trim().equals(userName) && "Active".equals(parts[4].trim())) {
+                if (parts.length >= 6 && parts[3].trim().equals(userId) && "Active".equals(parts[4].trim())) {
                     String maPhieuMuon = parts[0].trim();
                     String ngayMuon = parts[1].trim();
-                    String ngayTra = parts[2].trim();
-                    String tenSach = parts[5].trim();
+                    String maNguoiDung = parts[3].trim();
+                    String maSach = parts[5].trim();
 
                     // Assuming you have a method to get the Book object by its name
-                    Book book = getBookByTitle(tenSach);
+                    Book book = getBookByCode(maSach);
                     if (book != null) {
-                        borrowedBooks.add(new BorrowedBook(maPhieuMuon, ngayMuon, ngayTra, book, true));
+                        borrowSlips.add(new BorrowSlip(maPhieuMuon, LocalDate.parse(ngayMuon), maNguoiDung, book, true));
                     }
                 }
             }
         } catch (IOException e) {
             e.printStackTrace(System.err);
         }
-        return borrowedBooks;
+        return borrowSlips;
     }
 
-    private void updateBorrowedTable(List<BorrowedBook> borrowedBooks) {
+    private void updateBorrowedTable(List<BorrowSlip> borrowedBooks) {
         borrowedTableModel.setRowCount(0);
         for (int i = 0; i < borrowedBooks.size(); i++) {
-            BorrowedBook borrowedBook = borrowedBooks.get(i);
-            borrowedTableModel.addRow(new Object[]{i + 1, borrowedBook.getBookTitle(), borrowedBook.getNgayMuon(), borrowedBook.getNgayTra()});
+            BorrowSlip borrowSlip = borrowedBooks.get(i);
+            borrowedTableModel.addRow(new Object[]{i + 1, borrowSlip.getSachMuon().getTenSach(), borrowSlip.getNgayMuon(), borrowSlip.getNgayTra()});
         }
     }
 
@@ -139,6 +143,7 @@ public class BorrowBook extends JFrame {
     }
 
     private List<WaitingBook> getWaitingBooks() {
+        Account a = SessionManager.getCurrentUser();
         List<WaitingBook> waitingBooks = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(ReadData.f_path("src\\backend\\DemoDB\\borrow-slip.txt")))) {
             String line;
@@ -146,7 +151,7 @@ public class BorrowBook extends JFrame {
                 if (!line.isEmpty()) {
                     line = line.substring(1, line.length() - 1);
                     String[] parts = line.split("\\|");
-                    if (parts.length >= 6 && "Inactive".equals(parts[4].trim())) {
+                    if (parts.length >= 6 && "Inactive".equals(parts[4].trim()) && a.getMaTaiKhoan().equals(parts[3].trim())) {
 //                    String maSach = parts[0].trim();
                         String ngayMuon = parts[1].trim();
                         String ngayTra = parts[2].trim();
@@ -169,13 +174,13 @@ public class BorrowBook extends JFrame {
         }
     }
 
-    private static Book getBookByTitle(String bookTitle) {
+    private static Book getBookByCode(String bookCode) {
         try (BufferedReader br = new BufferedReader(new FileReader(ReadData.f_path("src\\backend\\DemoDB\\Book.txt")))) {
             String line;
             while ((line = br.readLine()) != null) {
                 line = line.substring(1, line.length() - 1);
                 String[] parts = line.split("\\|");
-                if (parts.length >= 8 && parts[1].trim().equals(bookTitle)) {
+                if (parts.length >= 8 && parts[0].trim().equals(bookCode)) {
                     String code = parts[0].trim();
                     String name = parts[1].trim();
                     String author = parts[2].trim();
@@ -183,57 +188,13 @@ public class BorrowBook extends JFrame {
                     String category = parts[4].trim();
                     int quantity = Integer.parseInt(parts[5].trim());
                     double price = Double.parseDouble(parts[6].trim());
-                    return new Book(code, name, author, releaseDate, category, quantity, price);
+                    return new Book(code, name, author, LocalDate.parse(releaseDate), category, quantity, price);
                 }
             }
         } catch (IOException e) {
             e.printStackTrace(System.err);
         }
         return null;
-    }
-
-    public static class BorrowedBook {
-        private String maPhieuMuon;
-        private String ngayMuon;
-        private String ngayTra;
-        private Book book;
-        private boolean trangThai;
-
-        public BorrowedBook(String maPhieuMuon, String ngayMuon, String ngayTra, Book book, boolean trangThai) {
-            this.maPhieuMuon = maPhieuMuon;
-            this.ngayMuon = ngayMuon;
-            this.ngayTra = ngayTra;
-            this.book = book;
-            this.trangThai = trangThai;
-        }
-
-        public String getMaPhieuMuon() {
-            return maPhieuMuon;
-        }
-
-        public String getNgayMuon() {
-            return ngayMuon;
-        }
-
-        public Book getBook() {
-            return book;
-        }
-
-        public boolean isTrangThai() {
-            return trangThai;
-        }
-
-        public String getBookTitle() {
-            return book.getTenSach();
-        }
-
-        public String getNgayTra() {
-            return ngayTra;
-        }
-
-        public void setNgayTra(String ngayTra) {
-            this.ngayTra = ngayTra;
-        }
     }
 
     private class WaitingBook {

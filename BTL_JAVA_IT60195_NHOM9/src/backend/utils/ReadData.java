@@ -31,7 +31,11 @@ public class ReadData {
             while ((line = br.readLine()) != null) {
                 line = line.substring(1, line.length() - 1);
                 String[] data = line.split("\\|");
-                Account account = new Account(data[0].trim(), data[1].trim(), data[2].trim(), data[3].trim(), data[4].trim(), data[5].trim());
+//                Account account = new Account(data[0].trim(), data[1].trim(), data[2].trim(), data[3].trim(), data[4].trim(), data[5].trim());
+                boolean isActive;
+                if(data[6].equals("true"))isActive=true;
+                else isActive=false;
+                Account account = new Account(data[0].trim(), data[1].trim(), data[2].trim(), data[3].trim(), data[4].trim(), data[5].trim(),isActive);
                 accounts.add(account);
             }
         } catch (IOException e) {
@@ -54,7 +58,7 @@ public class ReadData {
                 Boolean isBorrow;
                 if(data[7].trim().equals("true"))isBorrow=true;
                 else isBorrow=false;
-                Book book = new Book(data[0].trim(), data[1].trim(), data[2].trim(), data[3].trim(), data[4].trim(), Integer.parseInt(data[5].trim()), Double.parseDouble(data[6].trim()),isBorrow);
+                Book book = new Book(data[0].trim(), data[1].trim(), data[2].trim(), LocalDate.parse(data[3].trim()), data[4].trim(), Integer.parseInt(data[5].trim()), Double.parseDouble(data[6].trim()),isBorrow);
                 books.add(book);
             }
         } catch (IOException e) {
@@ -103,7 +107,7 @@ public class ReadData {
                     String category = parts[4].trim();
                     int quantity = Integer.parseInt(parts[5].trim());
                     double price = Double.parseDouble(parts[6].trim());
-                    return new Book(code, name, author, releaseDate, category, quantity, price);
+                    return new Book(code, name, author, LocalDate.parse(releaseDate), category, quantity, price);
                 }
             }
         } catch (IOException e) {

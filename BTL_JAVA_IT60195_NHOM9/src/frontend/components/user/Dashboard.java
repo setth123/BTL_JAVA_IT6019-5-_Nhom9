@@ -118,8 +118,7 @@ public class Dashboard extends JFrame {
     private void handleRenewBook() {
         Dashboard.this.dispose();
         BorrowBook borrowBookWindow = new BorrowBook(Dashboard.this);
-        String currentUserName = SessionManager.getCurrentUser().getTenDangNhap();
-        borrowBookWindow.loadBorrowedBooks(currentUserName);
+        borrowBookWindow.loadBorrowedBooks();
     }
 
     private void handleViewHistory() {
@@ -154,15 +153,17 @@ public class Dashboard extends JFrame {
 
     private JTable createViolationTable() {
         java.util.List<Violation> violations = readViolation("src\\backend\\DemoDB\\Violation.txt");
-        System.out.println(violations.isEmpty());
         String[] columnNames = {"Mã Phiếu Mượn", "Lí Do", "Số Ngày Vi Phạm", "Số Tiền Phạt"};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 
-        for (Violation v : violations) {
-            Object[] rowData = {v.getMaPhieuMuon(), v.getLyDo(), v.getSoNgayViPham(), v.getSoTienPhat()};
-            tableModel.addRow(rowData);
-        }
 
+
+        for (Violation v : violations) {
+            if (SessionManager.getCurrentUser().getMaTaiKhoan().equals(v.getMaTaiKhoan())) {
+                Object[] rowData = {v.getMaPhieuMuon(), v.getLyDo(), v.getSoNgayViPham(), v.getSoTienPhat()};
+                tableModel.addRow(rowData);
+            }
+        }
         return new JTable(tableModel);
     }
 }

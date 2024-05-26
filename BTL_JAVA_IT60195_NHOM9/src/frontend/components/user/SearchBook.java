@@ -142,7 +142,7 @@ public class SearchBook {
                     double price = Double.parseDouble(parts[6].trim());
 
                     if (name.toLowerCase().contains(keyword.toLowerCase()) || code.toLowerCase().contains(keyword.toLowerCase())) {
-                        books.add(new Book(code, name, author, releaseDate, category, quantity, price));
+                        books.add(new Book(code, name, author, LocalDate.parse(releaseDate), category, quantity, price));
                     }
                 }
             }
@@ -379,7 +379,7 @@ public class SearchBook {
 
                 // Use SessionManager to get the current user
                 Account currentUser = SessionManager.getCurrentUser();
-                String maTaiKhoan = currentUser != null ? currentUser.getTenNguoiDung() : "N/A";
+                String maTaiKhoan = currentUser != null ? currentUser.getMaTaiKhoan() : "N/A";
 
                 BorrowSlip borrowSlip = new BorrowSlip(maPhieuMuon, ngayMuon, maTaiKhoan, book, false); // Assume newly created slip is inactive
                 // Write the borrow slip to file

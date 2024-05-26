@@ -72,5 +72,16 @@ public class WriteData {
             e.printStackTrace(System.err);
         }
     }
+    public static void writeLibrarian(List<Librarian> librarians,String fileName) {
+    	String path=ReadData.f_path(fileName);
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
+            for (Librarian l : librarians) {
+                bw.write(l.toString());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace(System.err);
+        }
+    }
 }
 

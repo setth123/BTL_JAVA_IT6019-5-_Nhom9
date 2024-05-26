@@ -22,6 +22,7 @@ public class Violation {
         this.soTienPhat = soTienPhat;
     }
 
+
     public Violation(String maViPham, String maPhieuMuon, String maTaiKhoan, String lyDo, int soNgayViPham, double soTienPhat) {
         this.maViPham = maViPham;
         this.maPhieuMuon = maPhieuMuon;
@@ -30,7 +31,6 @@ public class Violation {
         this.soNgayViPham = soNgayViPham;
         this.soTienPhat = soTienPhat;
     }
-
 
 
     public static int getVpNo() {
@@ -69,7 +69,11 @@ public class Violation {
         return lyDo;
     }
 
-    public void setLyDo(String lyDo) {
+    public String getlyDo() {
+        return lyDo;
+    }
+
+    public void setlyDo(String lyDo) {
         this.lyDo = lyDo;
     }
 
