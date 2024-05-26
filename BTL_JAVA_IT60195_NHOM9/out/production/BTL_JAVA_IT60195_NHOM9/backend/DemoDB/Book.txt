@@ -1,0 +1,6 @@
+|001|Harry Potter and the Philosopher's Stone|Bloomsbury|08/06/1948|Fantasy| 0 |15.99|tru|
+|002|The Hobbit|Allen & Unwin|08/06/1948|Fantasy| 12 |12.50|tru|
+|003|1984|George Orwell|08/06/1948|Dystopian| 14 |10.00|tru|
+|004|To Kill a Mockingbird|J.B. Lippincott & Co.|08/06/1948|Fiction| 24 |18.75|tru|
+|005|Pride and Prejudice|T. Egerton, Whitehall|08/06/1948|Romance| 29 |9.99|tru|
+|006|Sach 1|T. Egerton, Whitehall|08/06/1948|Romance|0|9.99|true

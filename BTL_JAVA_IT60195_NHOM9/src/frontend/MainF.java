@@ -18,7 +18,11 @@ public class MainF {
 
 	private JFrame frame;
 
-	
+	// Thêm getter để lấy frame chính và trở về sau khi đăng xuất
+	public JFrame getFrame() {
+		return frame;
+	}
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -43,14 +47,16 @@ public class MainF {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+
 		frame = new JFrame();
-		frame.setBounds(100, 100, 563, 362);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize( 560, 360);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setResizable(false);
 		frame.getContentPane().setLayout(null);
+		frame.setLocationRelativeTo(null); // căn ra giữa màn hình
 		
 		JLabel lblNewLabel = new JLabel("Hệ thống quản lý sách ");
-		lblNewLabel.setForeground(new Color(192, 192, 192));
+		lblNewLabel.setForeground(Color.gray);
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
 		lblNewLabel.setBounds(127, 11, 325, 97);
 		frame.getContentPane().add(lblNewLabel);

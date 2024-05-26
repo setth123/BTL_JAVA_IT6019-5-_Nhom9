@@ -1,23 +1,44 @@
 package backend.models;
 
 public class Violation {
+    private static int vpNo = 1;
     private String maViPham;
-    private String maSach;
+    private String maPhieuMuon;
     private String maTaiKhoan;
-    private String loaiViPham;
+    private String lyDo;
     private int soNgayViPham;
     private double soTienPhat;
 
     public Violation() {
     }
 
-    public Violation(String maViPham, String maSach, String maTaiKhoan, String loaiViPham, int soNgayViPham, double soTienPhat) {
-        this.maViPham = maViPham;
-        this.maSach = maSach;
+    public Violation(String maPhieuMuon, String maTaiKhoan, String lyDo, int soNgayViPham, double soTienPhat) {
+        this.maViPham = "VP-" + vpNo;
+        vpNo++;
+        this.maPhieuMuon = maPhieuMuon;
         this.maTaiKhoan = maTaiKhoan;
-        this.loaiViPham = loaiViPham;
+        this.lyDo = lyDo;
         this.soNgayViPham = soNgayViPham;
         this.soTienPhat = soTienPhat;
+    }
+
+    public Violation(String maViPham, String maPhieuMuon, String maTaiKhoan, String lyDo, int soNgayViPham, double soTienPhat) {
+        this.maViPham = maViPham;
+        this.maPhieuMuon = maPhieuMuon;
+        this.maTaiKhoan = maTaiKhoan;
+        this.lyDo = lyDo;
+        this.soNgayViPham = soNgayViPham;
+        this.soTienPhat = soTienPhat;
+    }
+
+
+
+    public static int getVpNo() {
+        return vpNo;
+    }
+
+    public static void setVpNo(int vpNo) {
+        Violation.vpNo = vpNo;
     }
 
     public String getMaViPham() {
@@ -28,12 +49,12 @@ public class Violation {
         this.maViPham = maViPham;
     }
 
-    public String getMaSach() {
-        return maSach;
+    public String getMaPhieuMuon() {
+        return maPhieuMuon;
     }
 
-    public void setMaSach(String maSach) {
-        this.maSach = maSach;
+    public void setMaPhieuMuon(String maPhieuMuon) {
+        this.maPhieuMuon = maPhieuMuon;
     }
 
     public String getMaTaiKhoan() {
@@ -44,12 +65,12 @@ public class Violation {
         this.maTaiKhoan = maTaiKhoan;
     }
 
-    public String getLoaiViPham() {
-        return loaiViPham;
+    public String getLyDo() {
+        return lyDo;
     }
 
-    public void setLoaiViPham(String loaiViPham) {
-        this.loaiViPham = loaiViPham;
+    public void setLyDo(String lyDo) {
+        this.lyDo = lyDo;
     }
 
     public int getSoNgayViPham() {
@@ -70,7 +91,7 @@ public class Violation {
 
     @Override
     public String toString() {
-        return String.format("| %-10s | %-30s | %-20s | %-10s | %-12s | %-10s |",
-                maViPham, maSach, maTaiKhoan, loaiViPham, soNgayViPham, soTienPhat);
+        return String.format("| %-5s | %-10s | %-10s | %-10s | %-50s | %-5s | %-10s",
+                vpNo, maViPham, maPhieuMuon, maTaiKhoan, lyDo, soNgayViPham, soTienPhat);
     }
 }

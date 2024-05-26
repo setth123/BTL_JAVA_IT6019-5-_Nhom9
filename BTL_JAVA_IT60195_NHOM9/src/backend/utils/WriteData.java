@@ -47,17 +47,7 @@ public class WriteData {
         }
     }
 
-    public static void writeBorrowSlipDetail(List<BorrowSlipDetail> details, String fileName) {
-    	String path=ReadData.f_path(fileName);
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
-            for (BorrowSlipDetail detail : details) {
-                bw.write(detail.toString());
-                bw.newLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace(System.err);
-        }
-    }
+
 
     public static void writeCategory(List<Category> categories, String fileName) {
     	String path=ReadData.f_path(fileName);

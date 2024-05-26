@@ -31,7 +31,7 @@ public class ReadData {
             while ((line = br.readLine()) != null) {
                 line = line.substring(1, line.length() - 1);
                 String[] data = line.split("\\|");
-                Account account = new Account(data[0].trim(), data[1].trim(), data[2].trim(), data[3].trim(), data[4].trim(), data[5].trim(), data[6].trim());
+                Account account = new Account(data[0].trim(), data[1].trim(), data[2].trim(), data[3].trim(), data[4].trim(), data[5].trim());
                 accounts.add(account);
             }
         } catch (IOException e) {
@@ -47,7 +47,6 @@ public class ReadData {
         
         String path=f_path(fileName);
 
-        
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -61,48 +60,56 @@ public class ReadData {
         } catch (IOException e) {
             e.printStackTrace(System.err);
         }
-
         return books;
     }
 
-    public static List<BorrowSlip> readBorrowSlip(String fileName) {
-        List<BorrowSlip> slips = new ArrayList<>();
-        
-        String path=f_path(fileName);
-
-        
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+    public static List<BorrowSlip> readBorrowSlip() {
+        List<BorrowSlip> borrowSlips = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(f_path("src\\backend\\DemoDB\\borrow-slip.txt")))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] data = line.split("\\|");
-                BorrowSlip slip = new BorrowSlip(data[0].trim(), LocalDate.parse(data[1].trim()), data[2].trim());
-                slips.add(slip);
+                line = line.substring(1, line.length() - 1);
+                String[] parts = line.split("\\|");
+                if (parts.length >= 5) {
+                    String maPhieuMuon = parts[0].trim();
+                    LocalDate ngayMuon = LocalDate.parse(parts[1].trim());
+                    LocalDate ngayTra = LocalDate.parse(parts[2].trim());
+                    String maTaiKhoan = parts[3].trim();
+                    boolean trangThai = parts[4].trim().equalsIgnoreCase("Active");
+                    String tenSach = parts[5].trim();
+                    Book sachMuon = getBookByTitle(tenSach);
+                    if (sachMuon != null) {
+                        borrowSlips.add(new BorrowSlip(maPhieuMuon, ngayMuon, maTaiKhoan, sachMuon, trangThai));
+                    }
+                }
             }
         } catch (IOException e) {
             e.printStackTrace(System.err);
         }
-
-        return slips;
+        return borrowSlips;
     }
 
-    public static List<BorrowSlipDetail> readBorrowSlipDetail(String fileName) {
-        List<BorrowSlipDetail> details = new ArrayList<>();
-        
-        String path=f_path(fileName);
-
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+    private static Book getBookByTitle(String tenSach) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src\\backend\\DemoDB\\Book.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] data = line.split("\\|");
-                BorrowSlipDetail detail = new BorrowSlipDetail(data[0].trim(), data[1].trim(),
-                        LocalDate.parse(data[2].trim()), LocalDate.parse(data[3].trim()), Integer.parseInt(data[4].trim()));
-                details.add(detail);
+                line = line.substring(1, line.length() - 1);
+                String[] parts = line.split("\\|");
+                if (parts.length >= 8 && parts[1].trim().equals(tenSach)) {
+                    String code = parts[0].trim();
+                    String name = parts[1].trim();
+                    String author = parts[2].trim();
+                    String releaseDate = parts[3].trim();
+                    String category = parts[4].trim();
+                    int quantity = Integer.parseInt(parts[5].trim());
+                    double price = Double.parseDouble(parts[6].trim());
+                    return new Book(code, name, author, releaseDate, category, quantity, price);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace(System.err);
         }
-
-        return details;
+        return null;
     }
 
     public static List<Category> readCategory(String fileName) {
@@ -125,15 +132,24 @@ public class ReadData {
 
     public static List<Violation> readViolation(String fileName) {
         List<Violation> violations = new ArrayList<>();
-        String path=f_path(fileName);
+        String path = f_path(fileName);
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
             while ((line = br.readLine()) != null) {
+                line = line.substring(1, line.length() - 1);
                 String[] data = line.split("\\|");
-                Violation violation = new Violation(data[0].trim(), data[1].trim(), data[2].trim(), data[3].trim(),
-                        Integer.parseInt(data[4].trim()), Double.parseDouble(data[5].trim()));
-                violations.add(violation);
+                if (data.length == 7) {
+                    String maViPham = data[1].trim();
+                    String maPhieuMuon = data[2].trim();
+                    String maTaiKhoan = data[3].trim();
+                    String lyDo = data[4].trim();
+                    int soNgayViPham = Integer.parseInt(data[5].trim());
+                    double soTienPhat = Double.parseDouble(data[6].trim());
+
+                    Violation violation = new Violation(maViPham, maPhieuMuon, maTaiKhoan, lyDo, soNgayViPham, soTienPhat);
+                    violations.add(violation);
+                }
             }
         } catch (IOException e) {
             e.printStackTrace(System.err);

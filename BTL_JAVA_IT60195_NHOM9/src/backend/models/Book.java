@@ -81,6 +81,11 @@ public class Book {
 	public void setBorrow(boolean isBorrow) {
 		this.isBorrow = isBorrow;
 	}
+	public void reduceQuantity(int amount) {
+		if (this.sl >= amount) {
+			this.sl -= amount;
+		}
+	}
 	@Override
     public String toString() {
         return (this.getMaSach()+"|"+this.getTenSach()+"|"+this.getNXB()+"|"+this.getNph()+"|"+this.getTheLoai()+"|"+this.getSl()+"|"+this.getGia()+"|"+this.getBorrow());

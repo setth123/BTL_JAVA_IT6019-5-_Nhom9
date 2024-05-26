@@ -14,6 +14,7 @@ public class Register {
     }
 
     public static void showRegisterLayout(JFrame frame) {
+
         // Tạo một JFrame cho layout đăng ký
         final JFrame registerFrame = new JFrame("Đăng ký");
         registerFrame.setSize(400, 450);
@@ -21,6 +22,10 @@ public class Register {
         registerFrame.setLayout(null);
 
         // Tạo các thành phần UI cho layout đăng ký
+        JLabel lblNewLabel = new JLabel("Đăng ký tài khoản");
+        lblNewLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        lblNewLabel.setForeground(Color.gray);
+
         JLabel lblName = new JLabel("Tên người dùng:");
         JTextField txtName = new JTextField();
 
@@ -47,24 +52,35 @@ public class Register {
         JButton btnRegister = new JButton("Đăng ký");
         JButton btnBack = new JButton("Quay lại");
 
-        lblName.setBounds(50, 20, 120, 20);
-        txtName.setBounds(200, 20, 120, 20);
-        lblAddress.setBounds(50, 60, 120, 20);
-        txtAddress.setBounds(200, 60, 120, 20);
-        lblPhoneNumber.setBounds(50, 100, 120, 20);
-        txtPhoneNumber.setBounds(200, 100, 120, 20);
-        lblUsername.setBounds(50, 140, 120, 20);
-        txtUsername.setBounds(200, 140, 120, 20);
-        lblPassword.setBounds(50, 180, 120, 20);
-        txtPassword.setBounds(200, 180, 120, 20);
-        lblPasswordHint.setBounds(20, 210, 350, 20);
-        lblConfirmPassword.setBounds(50, 250, 120, 20);
-        txtConfirmPassword.setBounds(200, 250, 120, 20);
-        lblMismatchMessage.setBounds(20, 290, 300, 20);
-        btnRegister.setBounds(50, 330, 100, 20);
-        btnBack.setBounds(250, 330, 100, 20);
+        lblNewLabel.setBounds(90,10,300,30);
+
+        lblName.setBounds(50, 60, 120, 20);
+        txtName.setBounds(200, 60, 120, 20);
+
+        lblAddress.setBounds(50, 100, 120, 20);
+        txtAddress.setBounds(200, 100, 120, 20);
+
+        lblPhoneNumber.setBounds(50, 140, 120, 20);
+        txtPhoneNumber.setBounds(200, 140, 120, 20);
+
+        lblUsername.setBounds(50, 180, 120, 20);
+        txtUsername.setBounds(200, 180, 120, 20);
+
+        lblPassword.setBounds(50, 220, 120, 20);
+        txtPassword.setBounds(200, 220, 120, 20);
+
+        lblPasswordHint.setBounds(30, 260, 350, 20);
+
+        lblConfirmPassword.setBounds(50, 300, 120, 20);
+        txtConfirmPassword.setBounds(200, 300, 120, 20);
+
+        lblMismatchMessage.setBounds(50, 320, 300, 20);
+
+        btnRegister.setBounds(50, 360, 100, 20);
+        btnBack.setBounds(250, 360, 100, 20);
 
         // Thêm các thành phần UI vào JFrame
+        registerFrame.add(lblNewLabel);
         registerFrame.add(lblName);
         registerFrame.add(txtName);
         registerFrame.add(lblAddress);

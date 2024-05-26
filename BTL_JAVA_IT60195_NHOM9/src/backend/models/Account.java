@@ -77,7 +77,9 @@ public class Account {
     public void setMatKhau(String matKhau) {
         this.matKhau = matKhau;
     }
-
+    public boolean validateCurrentPassword(String currentPassword) {
+        return this.matKhau.equals(currentPassword);
+    }
     @Override
     public String toString() {
         return String.format("| %-10s | %-30s | %-20s | %-12s | %-30s | %-30s |",

@@ -1,6 +1,10 @@
 package frontend.components.user;
 
+import backend.models.Account;
 import backend.models.Book;
+import backend.models.BorrowSlip;
+import backend.utils.ReadData;
+import backend.utils.SessionManager;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -8,17 +12,17 @@ import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class SearchBook {
     public static void showSearchBookLayout(JFrame parentFrame) {
+
         // Tạo một JFrame cho layout tìm kiếm sách
         final JFrame searchFrame = new JFrame("Tìm kiếm sách");
         searchFrame.setSize(800, 600);
@@ -47,6 +51,13 @@ public class SearchBook {
         // Bảng để hiển thị kết quả tìm kiếm
         String[] columnNames = {"STT", "Mã sách", "Tên sách", "Thể loại", "Thao tác"};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
+        List<Book> allBooks = searchBooks("");
+        if (allBooks.isEmpty()) {
+            tableModel.setRowCount(0); // Clear existing rows
+            tableModel.addRow(new Object[]{"", "", "No books found", "", ""});
+        } else {
+            updateTable(allBooks, tableModel);
+        }
         JTable table = new JTable(tableModel) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -116,28 +127,27 @@ public class SearchBook {
 
     private static List<Book> searchBooks(String keyword) {
         List<Book> books = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("D:\\Java\\BTL_Java_N9\\BTL_JAVA_IT6019-5-_Nhom9\\BTL_JAVA_IT60195_NHOM9\\src\\frontend\\DemoDB\\Book.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(ReadData.f_path("src\\backend\\DemoDB\\Book.txt")))) {
             String line;
-            int id = 1;
             while ((line = br.readLine()) != null) {
                 line = line.substring(1, line.length() - 1);
                 String[] parts = line.split("\\|");
                 if (parts.length >= 8) {
                     String code = parts[0].trim();
                     String name = parts[1].trim();
-                    String title = parts[2].trim();
-                    String publisher = parts[3].trim();
-                    String releaseDate = parts[4].trim();
-                    String category = parts[5].trim();
-                    int quantity = Integer.parseInt(parts[6].trim());
-                    double price = Double.parseDouble(parts[7].trim());
+                    String author = parts[2].trim();
+                    String releaseDate = parts[3].trim();
+                    String category = parts[4].trim();
+                    int quantity = Integer.parseInt(parts[5].trim());
+                    double price = Double.parseDouble(parts[6].trim());
+
                     if (name.toLowerCase().contains(keyword.toLowerCase()) || code.toLowerCase().contains(keyword.toLowerCase())) {
-                        books.add(new Book(code, name, title, publisher, LocalDate.parse(releaseDate), category, quantity, price));
+                        books.add(new Book(code, name, author, releaseDate, category, quantity, price));
                     }
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace(System.err);
         }
         return books;
     }
@@ -164,10 +174,10 @@ public class SearchBook {
 
     // Button editor class
     static class ButtonEditor extends DefaultCellEditor {
-        private JButton button;
+        private final JButton button;
         private String label;
         private boolean isPushed;
-        private JTable table;
+        private final JTable table;
         private int row;
 
         public ButtonEditor(JCheckBox checkBox, JTable table) {
@@ -195,13 +205,13 @@ public class SearchBook {
         @Override
         public Object getCellEditorValue() {
             if (isPushed) {
-                // Show book details when button is clicked
-                int id = (int) table.getValueAt(row, 0);
+                // Lấy thông tin sách từ bảng
                 String code = (String) table.getValueAt(row, 1);
-                String name = (String) table.getValueAt(row, 2);
-                String category = (String) table.getValueAt(row, 3);
-                Book book = getBookDetails(id, code, name, category);
-                showBookDetails(book, table);
+
+                Book book = findBookByCode(code);
+                if (book != null) {
+                    showBookDetails(book);
+                }
             }
             isPushed = false;
             return label;
@@ -218,24 +228,23 @@ public class SearchBook {
             super.fireEditingStopped();
         }
 
-        private Book getBookDetails(int id, String code, String name, String category) {
-            List<Book> books = searchBooks("");
+        private Book findBookByCode(String code) {
+            List<Book> books = searchBooks(""); // Load lại toàn bộ danh sách sách
             for (Book book : books) {
-                if (books.indexOf(book) == id) {
+                if (book.getMaSach().equals(code)) {
                     return book;
                 }
             }
             return null;
         }
 
-        private void showBookDetails(Book book, JTable searchTable) {
+        private void showBookDetails(Book book) {
             JFrame detailFrame = new JFrame("Chi tiết sách");
             detailFrame.setSize(400, 300);
             detailFrame.setLayout(new GridLayout(10, 1));
 
             JLabel lblCode = new JLabel("Mã sách: " + book.getMaSach());
             JLabel lblName = new JLabel("Tên sách: " + book.getTenSach());
-            JLabel lblTitle = new JLabel("Tiêu đề: " + book.getTieuDe());
             JLabel lblPublisher = new JLabel("NXB: " + book.getNXB());
             JLabel lblReleaseDate = new JLabel("Ngày phát hành: " + book.getNph());
             JLabel lblCategory = new JLabel("Thể loại: " + book.getTheLoai());
@@ -259,7 +268,6 @@ public class SearchBook {
 
             detailFrame.add(lblCode);
             detailFrame.add(lblName);
-            detailFrame.add(lblTitle);
             detailFrame.add(lblPublisher);
             detailFrame.add(lblReleaseDate);
             detailFrame.add(lblCategory);
@@ -275,13 +283,15 @@ public class SearchBook {
         private void showDetailedBookInfo(Book book) {
             JFrame detailedFrame = new JFrame("Thông tin chi tiết sách");
             detailedFrame.setSize(400, 300);
-            detailedFrame.setLayout(new GridLayout(4, 1));
+            detailedFrame.setLayout(new GridLayout(5, 1));
 
             JLabel lblCode = new JLabel("Mã sách: " + book.getMaSach());
             JLabel lblName = new JLabel("Tên sách: " + book.getTenSach());
             JLabel lblCategory = new JLabel("Thể loại: " + book.getTheLoai());
-
             JButton btnBack = new JButton("Quay lại");
+            JButton btnConfirm = new JButton("Xác nhận");
+
+            btnConfirm.setEnabled(book.getSl() > 0);
 
             btnBack.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -289,13 +299,127 @@ public class SearchBook {
                 }
             });
 
+            btnConfirm.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    book.reduceQuantity(1);
+
+                    // Write the borrow slip and get the generated ID
+                    writeBorrowSlip(book);
+
+                    // Update the Book.txt file to reflect the new quantity
+                    updateBookFile(book);
+
+                    // Display a confirmation dialog
+                    JOptionPane.showMessageDialog(detailedFrame, "Chờ xác nhận từ thủ thư", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
+                    detailedFrame.dispose();
+                }
+            });
+
             detailedFrame.add(lblCode);
             detailedFrame.add(lblName);
             detailedFrame.add(lblCategory);
+            detailedFrame.add(btnConfirm);
             detailedFrame.add(btnBack);
 
             detailedFrame.setLocationRelativeTo(null);
             detailedFrame.setVisible(true);
         }
+
+
+
+        private void updateBookFile(Book updatedBook) {
+            String filePath = ReadData.f_path("src\\backend\\DemoDB\\Book.txt");
+            List<String> fileContent = new ArrayList<>();
+
+            // Đọc toàn bộ nội dung của tệp vào danh sách
+            try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    fileContent.add(line);
+                }
+            } catch (IOException e) {
+                e.printStackTrace(System.err);
+                return;
+            }
+
+            // Tìm và cập nhật thông tin sách
+            for (int i = 0; i < fileContent.size(); i++) {
+                String tempLine = fileContent.get(i);
+                String line = tempLine.substring(1, tempLine.length() - 1);
+                if (line.contains(updatedBook.getMaSach())) {
+                    String[] parts = line.split("\\|");
+                    if (parts.length >= 8) {
+                        int quantity = Integer.parseInt(parts[5].trim());
+                        parts[5] = " " + (quantity - 1) + " "; // Cập nhật số lượng
+                        StringBuilder updatedLine = new StringBuilder("|");
+                        for (String part : parts) {
+                            updatedLine.append(part).append("|");
+                        }
+                        fileContent.set(i, updatedLine.toString());
+                    }
+                }
+            }
+
+            // Ghi lại nội dung đã cập nhật vào tệp
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+                for (String line : fileContent) {
+                    writer.write(line);
+                    writer.newLine();
+                }
+            } catch (IOException e) {
+                e.printStackTrace(System.err);
+            }
+        }
+
+        public static void writeBorrowSlip(Book book) {
+            String maPhieuMuon = generateBorrowSlipId();
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(ReadData.f_path("src\\backend\\DemoDB\\borrow-slip.txt"), true))) {
+                LocalDate ngayMuon = LocalDate.now();
+
+                // Use SessionManager to get the current user
+                Account currentUser = SessionManager.getCurrentUser();
+                String maTaiKhoan = currentUser != null ? currentUser.getTenNguoiDung() : "N/A";
+
+                BorrowSlip borrowSlip = new BorrowSlip(maPhieuMuon, ngayMuon, maTaiKhoan, book, false); // Assume newly created slip is inactive
+                // Write the borrow slip to file
+                writer.write(borrowSlip.toString());
+                writer.newLine();
+            } catch (IOException e) {
+                e.printStackTrace(System.err);
+            }
+        }
+
+
+        private void writeBorrowSlipDetail(Book book, String maPhieuMuon) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("borrow-slip-detail.txt", true))) {
+                String ngayTraDuKien = calculateDueDate(); // Implement this method to calculate the due date
+                String ngayTraThucTe = "N/A"; // This will be empty initially as the book hasn't been returned yet
+                int soLuong = 1;
+
+                String borrowSlipDetail = String.format("| %-10s | %-30s | %-20s | %-10s | %-12s |",
+                        book.getMaSach(), maPhieuMuon, ngayTraDuKien, ngayTraThucTe, soLuong);
+                writer.write(borrowSlipDetail);
+                writer.newLine();
+            } catch (IOException e) {
+                e.printStackTrace(System.err);
+            }
+        }
+
+
+        // Sample method to generate a borrow slip ID
+        private static String generateBorrowSlipId() {
+            // Implement ID generation logic
+            return "BS" + System.currentTimeMillis();
+        }
+
+        // Sample method to calculate the due date
+        private String calculateDueDate() {
+            Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.DAY_OF_MONTH, 14); // Assuming a 14-day borrow period
+            return new SimpleDateFormat("dd/MM/yyyy").format(cal.getTime());
+        }
     }
+
 }
+
