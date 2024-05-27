@@ -94,7 +94,7 @@ public class Violation {
 
     @Override
     public String toString() {
-        return String.format("| %-5s | %-10s | %-10s | %-10s | %-50s | %-5s | %-10s",
+        return String.format("| %-5s | %-10s | %-10s | %-50s | %-5d | %-10.2f",
                  maViPham, maPhieuMuon, maTaiKhoan, lyDo, soNgayViPham, soTienPhat);
     }
 }

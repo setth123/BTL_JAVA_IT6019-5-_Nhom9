@@ -13,7 +13,7 @@ public class Book {
 	private String theLoai;
 	private int sl;
 	private double gia;
-	private boolean isBorrow;
+	private boolean isAvaiable;
 	public Book() {
 	
 	}
@@ -26,7 +26,7 @@ public class Book {
 		this.theLoai = theLoai;
 		this.sl = sl;
 		this.gia = gia;
-		this.isBorrow=isBorrow;
+		this.isAvaiable=isBorrow;
 	}
 	public Book(String maSach, String tenSach, String NXB, LocalDate nph, String theLoai, int sl,
 			double gia) {
@@ -82,10 +82,10 @@ public class Book {
 	}
 	
 	public boolean getBorrow() {
-		return isBorrow;
+		return isAvaiable;
 	}
 	public void setBorrow(boolean isBorrow) {
-		this.isBorrow = isBorrow;
+		this.isAvaiable = isBorrow;
 	}
 	public void reduceQuantity(int amount) {
 		if (this.sl >= amount) {

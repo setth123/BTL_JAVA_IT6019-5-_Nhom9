@@ -8,7 +8,7 @@ public class BorrowSlip {
     private LocalDate ngayTra;
     private String maTaiKhoan;
     private String maSach;
-    //4 trạng thái bao gồm Pending(Chờ duyệt), Approved (Được duyệt), Dissaproved(Không được duyệt), Lost(Độc giả làm mất sách).
+    //4 trạng thái bao gồm Pending(Chờ duyệt), Approved (Được duyệt), Dissaproved(Không được duyệt),onTime(trả sách đúng hạn),Lost(Độc giả làm mất sách),Expired(Hết hạn).
     private String trangThai;
 
     public BorrowSlip(String maPhieuMuon, LocalDate ngayMuon, String maTaiKhoan, String maSach, String trangThai) {
@@ -70,7 +70,7 @@ public class BorrowSlip {
 
     @Override
     public String toString() {
-        return String.format("| %-25s | %-25s | %-25s | %-25s | %-25s | %-25s |",
+        return String.format(" %-25s | %-25s | %-25s | %-25s | %-25s | %-25s |",
                 maPhieuMuon, ngayMuon, ngayTra, maTaiKhoan, maSach,trangThai);
     }
 }

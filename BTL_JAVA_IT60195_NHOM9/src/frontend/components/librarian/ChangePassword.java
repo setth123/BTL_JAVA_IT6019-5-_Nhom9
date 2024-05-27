@@ -39,7 +39,8 @@ public class ChangePassword extends JFrame{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize(Librarian l,JFrame parent) {
-		setBounds(100, 100, 400, 500);
+		setTitle("Đổi mật khẩu");
+		setBounds(300, 100, 400, 500);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);

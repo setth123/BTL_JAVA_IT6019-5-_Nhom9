@@ -1,6 +1,5 @@
 package backend.utils;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +46,8 @@ public class FetchBE {
 		return result;
 	}
 	public static List<Violation> fetchViolation(){
-		return ReadData.readViolation("/DemoDB/Violation.txt");
+		violations= ReadData.readViolation("/DemoDB/Violation.txt");
+		return violations;
 	}
 	public static boolean findV(String maPhieu,String maUser) {
 		bs=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
@@ -85,7 +85,7 @@ public class FetchBE {
 		bs=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
 		List<BorrowSlip> result=new ArrayList<>();
 		for(BorrowSlip s: bs) {
-			if(s.getTrangThai().equals("Lost")||s.getNgayTra().isBefore(LocalDate.now())) {
+			if(s.getTrangThai().equals("Lost")||s.getTrangThai().equals("Expired")) {
 				result.add(s);
 			}
 		}

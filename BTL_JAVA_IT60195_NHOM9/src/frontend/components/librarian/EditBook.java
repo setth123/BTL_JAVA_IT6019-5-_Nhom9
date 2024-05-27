@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.YearMonth;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -43,18 +44,8 @@ public class EditBook extends JFrame{
 	}
 	
 	private static int daysInMonth(int year, int month) {
-        int days;
-        if (month == 2) {
-            if (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0))
-                days = 29;
-            else
-                days = 28;
-        } else if (month == 4 || month == 6 || month == 9 || month == 11) {
-            days = 30;
-        } else {
-            days = 31;
-        }
-        return days;
+        YearMonth yearMonth = YearMonth.of(year, month);
+        return yearMonth.lengthOfMonth();
     }
 
 	/**

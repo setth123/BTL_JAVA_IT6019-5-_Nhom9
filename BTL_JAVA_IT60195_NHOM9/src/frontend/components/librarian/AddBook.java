@@ -248,6 +248,7 @@ import javax.swing.JSpinner;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.time.YearMonth;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeListener;
@@ -272,21 +273,8 @@ public class AddBook extends JFrame {
 	
 	
 	private static int daysInMonth(int year, int month) {
-		int day;
-		if(year % 4 == 0){
-		    if(year % 100 == 0){
-		        if(year % 400 == 0){
-		           day=29;
-		        } else {
-		            day=29;
-		        }
-		    } else {
-		        day=28;
-		    }
-		} else {
-				day=29;
-		}
-		return day;
+        YearMonth yearMonth = YearMonth.of(year, month);
+        return yearMonth.lengthOfMonth();
     }
 
 	
@@ -423,7 +411,7 @@ public class AddBook extends JFrame {
 				}
 			}
 		});
-		btnNewButton.setBounds(486, 386, 89, 23);
+		btnNewButton.setBounds(486, 386, 101, 23);
 		getContentPane().add(btnNewButton);
 		
 		JButton btnHu = new JButton("Huỷ");

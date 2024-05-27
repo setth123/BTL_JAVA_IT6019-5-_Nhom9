@@ -70,6 +70,7 @@ public class LibrarianController {
 			    }
 			 if(bookFound) {
 				 WriteData.writeBook(books,"/DemoDB/Book.txt");
+				 return true;
 			 }
 		     return false;
 		}
@@ -111,16 +112,19 @@ public class LibrarianController {
 		}
 		
 		public static boolean addViolation(String maPhieuMuon,String maTaiKhoan,String lydo,int soNgayViPham,String soTienPhat) {
+			 borrowSlips=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
 		     violations=ReadData.readViolation("/DemoDB/Violation.txt");
 		     double stp=Double.parseDouble(soTienPhat);
-		        for (Book book : books) {
-		            if (book.getMaSach().equals(maPhieuMuon)) {
-		                return false;
-		            }
+		        for(BorrowSlip s: borrowSlips) {
+		        	if(s.getMaPhieuMuon().equals(maPhieuMuon)) {
+		        		if(s.getMaTaiKhoan().equals(maTaiKhoan)) {
+		        			violations.add(new Violation(maPhieuMuon, maTaiKhoan, lydo, soNgayViPham, stp));
+		        		    WriteData.writeViolation(violations,"/DemoDB/Violation.txt");
+		        		    return true;
+		        		}
+		        	}
 		        }
-			violations.add(new Violation(maPhieuMuon, maTaiKhoan, lydo, soNgayViPham, stp));
-		    WriteData.writeViolation(violations,"/DemoDB/Violation.txt");
-		    return true;
+		        return false;
 		    }
 		public static boolean approveBorrowSlip(String maPhieuMuon,String status){
 			borrowSlips=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
@@ -129,7 +133,8 @@ public class LibrarianController {
 					bs.setTrangThai(status);
 					if(bs.getTrangThai().equals("Approved")) {
 						Book b=Book.getBookByTitle(bs.getMaSach());
-						b.setBorrow(true);
+						b.reduceQuantity(1);
+						if(b.getSl()==0)b.setBorrow(false);
 					}
 					break;
 				}

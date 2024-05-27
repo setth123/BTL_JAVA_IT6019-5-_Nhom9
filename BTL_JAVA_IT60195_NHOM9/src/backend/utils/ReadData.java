@@ -111,19 +111,16 @@ public class ReadData {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
             while ((line = br.readLine()) != null) {
-                line = line.substring(1, line.length() - 1);
-                String[] data = line.split("\\|");
-                if (data.length == 7) {
-                    String maViPham = data[1].trim();
-                    String maPhieuMuon = data[2].trim();
-                    String maTaiKhoan = data[3].trim();
-                    String lyDo = data[4].trim();
-                    int soNgayViPham = Integer.parseInt(data[5].trim());
-                    double soTienPhat = Double.parseDouble(data[6].trim());
-
+                	String[] data = line.split("\\|");
+                    String maViPham = data[0].trim();
+                    String maPhieuMuon = data[1].trim();
+                    String maTaiKhoan = data[2].trim();
+                    String lyDo = data[3].trim();
+                    int soNgayViPham = Integer.parseInt(data[4].trim());
+                    double soTienPhat = Double.parseDouble(data[5].trim());
                     Violation violation = new Violation(maViPham, maPhieuMuon, maTaiKhoan, lyDo, soNgayViPham, soTienPhat);
                     violations.add(violation);
-                }
+
             }
         } catch (IOException e) {
             e.printStackTrace(System.err);
