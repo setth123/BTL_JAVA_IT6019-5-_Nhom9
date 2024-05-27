@@ -229,8 +229,10 @@ public class LibrarianController {
 				System.out.println(bs.getMaPhieuMuon());
 				if(bs.getMaPhieuMuon().equals(maPhieuMuon)) {
 					bs.setTrangThai(status);
-					Book b=Book.getBookByTitle(bs.getMaSach());
-					b.setBorrow(true);
+					if(bs.getTrangThai().equals("Approved")) {
+						Book b=Book.getBookByTitle(bs.getMaSach());
+						b.setBorrow(true);
+					}
 					break;
 				}
 			}
