@@ -9,9 +9,12 @@ import backend.utils.SessionManager;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -22,12 +25,17 @@ import java.util.List;
 
 public class SearchBook {
     public static void showSearchBookLayout(JFrame parentFrame) {
-
         // Tạo một JFrame cho layout tìm kiếm sách
         final JFrame searchFrame = new JFrame("Tìm kiếm sách");
-        searchFrame.setSize(800, 600);
-        searchFrame.setResizable(false);
+        searchFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        searchFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        searchFrame.setSize(900, 600);
+        searchFrame.setResizable(true);
         searchFrame.setLayout(new BorderLayout());
+        // Ensure JFrame displays at the center of the screen
+        searchFrame.setLocationRelativeTo(null);
+        searchFrame.setVisible(true);
+        parentFrame.setVisible(false);
 
         // Tạo các thành phần UI cho layout tìm kiếm sách
         JPanel topPanel = new JPanel(new BorderLayout());
@@ -76,20 +84,15 @@ public class SearchBook {
         // Add button to "Thao tác" column
         table.getColumn("Thao tác").setCellEditor(new ButtonEditor(new JCheckBox(), table));
 
-        // Adjust table column widths
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        table.getColumnModel().getColumn(0).setPreferredWidth(50);  // STT
-        table.getColumnModel().getColumn(1).setPreferredWidth(100); // Mã sách
-        table.getColumnModel().getColumn(2).setPreferredWidth(300); // Tên sách
-        table.getColumnModel().getColumn(3).setPreferredWidth(200); // Thể loại
-        table.getColumnModel().getColumn(4).setPreferredWidth(150); // Thao tác
-
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setPreferredSize(new Dimension(800, 400)); // Set preferred size for the scroll pane
 
         // Thêm các thành phần UI vào JFrame
         searchFrame.add(topPanel, BorderLayout.NORTH);
         searchFrame.add(scrollPane, BorderLayout.CENTER);
+
+        // Method to adjust column widths
+        adjustColumnWidths(table, new double[]{0.10, 0.10, 0.40, 0.30, 0.10});
 
         // Xử lý sự kiện khi nhấn vào nút "Tìm kiếm"
         btnSearch.addActionListener(new ActionListener() {
@@ -106,6 +109,7 @@ public class SearchBook {
                         updateTable(books, tableModel);
                     }
                 }
+                adjustColumnWidths(table, new double[]{0.10, 0.10, 0.40, 0.30, 0.10});
             }
         });
 
@@ -117,17 +121,30 @@ public class SearchBook {
             }
         });
 
-        // Đảm bảo JFrame hiển thị ở trung tâm màn hình
-        searchFrame.setLocationRelativeTo(null);
-        parentFrame.setVisible(false);
+        // Add a component listener to resize columns when the frame is resized
+        searchFrame.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                adjustColumnWidths(table, new double[]{0.10, 0.10, 0.40, 0.30, 0.10});
+            }
+        });
 
-        // Hiển thị JFrame tìm kiếm sách
-        searchFrame.setVisible(true);
+
     }
+
+    private static void adjustColumnWidths(JTable table, double[] percentages) {
+        final int totalWidth = table.getWidth();
+        TableColumnModel columnModel = table.getColumnModel();
+        for (int i = 0; i < percentages.length; i++) {
+            int pWidth = (int)(percentages[i] * totalWidth);
+            columnModel.getColumn(i).setPreferredWidth(pWidth);
+        }
+    }
+
 
     private static List<Book> searchBooks(String keyword) {
         List<Book> books = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(ReadData.f_path("src\\backend\\DemoDB\\Book.txt")))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(ReadData.f_path("..\\DemoDB\\Book.txt")))) {
             String line;
             while ((line = br.readLine()) != null) {
                 line = line.substring(1, line.length() - 1);
@@ -329,7 +346,7 @@ public class SearchBook {
 
 
         private void updateBookFile(Book updatedBook) {
-            String filePath = ReadData.f_path("src\\backend\\DemoDB\\Book.txt");
+            String filePath = ReadData.f_path("..\\DemoDB\\Book.txt");
             List<String> fileContent = new ArrayList<>();
 
             // Đọc toàn bộ nội dung của tệp vào danh sách
@@ -374,14 +391,14 @@ public class SearchBook {
 
         public static void writeBorrowSlip(Book book) {
             String maPhieuMuon = generateBorrowSlipId();
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(ReadData.f_path("src\\backend\\DemoDB\\borrow-slip.txt"), true))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(ReadData.f_path("..\\DemoDB\\borrow-slip.txt"), true))) {
                 LocalDate ngayMuon = LocalDate.now();
 
                 // Use SessionManager to get the current user
                 Account currentUser = SessionManager.getCurrentUser();
                 String maTaiKhoan = currentUser != null ? currentUser.getMaTaiKhoan() : "N/A";
 
-                BorrowSlip borrowSlip = new BorrowSlip(maPhieuMuon, ngayMuon, maTaiKhoan, book, false); // Assume newly created slip is inactive
+                BorrowSlip borrowSlip = new BorrowSlip(maPhieuMuon, ngayMuon, maTaiKhoan, book.getMaSach(), "Pending"); // Assume newly created slip is pending
                 // Write the borrow slip to file
                 writer.write(borrowSlip.toString());
                 writer.newLine();

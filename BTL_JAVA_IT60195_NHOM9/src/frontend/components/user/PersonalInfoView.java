@@ -17,7 +17,7 @@ public class PersonalInfoView extends JFrame {
 
         // Create and configure components
         JLabel headerLabel = new JLabel("Thông tin cá nhân");
-        headerLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 24));
+        headerLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
         headerLabel.setForeground(Color.gray);
 
         JLabel nameLabel = new JLabel("Tên tài khoản: ");
@@ -54,15 +54,24 @@ public class PersonalInfoView extends JFrame {
             dispose();
         });
 
-        // Configure layout using GroupLayout
-        JPanel panel = new JPanel();
-        GroupLayout layout = new GroupLayout(panel);
-        panel.setLayout(layout);
+        // Create a top panel for the back button and header
+        JPanel topPanel = new JPanel(new BorderLayout());
+        // Add an empty border to the top panel to move the "Quay lại" button down slightly
+        topPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Adjust the top padding as needed
+
+        topPanel.add(backButton, BorderLayout.WEST);
+        JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        headerPanel.add(headerLabel);
+        topPanel.add(headerPanel, BorderLayout.CENTER);
+
+        // Configure layout using GroupLayout for main content
+        JPanel mainPanel = new JPanel();
+        GroupLayout layout = new GroupLayout(mainPanel);
+        mainPanel.setLayout(layout);
         layout.setAutoCreateGaps(true);
         layout.setAutoCreateContainerGaps(true);
 
         layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(backButton)
                 .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addComponent(nameLabel)
@@ -74,19 +83,9 @@ public class PersonalInfoView extends JFrame {
                                 .addComponent(fullNameValue)
                                 .addComponent(addressValue)
                                 .addComponent(phoneNumberValue)))
-                .addComponent(headerLabel, GroupLayout.Alignment.CENTER)
-                .addGroup(layout.createSequentialGroup()
-                        .addComponent(editButton)
-                        .addGap(100, 100, 100) // Add space between buttons
-                        .addComponent(changePasswordButton))
-                .addGroup(GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
-                        .addComponent(editButton)
-                        .addComponent(changePasswordButton))
         );
 
         layout.setVerticalGroup(layout.createSequentialGroup()
-                .addComponent(backButton)
-                .addComponent(headerLabel)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(nameLabel)
                         .addComponent(nameValue))
@@ -99,16 +98,30 @@ public class PersonalInfoView extends JFrame {
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(phoneNumberLabel)
                         .addComponent(phoneNumberValue))
-                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(editButton)
-                        .addComponent(changePasswordButton)));
+        );
+
+        // Create a bottom panel for the buttons using BorderLayout
+        JPanel bottomPanel = new JPanel(new BorderLayout());
+        bottomPanel.add(editButton, BorderLayout.WEST);
+        bottomPanel.add(changePasswordButton, BorderLayout.EAST);
+
+        // Add an empty border to the bottom panel to move the buttons up slightly
+        bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // Adjust the bottom padding as needed
 
         // Set window properties
-        setSize(450, 260);
-        setResizable(false);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setResizable(true);
+        setSize(900, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        add(panel);
+
+        // Add components to the frame
+        setLayout(new BorderLayout());
+        add(topPanel, BorderLayout.NORTH);
+        add(mainPanel, BorderLayout.CENTER);
+        add(bottomPanel, BorderLayout.SOUTH);
+
+        // Make the frame visible
         setVisible(true);
     }
 }

@@ -18,7 +18,7 @@ public class ChangePassword extends JFrame {
 
         // Create and configure components
         JLabel headerLabel = new JLabel("Đổi mật khẩu");
-        headerLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 24));
+        headerLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
         headerLabel.setForeground(Color.gray);
 
         JLabel currentPasswordLabel = new JLabel("Mật khẩu hiện tại:");
@@ -77,7 +77,7 @@ public class ChangePassword extends JFrame {
             // Update the password
             currentUser.setMatKhau(newPassword); // Assuming Account has a setPassword method
             SessionManager.login(currentUser); // Update the session
-            java.util.List<Account> accounts = ReadData.readAccount("src\\backend\\DemoDB\\user-account.txt");
+            java.util.List<Account> accounts = ReadData.readAccount("..\\DemoDB\\user-account.txt");
             // Find and update the current user's information
             for (int i = 0; i < accounts.size(); i++) {
                 if (accounts.get(i).getMaTaiKhoan().equals(currentUser.getMaTaiKhoan())) {
@@ -86,13 +86,13 @@ public class ChangePassword extends JFrame {
                 }
             }
 
-            WriteData.writeAccount(accounts, "src\\backend\\DemoDB\\user-account.txt");
+            WriteData.writeAccount(accounts, "..\\DemoDB\\user-account.txt");
 
             // Show success message
             JOptionPane.showMessageDialog(this, "Mật khẩu đã được cập nhật", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 
-            // Return to edit personal info view
-            new EditPersonalInfo(parent, currentUser);
+            // Return to dashboard
+            new Dashboard();
             dispose();
         });
 
@@ -142,8 +142,9 @@ public class ChangePassword extends JFrame {
                         .addComponent(backButton)));
 
         // Set window properties
-        setSize(400, 400);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setSize(900, 600);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         add(panel);
         setVisible(true);

@@ -12,10 +12,11 @@ public class UserLogin extends JFrame {
 
         // Set window title
         setTitle("Độc giả đăng nhập");
+        setResizable(false);
 
         // Create and configure components
         JLabel headerLabel = new JLabel("Đăng nhập");
-        headerLabel.setFont(new java.awt.Font("Tahoma", Font.BOLD, 24));
+        headerLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
         headerLabel.setForeground(Color.gray);
 
         JLabel usernameLabel = new JLabel("Tên tài khoản:");
@@ -94,7 +95,7 @@ public class UserLogin extends JFrame {
 
         // Set window size, close operation, and visibility
         setSize(500, 300);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
     }

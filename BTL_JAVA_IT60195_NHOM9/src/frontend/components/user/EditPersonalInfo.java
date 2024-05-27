@@ -16,7 +16,7 @@ public class EditPersonalInfo extends JFrame {
 
         // Create and configure components
         JLabel headerLabel = new JLabel("Chỉnh sửa thông tin cá nhân");
-        headerLabel.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 24));
+        headerLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
         headerLabel.setForeground(Color.gray);
 
         JLabel usernameLabel = new JLabel("Tên tài khoản:");
@@ -43,7 +43,7 @@ public class EditPersonalInfo extends JFrame {
             // Save other updated information as needed
             // Update the session user details
             SessionManager.login(currentUser);
-            java.util.List<Account> accounts = ReadData.readAccount("src\\backend\\DemoDB\\user-account.txt");
+            java.util.List<Account> accounts = ReadData.readAccount("..\\DemoDB\\user-account.txt");
             for (int i = 0; i < accounts.size(); i++) {
                 if (currentUser.getMaTaiKhoan().equals(accounts.get(i).getMaTaiKhoan())) {
                     accounts.set(i, currentUser);
@@ -51,18 +51,19 @@ public class EditPersonalInfo extends JFrame {
                 }
             }
 
-            WriteData.writeAccount(accounts, "src\\backend\\DemoDB\\user-account.txt");
+            WriteData.writeAccount(accounts, "..\\DemoDB\\user-account.txt");
             // Show success message
             JOptionPane.showMessageDialog(this, "Thông tin đã được cập nhật", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 
             // Return to personal info view
-            new PersonalInfoView(parent);
+            new Dashboard();
             dispose();
         });
 
         changePasswordButton.addActionListener(e -> {
             // Open ChangePassword window
             new ChangePassword(this, currentUser);
+            dispose();
         });
 
         backButton.addActionListener(e -> {
@@ -119,8 +120,9 @@ public class EditPersonalInfo extends JFrame {
                         .addComponent(backButton)));
 
         // Set window properties
-        setSize(400, 300);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setSize(900, 600);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         add(panel);
         setVisible(true);

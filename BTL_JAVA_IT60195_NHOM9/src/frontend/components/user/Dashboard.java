@@ -101,9 +101,11 @@ public class Dashboard extends JFrame {
             // Create the main frame and add the panel to it
             this.setTitle("Library Menu");
             this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            this.setSize(900, 600);
             this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            this.setLocationRelativeTo(null);
             this.setLayout(new BorderLayout());
-            this.setResizable(false);
+//            this.setResizable(false);
             this.add(mainButtonPanel, BorderLayout.NORTH); // Add the main button panel
             this.add(contentPanel, BorderLayout.CENTER); // Add the category and violation panel
             this.setVisible(true);
@@ -139,7 +141,7 @@ public class Dashboard extends JFrame {
         dispose();
     }
     private JTable createCategoryTable() {
-        java.util.List<Category> categories = readCategory("src\\backend\\DemoDB\\Category.txt");
+        java.util.List<Category> categories = readCategory("..\\DemoDB\\Category.txt");
         String[] columnNames = {"ID", "Title"};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 
@@ -152,7 +154,7 @@ public class Dashboard extends JFrame {
     }
 
     private JTable createViolationTable() {
-        java.util.List<Violation> violations = readViolation("src\\backend\\DemoDB\\Violation.txt");
+        java.util.List<Violation> violations = readViolation("..\\DemoDB\\Violation.txt");
         String[] columnNames = {"Mã Phiếu Mượn", "Lí Do", "Số Ngày Vi Phạm", "Số Tiền Phạt"};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 

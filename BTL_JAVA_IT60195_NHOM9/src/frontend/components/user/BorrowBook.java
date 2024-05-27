@@ -27,8 +27,12 @@ public class BorrowBook extends JFrame {
     public BorrowBook(JFrame parentFrame) {
         this.parentFrame = parentFrame;
         setTitle("Xem lịch sử mượn sách");
+        setSize(900, 600);
         setExtendedState(JFrame.MAXIMIZED_BOTH); // Make the frame fullscreen
         setLayout(new BorderLayout());
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
 
         // Create the table models and tables
         String[] borrowedColumnNames = {"STT", "Tên sách", "Ngày mượn", "Ngày trả dự kiến"};
@@ -88,9 +92,7 @@ public class BorrowBook extends JFrame {
         add(bottomPanel, BorderLayout.SOUTH);
 
         // Căn giữa cửa sổ và hiển thị
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setVisible(true);
+
 
         // Tải dữ liệu cho cả hai bảng
         loadBorrowedBooks();
@@ -99,28 +101,26 @@ public class BorrowBook extends JFrame {
 
     public void loadBorrowedBooks() {
         String userId = SessionManager.getCurrentUser().getMaTaiKhoan();
-        java.util.List<BorrowSlip> borrowedBooks = getBorrowedBooks(userId);
+        List<BorrowSlip> borrowedBooks = getBorrowedBooks(userId);
         updateBorrowedTable(borrowedBooks);
     }
 
-    public static java.util.List<BorrowSlip> getBorrowedBooks(String userId) {
-        List<backend.models.BorrowSlip> borrowSlips = new ArrayList<>();
-        try (BufferedReader brSlip = new BufferedReader(new FileReader(ReadData.f_path("src\\backend\\DemoDB\\borrow-slip.txt")))) {
+    public static List<BorrowSlip> getBorrowedBooks(String userId) {
+        List<BorrowSlip> borrowSlips = new ArrayList<>();
+        try (BufferedReader brSlip = new BufferedReader(new FileReader(ReadData.f_path("..\\DemoDB\\borrow-slip.txt")))) {
             String line;
             while ((line = brSlip.readLine()) != null) {
                 line = line.substring(1, line.length() - 1);
                 String[] parts = line.split("\\|");
-                if (parts.length >= 6 && parts[3].trim().equals(userId) && "Active".equals(parts[4].trim())) {
+                if (parts.length >= 6 && parts[3].trim().equals(userId) && "Approved".equals(parts[5].trim())) {
                     String maPhieuMuon = parts[0].trim();
                     String ngayMuon = parts[1].trim();
                     String maNguoiDung = parts[3].trim();
-                    String maSach = parts[5].trim();
+                    String maSach = parts[4].trim();
+                    String trangThai = parts[5].trim();
 
-                    // Assuming you have a method to get the Book object by its name
-                    Book book = getBookByCode(maSach);
-                    if (book != null) {
-                        borrowSlips.add(new BorrowSlip(maPhieuMuon, LocalDate.parse(ngayMuon), maNguoiDung, book, true));
-                    }
+                    borrowSlips.add(new BorrowSlip(maPhieuMuon, LocalDate.parse(ngayMuon), maNguoiDung, maSach, trangThai));
+
                 }
             }
         } catch (IOException e) {
@@ -133,7 +133,8 @@ public class BorrowBook extends JFrame {
         borrowedTableModel.setRowCount(0);
         for (int i = 0; i < borrowedBooks.size(); i++) {
             BorrowSlip borrowSlip = borrowedBooks.get(i);
-            borrowedTableModel.addRow(new Object[]{i + 1, borrowSlip.getSachMuon().getTenSach(), borrowSlip.getNgayMuon(), borrowSlip.getNgayTra()});
+            Book book = getBookByCode(borrowSlip.getMaSach());
+            borrowedTableModel.addRow(new Object[]{i + 1, book.getTenSach(), borrowSlip.getNgayMuon(), borrowSlip.getNgayTra()});
         }
     }
 
@@ -145,17 +146,17 @@ public class BorrowBook extends JFrame {
     private List<WaitingBook> getWaitingBooks() {
         Account a = SessionManager.getCurrentUser();
         List<WaitingBook> waitingBooks = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(ReadData.f_path("src\\backend\\DemoDB\\borrow-slip.txt")))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(ReadData.f_path("..\\DemoDB\\borrow-slip.txt")))) {
             String line;
             while ((line = br.readLine()) != null) {
                 if (!line.isEmpty()) {
                     line = line.substring(1, line.length() - 1);
                     String[] parts = line.split("\\|");
-                    if (parts.length >= 6 && "Inactive".equals(parts[4].trim()) && a.getMaTaiKhoan().equals(parts[3].trim())) {
+                    if (parts.length >= 6 && "Pending".equals(parts[5].trim()) && a.getMaTaiKhoan().equals(parts[3].trim())) {
 //                    String maSach = parts[0].trim();
                         String ngayMuon = parts[1].trim();
                         String ngayTra = parts[2].trim();
-                        String tenSach = parts[5].trim();
+                        String tenSach = getBookByCode(parts[4].trim()).getTenSach();
                         waitingBooks.add(new WaitingBook(tenSach, ngayMuon, ngayTra));
                     }
                 }
@@ -175,7 +176,7 @@ public class BorrowBook extends JFrame {
     }
 
     private static Book getBookByCode(String bookCode) {
-        try (BufferedReader br = new BufferedReader(new FileReader(ReadData.f_path("src\\backend\\DemoDB\\Book.txt")))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(ReadData.f_path("..\\DemoDB\\Book.txt")))) {
             String line;
             while ((line = br.readLine()) != null) {
                 line = line.substring(1, line.length() - 1);

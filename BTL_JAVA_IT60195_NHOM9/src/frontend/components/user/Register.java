@@ -18,7 +18,7 @@ public class Register {
         // Tạo một JFrame cho layout đăng ký
         final JFrame registerFrame = new JFrame("Đăng ký");
         registerFrame.setSize(400, 450);
-        registerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        registerFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         registerFrame.setLayout(null);
 
         // Tạo các thành phần UI cho layout đăng ký
