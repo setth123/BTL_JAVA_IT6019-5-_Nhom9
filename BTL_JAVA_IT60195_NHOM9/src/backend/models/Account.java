@@ -1,7 +1,6 @@
 package backend.models;
 
 public class Account {
-    private static int nextId = 1;
     private  String maTaiKhoan;
     private String tenNguoiDung;
     private String diaChi;

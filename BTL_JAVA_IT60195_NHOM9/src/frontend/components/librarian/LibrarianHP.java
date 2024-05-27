@@ -169,7 +169,7 @@ public class LibrarianHP extends JFrame {
 		useropt.setForeground(Color.WHITE);
 		useropt.setFont(new Font("Tahoma", Font.BOLD, 14));
 		useropt.setBackground(Color.LIGHT_GRAY);
-		useropt.setBounds(10, 241, 103, 27);
+		useropt.setBounds(10, 241, 126, 27);
 		ImageIcon user=ImageProcess.scaled("Assets/1077063.png", 27, 27);
 		useropt.setIcon(user);
 		panel_1.add(useropt);

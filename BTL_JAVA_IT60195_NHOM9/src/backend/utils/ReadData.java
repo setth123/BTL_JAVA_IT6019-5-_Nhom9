@@ -25,7 +25,7 @@ public class ReadData {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
             while ((line = br.readLine()) != null) {
-                line = line.substring(1, line.length() - 1);
+               // line = line.substring(1, line.length() - 1);
                 String[] data = line.split("\\|");
                 boolean isActive;
                 if(data[6].equals("true"))isActive=true;

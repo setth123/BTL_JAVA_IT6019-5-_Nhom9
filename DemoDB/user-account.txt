@@ -1,6 +1,6 @@
-|DG1|tttttt|t|0912222222|t|T2101|false
-|DG2|KT1|Lol|0123456789|Hihihi|Hihi1|false
-|DG3|tt|tt|9129128392|tt|P2012|false
-|DG4|Hihihihihihi|Hihihihihihi|012222222|hihi|Hihi1|false
-|DG5|Hoho|Hoho|0129009321|Hoho|Hoho1|false
-|DG6|Haha|Haha|1212121212|haha|Haha1|false
+DG1|tttttt|t|0912222222|t|T2101|true
+DG2|KT1|Lol|0123456789|Hihihi|Hihi1|false
+DG3|tt|tt|9129128392|tt|P2012|false
+DG4|Hihihihihihi|Hihihihihihi|012222222|hihi|Hihi1|false
+DG5|Hoho|Hoho|0129009321|Hoho|Hoho1|false
+DG6|Haha|Haha|1212121212|haha|Haha1|true
