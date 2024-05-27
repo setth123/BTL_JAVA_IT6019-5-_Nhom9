@@ -135,7 +135,7 @@ public class ViolationForm extends JFrame {
 				dispose();
 			}
 		});
-		list.setBounds(155, 23, 216, 23);
+		list.setBounds(462, 23, 216, 23);
 		getContentPane().add(list);
 		
 		stpInp = new JTextField();
