@@ -125,11 +125,12 @@ public class LibrarianController {
 		public static boolean approveBorrowSlip(String maPhieuMuon,String status){
 			borrowSlips=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
 			for(BorrowSlip bs: borrowSlips) {
-				System.out.println(bs.getMaPhieuMuon());
 				if(bs.getMaPhieuMuon().equals(maPhieuMuon)) {
 					bs.setTrangThai(status);
-					Book b=Book.getBookByTitle(bs.getMaSach());
-					b.setBorrow(true);
+					if(bs.getTrangThai().equals("Approved")) {
+						Book b=Book.getBookByTitle(bs.getMaSach());
+						b.setBorrow(true);
+					}
 					break;
 				}
 			}
