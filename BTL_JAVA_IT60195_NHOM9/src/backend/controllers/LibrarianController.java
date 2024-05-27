@@ -102,7 +102,8 @@
 
 package backend.controllers;
 import backend.models.Account;
-import backend.models.Book; 
+import backend.models.Book;
+import backend.models.BorrowSlip;
 import backend.utils.ReadData;
 import backend.utils.WriteData;
 import backend.models.Librarian;
@@ -116,9 +117,10 @@ public class LibrarianController {
 	    public static List<Librarian> librarians;
 	    public static List<Account> accounts;
 	    public static List<Violation> violations;
+	    public static List<BorrowSlip> borrowSlips;
 	    
 		public static Librarian login(String l_accountName,String l_password) {
-		librarians=ReadData.readLibrarian("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Librarian.txt");
+		librarians=ReadData.readLibrarian("/DemoDB/Librarian.txt");
 		for(Librarian l : librarians) {
 			if(l_accountName.equals(l.getAccountName()) && l_password.equals(l.getPassword())) {
 				return l;
@@ -128,19 +130,19 @@ public class LibrarianController {
 	    }
 		
 		public static boolean changePassword(Librarian l,String n_password) {
-			librarians=ReadData.readLibrarian("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Librarian.txt");
+			librarians=ReadData.readLibrarian("/DemoDB/Librarian.txt");
 			for(Librarian ls : librarians) {
 				if(l.getAccountName().equals(ls.getAccountName())) {
 					ls.setPassword(n_password);
 				}
 			}
-			WriteData.writeLibrarian(librarians,"/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Librarian.txt");
+			WriteData.writeLibrarian(librarians,"/DemoDB/Librarian.txt");
 			return true;
 		}
 		
 	    public static boolean addBook(String maSach, String tenSach,String nxb, int nam,int thang,int ngay, String theLoai, int soLuong, double gia) {
 	     LocalDate nph = LocalDate.of(nam,thang,ngay);
-	     books=ReadData.readBook("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Book.txt");
+	     books=ReadData.readBook("/DemoDB/Book.txt");
 		 boolean bookFound = false;
 	        for (Book book : books) {
 	            if (book.getMaSach().equals(maSach)) {
@@ -152,12 +154,12 @@ public class LibrarianController {
 	        if (!bookFound) {
 				books.add(new Book(maSach, tenSach, nxb, nph, theLoai, soLuong, gia,false));
 	        }
-	    WriteData.writeBook(books,"/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Book.txt");
+	    WriteData.writeBook(books,"/DemoDB/Book.txt");
 	    return true;
 	    }
 	    
 		public static boolean delBook(String maSach) {
-			 books=ReadData.readBook("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Book.txt");
+			 books=ReadData.readBook("/DemoDB/Book.txt");
 			 boolean bookFound = false;
 			 Iterator<Book> iterator = books.iterator();
 			    while (iterator.hasNext()) {
@@ -168,14 +170,14 @@ public class LibrarianController {
 			        }
 			    }
 			 if(bookFound) {
-				 WriteData.writeBook(books,"/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Book.txt");
+				 WriteData.writeBook(books,"/DemoDB/Book.txt");
 			 }
 		     return false;
 		}
 		
 		public static boolean editBook(String maSach,String n_masach,String n_tenSach, String n_NXB, int year,int month,int day, String n_theLoai,int n_sl, double n_gia) {
 			LocalDate nph = LocalDate.of(year,month,day);
-			books=ReadData.readBook("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Book.txt");
+			books=ReadData.readBook("/DemoDB/Book.txt");
 			boolean bookFound = false;
 			for (Book book : books) {
 		        if (book.getMaSach().equals(maSach)) {
@@ -191,26 +193,26 @@ public class LibrarianController {
 		        }
 			}
 		    if (bookFound) {
-		    	WriteData.writeBook(books, "/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Book.txt");
+		    	WriteData.writeBook(books, "/DemoDB/Book.txt");
 		    	return true;
 		    }
 			return false;
 	}
 		
 		public static boolean changeAccStatus(String maTaiKhoan) {
-			accounts=ReadData.readAccount("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/user-account.txt");
+			accounts=ReadData.readAccount("/DemoDB/user-account.txt");
 			for(Account a : accounts) {
 				if(a.getMaTaiKhoan().equals(maTaiKhoan)) {
 					if(a.getIsActive())a.setIsActive(false);
 					else a.setIsActive(true);
 				}
 			}
-			WriteData.writeAccount(accounts,"/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/user-account.txt");
+			WriteData.writeAccount(accounts,"/DemoDB/user-account.txt");
 			return true;
 		}
 		
 		public static boolean addViolation(String maPhieuMuon,String maTaiKhoan,String lydo,int soNgayViPham,String soTienPhat) {
-		     violations=ReadData.readViolation("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Violation.txt");
+		     violations=ReadData.readViolation("/DemoDB/Violation.txt");
 		     double stp=Double.parseDouble(soTienPhat);
 		        for (Book book : books) {
 		            if (book.getMaSach().equals(maPhieuMuon)) {
@@ -218,8 +220,21 @@ public class LibrarianController {
 		            }
 		        }
 			violations.add(new Violation(maPhieuMuon, maTaiKhoan, lydo, soNgayViPham, stp));
-		    WriteData.writeViolation(violations,"/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Violation.txt");
+		    WriteData.writeViolation(violations,"/DemoDB/Violation.txt");
 		    return true;
 		    }
-		
+		public static boolean approveBorrowSlip(String maPhieuMuon,String status){
+			borrowSlips=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
+			for(BorrowSlip bs: borrowSlips) {
+				System.out.println(bs.getMaPhieuMuon());
+				if(bs.getMaPhieuMuon().equals(maPhieuMuon)) {
+					bs.setTrangThai(status);
+					Book b=Book.getBookByTitle(bs.getMaSach());
+					b.setBorrow(true);
+					break;
+				}
+			}
+			WriteData.writeBorrowSlip(borrowSlips, "/DemoDB/borrow-slip.txt");
+			return true;
+	}
 }

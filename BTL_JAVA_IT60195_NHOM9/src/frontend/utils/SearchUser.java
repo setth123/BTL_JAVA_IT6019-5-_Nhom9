@@ -7,7 +7,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import backend.controllers.LibrarianController;
-import backend.utils.SearchBE;
+import backend.utils.FetchBE;
 
 import javax.swing.JButton;
 import javax.swing.JTable;
@@ -167,7 +167,7 @@ public class SearchUser extends JFrame{
 			getContentPane().add(title);
 			model.addColumn("Số lần vi phạm");
 			for (int i = 0; i < model.getRowCount(); i++) {
-	            model.setValueAt(SearchBE.countV(model.getValueAt(i, 0).toString()), i, model.getColumnCount() - 1);
+	            model.setValueAt(FetchBE.countV(model.getValueAt(i, 0).toString()), i, model.getColumnCount() - 1);
 	        }
 			table.addMouseListener(new MouseAdapter() {
 				@Override 

@@ -1,5 +1,7 @@
 package backend.models;
 
+import backend.controllers.Statics;
+
 public class Violation {
     private static int vpNo = 1;
     private String maViPham;
@@ -13,8 +15,8 @@ public class Violation {
     }
 
     public Violation(String maPhieuMuon, String maTaiKhoan, String lyDo, int soNgayViPham, double soTienPhat) {
+    	vpNo=Statics.violations()+1;
         this.maViPham = "VP-" + vpNo;
-        vpNo++;
         this.maPhieuMuon = maPhieuMuon;
         this.maTaiKhoan = maTaiKhoan;
         this.lyDo = lyDo;
@@ -69,11 +71,8 @@ public class Violation {
         return lyDo;
     }
 
-    public String getlyDo() {
-        return lyDo;
-    }
 
-    public void setlyDo(String lyDo) {
+    public void setLyDo(String lyDo) {
         this.lyDo = lyDo;
     }
 
@@ -96,6 +95,6 @@ public class Violation {
     @Override
     public String toString() {
         return String.format("| %-5s | %-10s | %-10s | %-10s | %-50s | %-5s | %-10s",
-                vpNo, maViPham, maPhieuMuon, maTaiKhoan, lyDo, soNgayViPham, soTienPhat);
+                 maViPham, maPhieuMuon, maTaiKhoan, lyDo, soNgayViPham, soTienPhat);
     }
 }

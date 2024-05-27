@@ -1,15 +1,26 @@
 package backend.models;
 
 public class Librarian {
+	private String maTT;
 	private String accountName;
 	private String password;
 	public Librarian() {
 		
 	}
-	public Librarian(String accountName, String password) {
+	public Librarian(String maTT,String accountName, String password) {
 		super();
+		this.maTT=maTT;
 		this.accountName = accountName;
 		this.password = password;
+	}
+	
+	
+	
+	public String getMaTT() {
+		return maTT;
+	}
+	public void setMaTT(String maTT) {
+		this.maTT = maTT;
 	}
 	public String getAccountName() {
 		return accountName;
@@ -27,7 +38,7 @@ public class Librarian {
 	
 	@Override
     public String toString() {
-        return (accountName+"|"+password);
+        return (maTT+"|"+accountName+"|"+password);
     }
 	
 }

@@ -9,13 +9,12 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JButton;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import backend.controllers.LibrarianController;
 import backend.models.BorrowSlip;
-import backend.utils.SearchBE;
+import backend.utils.FetchBE;
 
 import javax.swing.JSpinner;
 import java.awt.event.MouseAdapter;
@@ -27,6 +26,7 @@ public class ViolationForm extends JFrame {
 	private JTextField pminp;
 	private JTextField tkinp;
 	private JTextField stpInp;
+	private JTextField lydoInp;
 
 	public ViolationForm(BorrowSlip br, JFrame parent) {
 		initialize(br,parent);
@@ -36,7 +36,7 @@ public class ViolationForm extends JFrame {
 	 * Create the frame.
 	 */
 	private void initialize(BorrowSlip br,JFrame parent) {
-		setBounds(300,300,800,500);
+		setBounds(300,100,800,500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setTitle("Tạo phiếu vi phạm");
@@ -82,10 +82,6 @@ public class ViolationForm extends JFrame {
 		lydo.setBounds(25, 334, 89, 14);
 		getContentPane().add(lydo);
 		
-		JTextArea lyDoInp = new JTextArea();
-		lyDoInp.setBounds(132, 329, 481, 23);
-		getContentPane().add(lyDoInp);
-		
 		JLabel songay = new JLabel("Số ngày vi phạm");
 		songay.setBounds(371, 189, 100, 14);
 		getContentPane().add(songay);
@@ -102,11 +98,11 @@ public class ViolationForm extends JFrame {
 		Submit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(SearchBE.findV(pminp.getText(), tkinp.getText())==false) {
+				if(FetchBE.findV(pminp.getText(), tkinp.getText())==false) {
 					JOptionPane.showMessageDialog(ViolationForm.this,"Mã phiếu mượn hoặc mã tài khoản không tồn tại");
 					return;
 				}
-				if(LibrarianController.addViolation(pminp.getText(),tkinp.getText(),lyDoInp.getText(),(Integer)songayInp.getValue(),stpInp.getText())) {
+				if(LibrarianController.addViolation(pminp.getText(),tkinp.getText(),lydoInp.getText(),(Integer)songayInp.getValue(),stpInp.getText())) {
 					JOptionPane.showMessageDialog(ViolationForm.this,"Tạo phiếu vi phạm thành công");
 				}
 				else JOptionPane.showMessageDialog(ViolationForm.this,"Không thể kết nối");
@@ -121,7 +117,7 @@ public class ViolationForm extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				pminp.setText(br.getMaPhieuMuon());
 				tkinp.setText(br.getMaTaiKhoan());
-				lyDoInp.setText("");
+				lydoInp.setText("");
 				songayInp.setValue(1);
 				stpInp.setText("");
 			}
@@ -130,12 +126,26 @@ public class ViolationForm extends JFrame {
 		getContentPane().add(btnHu);
 		
 		JButton list = new JButton("Danh sách phiếu vi phạm");
-		list.setBounds(155, 23, 173, 23);
+		list.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ViolationsList vs=new ViolationsList(ViolationForm.this);
+				vs.setVisible(true);
+				setVisible(false);
+				dispose();
+			}
+		});
+		list.setBounds(155, 23, 216, 23);
 		getContentPane().add(list);
 		
 		stpInp = new JTextField();
 		stpInp.setBounds(462, 251, 86, 20);
 		getContentPane().add(stpInp);
 		stpInp.setColumns(10);
+		
+		lydoInp = new JTextField();
+		lydoInp.setBounds(134, 331, 436, 20);
+		getContentPane().add(lydoInp);
+		lydoInp.setColumns(10);
 	}
 }

@@ -9,7 +9,6 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -51,6 +50,7 @@ public class MainF {
 	private void initialize() {
 
 		frame = new JFrame();
+		frame.setTitle("Hệ thống quản lý sách");
 		frame.setSize( 560, 360);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setBounds(100, 100, 400, 362);
@@ -59,29 +59,29 @@ public class MainF {
 		frame.getContentPane().setLayout(null);
 		frame.setLocationRelativeTo(null); // căn ra giữa màn hình
 		
-		JLabel lblNewLabel = new JLabel("Hệ thống quản lý sách ");
-		lblNewLabel.setForeground(Color.gray);
-		lblNewLabel.setForeground(new Color(128, 128, 128));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 25));
-		lblNewLabel.setBounds(43, 11, 325, 97);
-		frame.getContentPane().add(lblNewLabel);
+		JLabel title = new JLabel("Hệ thống quản lý sách ");
+		title.setForeground(Color.gray);
+		title.setForeground(new Color(128, 128, 128));
+		title.setFont(new Font("Tahoma", Font.BOLD, 25));
+		title.setBounds(43, 11, 325, 97);
+		frame.getContentPane().add(title);
 		
-		JLabel lblNewLabel_1 = new JLabel("Đăng nhập để tiếp tục");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel_1.setBounds(115, 94, 176, 14);
-		frame.getContentPane().add(lblNewLabel_1);
+		JLabel label1 = new JLabel("Đăng nhập để tiếp tục");
+		label1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		label1.setBounds(115, 94, 176, 14);
+		frame.getContentPane().add(label1);
 		
-		JButton btnNewButton = new JButton("Đăng ký");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton signup = new JButton("Đăng ký");
+		signup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Register.showRegisterLayout(frame);
 			}
 		});
-		btnNewButton.setBounds(113, 146, 166, 23);
-		frame.getContentPane().add(btnNewButton);
+		signup.setBounds(113, 146, 166, 23);
+		frame.getContentPane().add(signup);
 
-		JButton btnNewButton_1 = new JButton("Đăng nhập");
-		btnNewButton_1.addActionListener((e) -> {
+		JButton signin = new JButton("Đăng nhập");
+		signin.addActionListener((e) -> {
 			// Create the second window (UserLogin)
 			UserLogin userLogin = new UserLogin(frame);
 			// Set the second window visible
@@ -89,20 +89,20 @@ public class MainF {
 			// Hide the main window
 			frame.setVisible(false);
 		});
-		btnNewButton_1.setBounds(113, 198, 166, 23);
-		frame.getContentPane().add(btnNewButton_1);
+		signin.setBounds(113, 198, 166, 23);
+		frame.getContentPane().add(signin);
 		
-		JButton btnNewButton_2 = new JButton("Đăng nhập (Thủ thư)");
-		btnNewButton_2.setBounds(113, 242, 163, 23);
-		btnNewButton_2.addActionListener(new ActionListener() {
+		JButton signinAd = new JButton("Đăng nhập (Thủ thư)");
+		signinAd.setBounds(113, 242, 163, 23);
+		signinAd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				AdminLogin admin=new AdminLogin(frame);
-//				admin.setVisible(true);
+				AdminLogin admin=new AdminLogin(frame);
+				admin.setVisible(true);
 				frame.setVisible(false);
 				frame.dispose();
 			}
 		});
-		frame.getContentPane().add(btnNewButton_2);
+		frame.getContentPane().add(signinAd);
 	}
 }
 

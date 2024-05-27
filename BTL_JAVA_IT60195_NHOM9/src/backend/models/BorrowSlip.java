@@ -7,15 +7,16 @@ public class BorrowSlip {
     private LocalDate ngayMuon;
     private LocalDate ngayTra;
     private String maTaiKhoan;
-    private Book sachMuon;
-    private boolean trangThai;
+    private String maSach;
+    //4 trạng thái bao gồm Pending(Chờ duyệt), Approved (Được duyệt), Dissaproved(Không được duyệt), Lost(Độc giả làm mất sách).
+    private String trangThai;
 
-    public BorrowSlip(String maPhieuMuon, LocalDate ngayMuon, String maTaiKhoan, Book sachMuon, boolean trangThai) {
+    public BorrowSlip(String maPhieuMuon, LocalDate ngayMuon, String maTaiKhoan, String maSach, String trangThai) {
         this.maPhieuMuon = maPhieuMuon;
         this.ngayMuon = ngayMuon;
         this.ngayTra = ngayMuon.plusDays(14);
         this.maTaiKhoan = maTaiKhoan;
-        this.sachMuon = sachMuon;
+        this.maSach = maSach;
         this.trangThai = trangThai;
     }
 
@@ -51,25 +52,25 @@ public class BorrowSlip {
         this.maTaiKhoan = maTaiKhoan;
     }
 
-    public boolean isTrangThai() {
+    public String getTrangThai() {
         return trangThai;
     }
 
-    public void setTrangThai(boolean trangThai) {
+    public void setTrangThai(String trangThai) {
         this.trangThai = trangThai;
     }
 
-    public Book getSachMuon() {
-        return sachMuon;
+    public String getMaSach() {
+        return maSach;
     }
 
-    public void setSachMuon(Book sachMuon) {
-        this.sachMuon = sachMuon;
+    public void setMaSach(String maSach) {
+        this.maSach = maSach;
     }
 
     @Override
     public String toString() {
         return String.format("| %-25s | %-25s | %-25s | %-25s | %-25s | %-25s |",
-                maPhieuMuon, ngayMuon, ngayTra, maTaiKhoan, trangThai ? "Active" : "Inactive", sachMuon.getTenSach());
+                maPhieuMuon, ngayMuon, ngayTra, maTaiKhoan, maSach,trangThai);
     }
 }

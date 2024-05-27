@@ -6,14 +6,13 @@ import javax.swing.table.DefaultTableModel;
 
 import backend.models.Account;
 import backend.models.Book;
-import backend.utils.SearchBE;
+import backend.utils.FetchBE;
 
 public class FetchData {
 	//fetch user
 	public static void fetchUser(String keyword,DefaultTableModel m) {
 		m.setRowCount(0);
-		System.out.println(keyword);
-		List<Account> result=SearchBE.findA(keyword);
+		List<Account> result=FetchBE.findA(keyword);
 		for (Account a : result) {
 			String isActive;
 			if(a.getIsActive())isActive="Active";
@@ -24,7 +23,7 @@ public class FetchData {
 	}
 	public static void fetchUser(DefaultTableModel m) {
 		m.setRowCount(0);
-		List<Account> result=SearchBE.findA("");
+		List<Account> result=FetchBE.findA("");
 		int end = Math.min(10, result.size());
 		for (int i = result.size()-1; i >=result.size()-end; i--) {
 		    Account a = result.get(i);
@@ -37,7 +36,7 @@ public class FetchData {
 	public static void fetchBook(String keyword,DefaultTableModel m) {
 		System.out.println(keyword);
 		m.setRowCount(0);
-		List<Book> result=SearchBE.findB(keyword);
+		List<Book> result=FetchBE.findB(keyword);
 		
 		for (Book b : result) {
 			Object[] row= {b.getMaSach(),b.getTenSach(),b.getNXB(),b.getNph(),b.getTheLoai(),b.getSl(),b.getGia()};
@@ -46,7 +45,7 @@ public class FetchData {
 	}
 	public static void fetchBook(DefaultTableModel m) {
 		m.setRowCount(0);
-		List<Book> result = SearchBE.findB("");
+		List<Book> result = FetchBE.findB("");
 		int end = Math.min(10, result.size());
 		for (int i = result.size()-1; i >=result.size()-end; i--) {
 		    Book b = result.get(i);
@@ -54,5 +53,4 @@ public class FetchData {
 		    m.addRow(row);
 		}
 	}
-
 }

@@ -235,7 +235,7 @@ import javax.swing.JFrame;
 
 import backend.controllers.LibrarianController;
 import backend.models.Category;
-import backend.utils.ReadData;
+import backend.utils.FetchBE;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -269,9 +269,7 @@ public class AddBook extends JFrame {
 		Initialize(parent);
 	}
 	
-	public static List<Category> fetchCate() {
-		return ReadData.readCategory("/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Category.txt");
-	}
+	
 	
 	private static int daysInMonth(int year, int month) {
 		int day;
@@ -396,7 +394,7 @@ public class AddBook extends JFrame {
 		getContentPane().add(lblNewLabel_1_1_1_2);
 		
 		JComboBox<String> comboBox = new JComboBox<String>();
-		List<Category> cs=fetchCate();
+		List<Category> cs=FetchBE.fetchCate();
 		for(Category c: cs) {
 			comboBox.addItem(c.getTenDanhMuc());
 		}

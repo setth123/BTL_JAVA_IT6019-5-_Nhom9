@@ -30,7 +30,6 @@ public class Category {
 
     @Override
     public String toString() {
-        return String.format("| %-10s | %-30s |",
-                maDanhMuc, tenDanhMuc);
+        return (maDanhMuc+"|"+tenDanhMuc);
     }
 }
