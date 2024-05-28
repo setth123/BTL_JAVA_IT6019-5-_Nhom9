@@ -9,8 +9,6 @@ import backend.models.Librarian;
 import frontend.utils.Animation;
 import frontend.utils.FetchData;
 import frontend.utils.ImageProcess;
-import frontend.utils.SearchBook;
-import frontend.utils.SearchUser;
 
 import java.awt.Color;
 import javax.swing.JLabel;

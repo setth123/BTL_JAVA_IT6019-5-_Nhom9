@@ -26,10 +26,10 @@ import backend.utils.FetchBE;
 
 
 public class EditBook extends JFrame{
-	private JTextField textField;
+	private JTextField maSachInp;
 	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField nxbInp;
+	private JTextField priceInp;
 
 	/**
 	 * 
@@ -56,179 +56,184 @@ public class EditBook extends JFrame{
 		setBounds(100, 100, 800, 500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
+		setTitle("Sửa thông tin sách");
 		
-		JLabel lblNewLabel = new JLabel("Sửa thông tin sách\r\n"+" "+b.getMaSach());
-		lblNewLabel.setBounds(20, 56, 401, 53);
-		lblNewLabel.setForeground(new Color(128, 128, 128));
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
-		getContentPane().add(lblNewLabel);
+		JLabel title = new JLabel("Sửa thông tin sách\r\n"+" "+b.getMaSach());
+		title.setBounds(20, 56, 401, 53);
+		title.setForeground(new Color(128, 128, 128));
+		title.setFont(new Font("Tahoma", Font.BOLD, 24));
+		getContentPane().add(title);
 		
-		JLabel lblNewLabel_1 = new JLabel("Mã sách");
-		lblNewLabel_1.setBounds(44, 139, 80, 14);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		getContentPane().add(lblNewLabel_1);
+		JLabel maSach = new JLabel("Mã sách");
+		maSach.setBounds(44, 139, 80, 14);
+		maSach.setFont(new Font("Tahoma", Font.BOLD, 14));
+		getContentPane().add(maSach);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("Tên sách");
-		lblNewLabel_1_1.setBounds(44, 199, 80, 14);
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		getContentPane().add(lblNewLabel_1_1);
+		JLabel tenSach = new JLabel("Tên sách");
+		tenSach.setBounds(44, 199, 80, 14);
+		tenSach.setFont(new Font("Tahoma", Font.BOLD, 14));
+		getContentPane().add(tenSach);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("Nhà xuất bản");
-		lblNewLabel_1_2.setBounds(44, 272, 111, 14);
-		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.BOLD, 14));
-		getContentPane().add(lblNewLabel_1_2);
+		JLabel nxb = new JLabel("Nhà xuất bản");
+		nxb.setBounds(44, 272, 111, 14);
+		nxb.setFont(new Font("Tahoma", Font.BOLD, 14));
+		getContentPane().add(nxb);
 		
-		JLabel lblNewLabel_1_3 = new JLabel("Ngày phát hành");
-		lblNewLabel_1_3.setBounds(44, 336, 111, 14);
-		lblNewLabel_1_3.setFont(new Font("Tahoma", Font.BOLD, 14));
-		getContentPane().add(lblNewLabel_1_3);
+		JLabel nph = new JLabel("Ngày phát hành");
+		nph.setBounds(44, 336, 111, 14);
+		nph.setFont(new Font("Tahoma", Font.BOLD, 14));
+		getContentPane().add(nph);
 		
-		textField = new JTextField();
-		textField.setBounds(165, 138, 160, 20);
-		getContentPane().add(textField);
-		textField.setColumns(10);
+		maSachInp = new JTextField();
+		maSachInp.setBounds(165, 138, 160, 20);
+		getContentPane().add(maSachInp);
+		maSachInp.setColumns(10);
 		
 		textField_1 = new JTextField();
 		textField_1.setBounds(165, 198, 160, 20);
 		textField_1.setColumns(10);
 		getContentPane().add(textField_1);
 		
-		textField_2 = new JTextField();
-		textField_2.setBounds(165, 271, 160, 20);
-		textField_2.setColumns(10);
-		getContentPane().add(textField_2);
+		nxbInp = new JTextField();
+		nxbInp.setBounds(165, 271, 160, 20);
+		nxbInp.setColumns(10);
+		getContentPane().add(nxbInp);
 		
 		
 		int day=b.getNph().getDayOfMonth();
 		int month=b.getNph().getMonthValue();
 		int year=b.getNph().getYear();
-		JLabel lblNewLabel_2_1_1 = new JLabel("Năm");
-		lblNewLabel_2_1_1.setBounds(328, 338, 46, 14);
-		getContentPane().add(lblNewLabel_2_1_1);
+		JLabel nam = new JLabel("Năm");
+		nam.setBounds(328, 338, 46, 14);
+		getContentPane().add(nam);
 		
 		SpinnerNumberModel model11=new SpinnerNumberModel(year,1900,2024,1);
-		JSpinner spinner_1_1 = new JSpinner(model11);
-		spinner_1_1.setBounds(357, 335, 51, 20);
-		getContentPane().add(spinner_1_1);
+		JSpinner namInp = new JSpinner(model11);
+		namInp.setBounds(357, 335, 51, 20);
+		getContentPane().add(namInp);
 		
-		JLabel lblNewLabel_2_1 = new JLabel("Tháng");
-		lblNewLabel_2_1.setBounds(250, 338, 46, 14);
-		getContentPane().add(lblNewLabel_2_1);
+		JLabel thang = new JLabel("Tháng");
+		thang.setBounds(250, 338, 46, 14);
+		getContentPane().add(thang);
 		
 		SpinnerNumberModel model12=new SpinnerNumberModel(month,1,12,1);
-		JSpinner spinner_1 = new JSpinner(model12);
-		spinner_1.setBounds(286, 335, 39, 20);
-		getContentPane().add(spinner_1);
+		JSpinner thangInp = new JSpinner(model12);
+		thangInp.setBounds(286, 335, 39, 20);
+		getContentPane().add(thangInp);
 		
-		JLabel lblNewLabel_2 = new JLabel("Ngày");
-		lblNewLabel_2.setBounds(175, 338, 46, 14);
-		getContentPane().add(lblNewLabel_2);
+		JLabel ngay = new JLabel("Ngày");
+		ngay.setBounds(175, 338, 46, 14);
+		getContentPane().add(ngay);
 						
 		
 		SpinnerNumberModel model13=new SpinnerNumberModel(19,1,daysInMonth(year,month),1);
-		JSpinner spinner = new JSpinner(model13);
-		spinner.setBounds(208, 335, 39, 20);
-		getContentPane().add(spinner);
+		JSpinner ngayInp = new JSpinner(model13);
+		ngayInp.setBounds(208, 335, 39, 20);
+		getContentPane().add(ngayInp);
 		
-		spinner_1.addChangeListener(new ChangeListener() {
+		thangInp.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				int s_year = (int) spinner_1_1.getValue();
-				int s_month=(int)spinner_1.getValue();
+				int s_year = (int) namInp.getValue();
+				int s_month=(int)thangInp.getValue();
 				int maxday=daysInMonth(s_year,s_month);
 				SpinnerNumberModel n_model=new SpinnerNumberModel(19,1,maxday,1);
-				spinner.setModel(n_model);
+				ngayInp.setModel(n_model);
 			}
 		});
 		
-		JLabel lblNewLabel_1_1_1 = new JLabel("Thể loại");
-		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_1_1_1.setBounds(441, 139, 80, 19);
-		getContentPane().add(lblNewLabel_1_1_1);
+		JLabel cate = new JLabel("Thể loại");
+		cate.setFont(new Font("Tahoma", Font.BOLD, 14));
+		cate.setBounds(441, 139, 80, 19);
+		getContentPane().add(cate);
 		
-		JLabel lblNewLabel_1_1_1_1 = new JLabel("Giá");
-		lblNewLabel_1_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_1_1_1_1.setBounds(441, 274, 80, 14);
-		getContentPane().add(lblNewLabel_1_1_1_1);
+		JLabel price = new JLabel("Giá");
+		price.setFont(new Font("Tahoma", Font.BOLD, 14));
+		price.setBounds(441, 274, 80, 14);
+		getContentPane().add(price);
 		
-		JLabel lblNewLabel_1_1_1_2 = new JLabel("Số lượng");
-		lblNewLabel_1_1_1_2.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblNewLabel_1_1_1_2.setBounds(441, 201, 80, 17);
-		getContentPane().add(lblNewLabel_1_1_1_2);
+		JLabel sl = new JLabel("Số lượng");
+		sl.setFont(new Font("Tahoma", Font.BOLD, 14));
+		sl.setBounds(441, 201, 80, 17);
+		getContentPane().add(sl);
 		
-		JComboBox<String> comboBox = new JComboBox<String>();
+		JComboBox<String> categoriesInp = new JComboBox<String>();
 		List<Category> cs=FetchBE.fetchCate();
 		for(Category c: cs) {
-			comboBox.addItem(c.getTenDanhMuc());
+			categoriesInp.addItem(c.getTenDanhMuc());
 		}
-		comboBox.setBounds(521,137,136,20);
-		getContentPane().add(comboBox);
+		categoriesInp.setBounds(521,137,136,20);
+		getContentPane().add(categoriesInp);
 		
 		SpinnerNumberModel model2=new SpinnerNumberModel(1,1,100,1);
-		JSpinner spinner_2 = new JSpinner(model2);
-		spinner_2.setBounds(521, 198, 66, 20);
-		getContentPane().add(spinner_2);
+		JSpinner slInp = new JSpinner(model2);
+		slInp.setBounds(521, 198, 66, 20);
+		getContentPane().add(slInp);
 		
-		textField_3 = new JTextField();
-		textField_3.setBounds(521, 271, 136, 20);
-		getContentPane().add(textField_3);
-		textField_3.setColumns(10);
+		priceInp = new JTextField();
+		priceInp.setBounds(521, 271, 136, 20);
+		getContentPane().add(priceInp);
+		priceInp.setColumns(10);
 		
-		textField.setText(b.getMaSach());
+		maSachInp.setText(b.getMaSach());
 		String oldMaSach=b.getMaSach();
 		textField_1.setText(b.getTenSach());
-		textField_2.setText(b.getNXB());
-		textField_3.setText(String.valueOf(b.getGia()));
-		comboBox.setSelectedItem(b.getTheLoai());
-		spinner.setValue(day);
-		spinner_1.setValue(month);
-		spinner_1_1.setValue(year);
-		spinner_2.setValue(b.getSl());
+		nxbInp.setText(b.getNXB());
+		priceInp.setText(String.valueOf(b.getGia()));
+		categoriesInp.setSelectedItem(b.getTheLoai());
+		ngayInp.setValue(day);
+		thangInp.setValue(month);
+		namInp.setValue(year);
+		slInp.setValue(b.getSl());
 		
-		JButton btnNewButton = new JButton("Lưu");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton submit = new JButton("Lưu");
+		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(textField.getText().equals("")||textField_1.getText().equals("")||textField_2.getText().equals("")||textField_3.getText().equals("")) {
+				if(!priceInp.getText().matches("-?\\\\d+(\\\\.\\\\d+)?")) {
+					JOptionPane.showMessageDialog(EditBook.this,"Giá thành không hợp lệ");
+					return;
+				}
+				if(maSachInp.getText().equals("")||textField_1.getText().equals("")||nxbInp.getText().equals("")||priceInp.getText().equals("")) {
 					JOptionPane.showMessageDialog(EditBook.this,"Vui lòng nhập đầy đủ thông tin");
 				}
 				else {
-					if(LibrarianController.editBook(oldMaSach,textField.getText(),textField_1.getText(),textField_2.getText(),year,month,(Integer)spinner.getValue(),(String)comboBox.getSelectedItem(),(Integer)spinner_2.getValue(),Double.parseDouble(textField_3.getText()))) {
+					if(LibrarianController.editBook(oldMaSach,maSachInp.getText(),textField_1.getText(),nxbInp.getText(),year,month,(Integer)ngayInp.getValue(),(String)categoriesInp.getSelectedItem(),(Integer)slInp.getValue(),Double.parseDouble(priceInp.getText()))) {
 						JOptionPane.showMessageDialog(EditBook.this, "Sửa thông tin sách thành công");
 					}
 					else JOptionPane.showMessageDialog(EditBook.this, "Lỗi không xác định");
 				}
 			}
 		});
-		btnNewButton.setBounds(486, 386, 89, 23);
-		getContentPane().add(btnNewButton);
+		submit.setBounds(486, 386, 89, 23);
+		getContentPane().add(submit);
 		
-		JButton btnHu = new JButton("Huỷ");
-		btnHu.addActionListener(new ActionListener() {
+		JButton huy = new JButton("Huỷ");
+		huy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				textField.setText(b.getMaSach());
+				maSachInp.setText(b.getMaSach());
 				textField_1.setText(b.getTenSach());
-				textField_2.setText(b.getNXB());
-				textField_3.setText(String.valueOf(b.getGia()));
-				comboBox.setSelectedItem(b.getTheLoai());
-				spinner.setValue(day);
-				spinner_1.setValue(month);
-				spinner_1_1.setValue(year);
-				spinner_2.setValue(b.getSl());
+				nxbInp.setText(b.getNXB());
+				priceInp.setText(String.valueOf(b.getGia()));
+				categoriesInp.setSelectedItem(b.getTheLoai());
+				ngayInp.setValue(day);
+				thangInp.setValue(month);
+				namInp.setValue(year);
+				slInp.setValue(b.getSl());
 				
 			}
 		});
-		btnHu.setBounds(607, 386, 89, 23);
-		getContentPane().add(btnHu);
+		huy.setBounds(607, 386, 89, 23);
+		getContentPane().add(huy);
 		
-		JButton btnNewButton_1 = new JButton("Quay lại");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		JButton ql = new JButton("Quay lại");
+		ql.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				dispose();
 				parent.setVisible(true);
 			}
 		});
-		btnNewButton_1.setBounds(35, 11, 89, 23);
-		getContentPane().add(btnNewButton_1);
+		ql.setBounds(35, 11, 89, 23);
+		getContentPane().add(ql);
 	}
 
 }

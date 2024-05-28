@@ -1,4 +1,4 @@
-package frontend.utils;
+package frontend.components.librarian;
 
 
 import javax.swing.table.DefaultTableModel;
@@ -7,7 +7,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import backend.controllers.LibrarianController;
 import backend.models.Book;
-import frontend.components.librarian.EditBook;
+import frontend.utils.FetchData;
 
 import java.time.LocalDate;
 import javax.swing.JButton;

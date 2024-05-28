@@ -77,7 +77,7 @@ public class ChangePassword extends JFrame {
             // Update the password
             currentUser.setMatKhau(newPassword); // Assuming Account has a setPassword method
             SessionManager.login(currentUser); // Update the session
-            java.util.List<Account> accounts = ReadData.readAccount("..\\DemoDB\\user-account.txt");
+            java.util.List<Account> accounts = ReadData.readAccount("/DemoDB/user-account.txt");
             // Find and update the current user's information
             for (int i = 0; i < accounts.size(); i++) {
                 if (accounts.get(i).getMaTaiKhoan().equals(currentUser.getMaTaiKhoan())) {
@@ -86,7 +86,7 @@ public class ChangePassword extends JFrame {
                 }
             }
 
-            WriteData.writeAccount(accounts, "..\\DemoDB\\user-account.txt");
+            WriteData.writeAccount(accounts, "/DemoDB/user-account.txt");
 
             // Show success message
             JOptionPane.showMessageDialog(this, "Mật khẩu đã được cập nhật", "Thông báo", JOptionPane.INFORMATION_MESSAGE);

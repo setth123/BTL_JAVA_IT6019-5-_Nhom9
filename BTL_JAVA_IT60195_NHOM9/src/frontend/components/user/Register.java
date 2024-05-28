@@ -128,12 +128,12 @@ public class Register {
                 } else if (!isValidPassword(password)) {
                     lblMismatchMessage.setText("Mật khẩu không hợp lệ");
                 } else {
-                    int total = ReadData.readAccount("src\\backend\\DemoDB\\user-account.txt").size();
+                    int total = ReadData.readAccount("/DemoDB/user-account.txt").size();
                     lblMismatchMessage.setText("Đăng ký tài khoản thành công!");
                     Account a = new Account("DG" + (total + 1), name, address, phoneNumber, userName, password, true);
-                    java.util.List<Account> accounts = ReadData.readAccount("src\\backend\\DemoDB\\user-account.txt");
+                    java.util.List<Account> accounts = ReadData.readAccount("/DemoDB/user-account.txt");
                     accounts.add(a);
-                    WriteData.writeAccount(accounts, "src\\backend\\DemoDB\\user-account.txt");
+                    WriteData.writeAccount(accounts, "/DemoDB/user-account.txt");
                     Timer timer = new Timer(1000, new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {

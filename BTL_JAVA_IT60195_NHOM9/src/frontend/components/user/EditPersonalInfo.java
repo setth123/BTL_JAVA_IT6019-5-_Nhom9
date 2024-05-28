@@ -43,7 +43,7 @@ public class EditPersonalInfo extends JFrame {
             // Save other updated information as needed
             // Update the session user details
             SessionManager.login(currentUser);
-            java.util.List<Account> accounts = ReadData.readAccount("..\\DemoDB\\user-account.txt");
+            java.util.List<Account> accounts = ReadData.readAccount("/DemoDB/user-account.txt");
             for (int i = 0; i < accounts.size(); i++) {
                 if (currentUser.getMaTaiKhoan().equals(accounts.get(i).getMaTaiKhoan())) {
                     accounts.set(i, currentUser);
@@ -51,7 +51,7 @@ public class EditPersonalInfo extends JFrame {
                 }
             }
 
-            WriteData.writeAccount(accounts, "..\\DemoDB\\user-account.txt");
+            WriteData.writeAccount(accounts, "/DemoDB/user-account.txt");
             // Show success message
             JOptionPane.showMessageDialog(this, "Thông tin đã được cập nhật", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
 

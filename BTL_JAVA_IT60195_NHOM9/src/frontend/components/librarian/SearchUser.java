@@ -1,4 +1,4 @@
-package frontend.utils;
+package frontend.components.librarian;
 
 
 import javax.swing.table.DefaultTableModel;
@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 
 import backend.controllers.LibrarianController;
 import backend.utils.FetchBE;
+import frontend.utils.FetchData;
 
 import javax.swing.JButton;
 import javax.swing.JTable;

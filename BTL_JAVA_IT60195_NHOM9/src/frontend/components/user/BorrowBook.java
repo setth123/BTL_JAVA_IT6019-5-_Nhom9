@@ -107,7 +107,7 @@ public class BorrowBook extends JFrame {
 
     public static List<BorrowSlip> getBorrowedBooks(String userId) {
         List<BorrowSlip> borrowSlips = new ArrayList<>();
-        try (BufferedReader brSlip = new BufferedReader(new FileReader(ReadData.f_path("..\\DemoDB\\borrow-slip.txt")))) {
+        try (BufferedReader brSlip = new BufferedReader(new FileReader(ReadData.f_path("/DemoDB/borrow-slip.txt")))) {
             String line;
             while ((line = brSlip.readLine()) != null) {
                 line = line.substring(1, line.length() - 1);
@@ -146,7 +146,7 @@ public class BorrowBook extends JFrame {
     private List<WaitingBook> getWaitingBooks() {
         Account a = SessionManager.getCurrentUser();
         List<WaitingBook> waitingBooks = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(ReadData.f_path("..\\DemoDB\\borrow-slip.txt")))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(ReadData.f_path("/DemoDB/borrow-slip.txt")))) {
             String line;
             while ((line = br.readLine()) != null) {
                 if (!line.isEmpty()) {
@@ -176,7 +176,7 @@ public class BorrowBook extends JFrame {
     }
 
     private static Book getBookByCode(String bookCode) {
-        try (BufferedReader br = new BufferedReader(new FileReader(ReadData.f_path("..\\DemoDB\\Book.txt")))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(ReadData.f_path("/DemoDB/Book.txt")))) {
             String line;
             while ((line = br.readLine()) != null) {
                 line = line.substring(1, line.length() - 1);

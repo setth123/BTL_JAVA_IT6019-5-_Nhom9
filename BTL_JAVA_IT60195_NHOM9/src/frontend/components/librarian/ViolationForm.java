@@ -98,6 +98,10 @@ public class ViolationForm extends JFrame {
 		Submit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(!stp.getText().matches("-?\\\\d+(\\\\.\\\\d+)?")) {
+					JOptionPane.showMessageDialog(ViolationForm.this, "Số tiền phạt không hợp lệ");
+					return;
+				}
 				if(FetchBE.findV(pminp.getText(), tkinp.getText())==false) {
 					JOptionPane.showMessageDialog(ViolationForm.this,"Mã phiếu mượn hoặc mã tài khoản không tồn tại");
 					return;
