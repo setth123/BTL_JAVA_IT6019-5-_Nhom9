@@ -130,10 +130,6 @@ public class LibrarianHP extends JFrame {
 		
 		ImageIcon reload=ImageProcess.scaled("Assets/reload.png",23,23);
 		JButton ref = new JButton("");
-		ref.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		
 		ref.setIcon(reload);
 		ref.setBounds(1143, 47, 23, 23);
@@ -178,8 +174,8 @@ public class LibrarianHP extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				AddBook a=new AddBook(LibrarianHP.this);
 				a.setVisible(true);
-				setVisible(false);
-				dispose();
+				//setVisible(false);
+				//dispose();
 			}
 		});
 		Animation.onHoover(panel_2, new Color(0,128,255), new Color(0,128,192));
@@ -330,7 +326,7 @@ public class LibrarianHP extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				ChangePassword cp=new ChangePassword(l,LibrarianHP.this);
 				cp.setVisible(true);
-				setVisible(false);
+				//setVisible(false);
 				dispose();
 			}
 		});

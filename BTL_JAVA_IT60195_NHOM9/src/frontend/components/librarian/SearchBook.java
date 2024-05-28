@@ -184,8 +184,8 @@ public class SearchBook extends JFrame{
 					Book b=new Book(maSach,tenSach,nxb,nph,theLoai,sl,gia);
 					EditBook eb=new EditBook(SearchBook.this,b);
 					eb.setVisible(true);
-					setVisible(false);
-					dispose();
+					//setVisible(false);
+					//dispose();
 				}
 			});
 			break;

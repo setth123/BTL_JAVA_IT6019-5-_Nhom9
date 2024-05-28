@@ -119,8 +119,8 @@ public class SearchBorrowSlips extends JFrame{
 				BorrowSlip bs=new BorrowSlip(maPhieuMuon,ngayMuon,maTaiKhoan,maSach,trangThai);
 				ViolationForm vf=new ViolationForm(bs,SearchBorrowSlips.this);
 				vf.setVisible(true);
-				setVisible(false);
-				dispose();
+				//setVisible(false);
+				//dispose();
 			}
 		});
 		
