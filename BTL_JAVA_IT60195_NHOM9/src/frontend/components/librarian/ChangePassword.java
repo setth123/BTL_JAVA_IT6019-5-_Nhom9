@@ -42,7 +42,7 @@ public class ChangePassword extends JFrame{
 		setTitle("Đổi mật khẩu");
 		setBounds(300, 100, 400, 500);
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 
 		

@@ -54,7 +54,7 @@ public class EditBook extends JFrame{
 	private void initialize(JFrame parent,Book b) {
 		
 		setBounds(100, 100, 800, 500);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 		setTitle("Sửa thông tin sách");
 		

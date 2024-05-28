@@ -279,7 +279,7 @@ public class AddBook extends JFrame {
 
 	
 	private void Initialize(JFrame parent) {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 800, 500);
 		getContentPane().setLayout(null);
 		setTitle("Thêm sách");

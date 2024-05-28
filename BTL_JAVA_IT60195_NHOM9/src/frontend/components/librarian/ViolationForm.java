@@ -37,7 +37,7 @@ public class ViolationForm extends JFrame {
 	 */
 	private void initialize(BorrowSlip br,JFrame parent) {
 		setBounds(300,100,800,500);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setTitle("Tạo phiếu vi phạm");
 		getContentPane().setLayout(null);
