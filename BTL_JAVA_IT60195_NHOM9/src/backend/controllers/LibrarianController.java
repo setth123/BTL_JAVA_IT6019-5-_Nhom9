@@ -120,6 +120,8 @@ public class LibrarianController {
 		        		if(s.getMaTaiKhoan().equals(maTaiKhoan)) {
 		        			violations.add(new Violation(maPhieuMuon, maTaiKhoan, lydo, soNgayViPham, stp));
 		        		    WriteData.writeViolation(violations,"/DemoDB/Violation.txt");
+		        		    s.setTrangThai("Solved");
+		        		    WriteData.writeBorrowSlip(borrowSlips,"/DemoDB/borrow-slip.txt");
 		        		    return true;
 		        		}
 		        	}
@@ -148,5 +150,34 @@ public class LibrarianController {
 			WriteData.writeBook(books, "/DemoDB/book.txt");
 			WriteData.writeBorrowSlip(borrowSlips, "/DemoDB/borrow-slip.txt");
 			return true;
+	}
+	public static boolean returnBook(String maPhieuMuon,String status) {
+		borrowSlips=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
+		books=ReadData.readBook("/DemoDB/book.txt");
+		for(BorrowSlip bs: borrowSlips) {
+			if(bs.getMaPhieuMuon().equals(maPhieuMuon)) {
+				if(status.equals("Mất sách")) {
+					bs.setTrangThai("Lost");
+					WriteData.writeBorrowSlip(borrowSlips, "/DemoDB/borrow-slip.txt");
+					return true;
+				}
+				if(bs.getTrangThai().equals("Approved")&&bs.getNgayTra().isBefore(LocalDate.now())) {
+					bs.setTrangThai("Expired");
+				}
+				else if((bs.getNgayTra().isAfter(LocalDate.now())||bs.getNgayTra().isEqual(LocalDate.now()))&&bs.getTrangThai().equals("Approved")) {
+					bs.setTrangThai("onTime");
+				}
+				
+				for(Book b : books) {
+					if(bs.getMaSach().equals(b.getMaSach())) {
+						b.increaseQuantity(1);
+					}
+				}
+			break;
+			}
+		}
+		WriteData.writeBook(books, "/DemoDB/book.txt");
+		WriteData.writeBorrowSlip(borrowSlips, "/DemoDB/borrow-slip.txt");
+		return true;
 	}
 }

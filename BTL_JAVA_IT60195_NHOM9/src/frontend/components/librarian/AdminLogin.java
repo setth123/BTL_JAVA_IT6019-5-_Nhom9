@@ -42,7 +42,8 @@ public class AdminLogin extends JFrame {
 		Title.setFont(new Font("Tahoma", Font.BOLD, 20));
 		Title.setBounds(61, 33, 301, 68);
 		getContentPane().add(Title);
-
+		
+		//form nhâph liệu
 		JLabel nameLb = new JLabel("Tài khoản");
 		nameLb.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		nameLb.setBounds(48, 112, 70, 14);
@@ -53,7 +54,7 @@ public class AdminLogin extends JFrame {
 		passwordLb.setBounds(48, 173, 70, 14);
 		getContentPane().add(passwordLb);
 
-
+		//đăng nhập
 		JButton submit = new JButton("Đăng nhập");
 		submit.setBackground(new Color(0, 255, 255));
 		submit.addActionListener(new ActionListener() {
@@ -78,6 +79,7 @@ public class AdminLogin extends JFrame {
 		submit.setBounds(116, 246, 115, 23);
 		getContentPane().add(submit);
 
+		//form nhập liệu
 		adminName = new JTextField();
 		adminName.setBounds(140, 112, 153, 20);
 		getContentPane().add(adminName);
@@ -87,6 +89,7 @@ public class AdminLogin extends JFrame {
 		adminPassword.setBounds(140, 172, 153, 20);
 		getContentPane().add(adminPassword);
 
+		//Quay lại trang trước
 		JButton ql = new JButton("Quay lại");
 		ql.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

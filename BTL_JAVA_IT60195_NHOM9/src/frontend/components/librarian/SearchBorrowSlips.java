@@ -41,10 +41,8 @@ public class SearchBorrowSlips extends JFrame{
 		initialize(parent);
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	
+
+	//lấy danh sách phiếu mượn vi phạm
 	private static void fetchViolatedBorrowSlip(DefaultTableModel m) {
 		m.setRowCount(0);
 		List<BorrowSlip> result=FetchBE.findViolatedBS();
@@ -53,6 +51,8 @@ public class SearchBorrowSlips extends JFrame{
 			m.addRow(row);
 		}
 	}
+	
+	//lấy danh sách phiếu mượn vi phạm theo dữ liệu có trước
 	private static void fetchViolatedBorrowSlip(DefaultTableModel m,List<BorrowSlip> bs) {
 		m.setRowCount(0);
 		for(BorrowSlip s : bs) {
@@ -69,17 +69,22 @@ public class SearchBorrowSlips extends JFrame{
 		setResizable(false);
 		getContentPane().setLayout(null);
 		
+		
+		//thanh tìm kiếm phiếu mượn
 		searchBar=new JTextField();
 		searchBar.setBounds(951, 21, 276, 35);
 		searchBar.setColumns(10);
 		getContentPane().add(searchBar);
 		
+		//Tìm kiếm
 		JButton search = new JButton("Tìm kiếm");
 		search.setBackground(new Color(0, 128, 255));
 		search.setBounds(1249, 20, 89, 30);
 		getContentPane().add(search);
 		
 		
+		
+		//Tạo bảng
 		String[] bs= {"Mã phiếu mượn","Ngày mượn","Ngày trả","Mã tài khoản","Mã sách","Trạng thái"};
 		DefaultTableModel model=new DefaultTableModel(bs,0);
 		fetchViolatedBorrowSlip(model);
@@ -107,6 +112,8 @@ public class SearchBorrowSlips extends JFrame{
 		title.setBounds(289, 59, 474, 31);
 		getContentPane().add(title);
 		
+		
+		//Nhấn vào hàng
 		table.addMouseListener(new MouseAdapter() {
 			@Override 
 			public void mouseClicked(MouseEvent e) {
@@ -124,6 +131,7 @@ public class SearchBorrowSlips extends JFrame{
 			}
 		});
 		
+		//Tìm kiếm phiếu mượn
 		search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				List<BorrowSlip> result=FetchBE.findBS(searchBar.getText());

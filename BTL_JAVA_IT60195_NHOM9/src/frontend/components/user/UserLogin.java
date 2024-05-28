@@ -73,18 +73,23 @@ public class UserLogin extends JFrame {
 
             Account loggedIn = UserController.login(username, password);
             if (loggedIn != null) {
-                SessionManager.login(loggedIn);
+                if (loggedIn.getIsActive() == false) {
+                    JOptionPane.showMessageDialog(this, "Tài khoản của bạn đã bị khoá vui lòng liên hệ thủ thư", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    SessionManager.login(loggedIn);
 
-                // Open the main dashboard window
-                Dashboard dashboard = new Dashboard();
-                dashboard.setVisible(true);
+                    // Open the main dashboard window
+                    Dashboard dashboard = new Dashboard();
+                    dashboard.setVisible(true);
 
-                // Close the login window
-                dispose();
+                    // Close the login window
+                    dispose();
+                }
             } else {
                 // Display error message or handle unsuccessful login
                 JOptionPane.showMessageDialog(this, "Đăng nhập không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
+
         });
 
         // Add action listener for back button

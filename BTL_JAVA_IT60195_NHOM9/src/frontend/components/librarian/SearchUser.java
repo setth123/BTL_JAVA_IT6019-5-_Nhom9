@@ -59,6 +59,7 @@ public class SearchUser extends JFrame{
 		setResizable(false);
 		getContentPane().setLayout(null);
 		
+		//thanh tìm kiếm
 		searchBar=new JTextField();
 		searchBar.setText(keyword);
 		searchBar.setBounds(951, 21, 276, 35);
@@ -70,6 +71,8 @@ public class SearchUser extends JFrame{
 		search.setBounds(1249, 20, 89, 30);
 		getContentPane().add(search);
 		
+		
+		//tạo bảng
 		String[] u= {"Mã tài khoản ","Tên người dùng","Địa chỉ","Số điện thoại","Tên đăng nhập","Mật khẩu"};
 		DefaultTableModel model=new DefaultTableModel(u,0);
 		FetchData.fetchUser(keyword,model);
@@ -86,6 +89,7 @@ public class SearchUser extends JFrame{
 		sp.setBounds(39, 117, 1257, 541);
 		getContentPane().add(sp);
 		
+		//Quay lại trang trước đó
 		JButton ql = new JButton("Quay lại");
 		ql.addMouseListener(new MouseAdapter() {
 			@Override
@@ -106,6 +110,7 @@ public class SearchUser extends JFrame{
 		getContentPane().add(title);
 	}
 	
+	//khoá người dùng
 	//searchFor=1 equal to disable user
 	private void initialize(JFrame parent,String keyword,int searchFor) {
 		setTitle("Tìm kiếm");
@@ -115,6 +120,7 @@ public class SearchUser extends JFrame{
 		setResizable(false);
 		getContentPane().setLayout(null);
 		
+		//thanh tìm kiếm
 		searchBar=new JTextField();
 		searchBar.setText(keyword);
 		searchBar.setBounds(951, 21, 276, 35);
@@ -126,6 +132,7 @@ public class SearchUser extends JFrame{
 		search.setBounds(1249, 20, 89, 30);
 		getContentPane().add(search);
 		
+		//tạo bảng
 		String[] u= {"Mã tài khoản ","Tên người dùng","Địa chỉ","Số điện thoại","Tên đăng nhập","Mật khẩu","Trạng thái"};
 		DefaultTableModel model=new DefaultTableModel(u,0);
 		FetchData.fetchUser(keyword,model);
@@ -142,6 +149,7 @@ public class SearchUser extends JFrame{
 		sp.setBounds(39, 117, 1257, 541);
 		getContentPane().add(sp);
 		
+		//quay lại trang trước đó
 		JButton ql = new JButton("Quay lại");
 		ql.addMouseListener(new MouseAdapter() {
 			@Override
@@ -157,7 +165,7 @@ public class SearchUser extends JFrame{
 		
 		//title = new JLabel("TÌM KIẾM NGƯỜI DÙNG");
 		
-		
+		//khoá người dùng
 		switch(searchFor) {
 		case 1:
 			setTitle("Khoá người dùng");
@@ -166,10 +174,12 @@ public class SearchUser extends JFrame{
 			title.setFont(new Font("Tahoma", Font.BOLD, 26));
 			title.setBounds(300, 33, 373, 35);
 			getContentPane().add(title);
+			//sửa bảng
 			model.addColumn("Số lần vi phạm");
 			for (int i = 0; i < model.getRowCount(); i++) {
 	            model.setValueAt(FetchBE.countV(model.getValueAt(i, 0).toString()), i, model.getColumnCount() - 1);
 	        }
+			//nhấn vào dòng trong bảng
 			table.addMouseListener(new MouseAdapter() {
 				@Override 
 				public void mouseClicked(MouseEvent e) {

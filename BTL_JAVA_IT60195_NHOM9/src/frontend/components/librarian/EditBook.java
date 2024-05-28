@@ -42,7 +42,7 @@ public class EditBook extends JFrame{
 	public EditBook(JFrame parent,Book b) {
 		initialize(parent,b);
 	}
-	
+	//tính ngày trong tháng
 	private static int daysInMonth(int year, int month) {
         YearMonth yearMonth = YearMonth.of(year, month);
         return yearMonth.lengthOfMonth();
@@ -64,6 +64,8 @@ public class EditBook extends JFrame{
 		title.setFont(new Font("Tahoma", Font.BOLD, 24));
 		getContentPane().add(title);
 		
+		
+		//form sửa thông tin
 		JLabel maSach = new JLabel("Mã sách");
 		maSach.setBounds(44, 139, 80, 14);
 		maSach.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -185,13 +187,21 @@ public class EditBook extends JFrame{
 		namInp.setValue(year);
 		slInp.setValue(b.getSl());
 		
+		
+		//sửa thông tin
 		JButton submit = new JButton("Lưu");
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(!priceInp.getText().matches("-?\\\\d+(\\\\.\\\\d+)?")) {
-					JOptionPane.showMessageDialog(EditBook.this,"Giá thành không hợp lệ");
-					return;
-				}
+				try {
+		            double priceValue = Double.parseDouble(priceInp.getText());
+		            if (priceValue <= 0) {
+		                JOptionPane.showMessageDialog(EditBook.this, "Giá  không hợp lệ");
+		                return;
+		            }
+		        } catch (NumberFormatException ex) {
+		            JOptionPane.showMessageDialog(EditBook.this, "Giá không hợp lệ");
+		            return;
+		        }
 				if(maSachInp.getText().equals("")||textField_1.getText().equals("")||nxbInp.getText().equals("")||priceInp.getText().equals("")) {
 					JOptionPane.showMessageDialog(EditBook.this,"Vui lòng nhập đầy đủ thông tin");
 				}
@@ -206,6 +216,7 @@ public class EditBook extends JFrame{
 		submit.setBounds(486, 386, 89, 23);
 		getContentPane().add(submit);
 		
+		//reset thông tin
 		JButton huy = new JButton("Huỷ");
 		huy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -224,6 +235,7 @@ public class EditBook extends JFrame{
 		huy.setBounds(607, 386, 89, 23);
 		getContentPane().add(huy);
 		
+		//Quay lại trang trước đo
 		JButton ql = new JButton("Quay lại");
 		ql.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

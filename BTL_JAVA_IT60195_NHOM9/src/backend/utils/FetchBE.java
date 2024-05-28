@@ -67,11 +67,11 @@ public class FetchBE {
 		}
 		return count;
 	}
-	public static List<BorrowSlip> findBSbyStatus(String status){
+	public static List<BorrowSlip> findBSbyStatus(){
 		bs=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
 		List<BorrowSlip> result=new ArrayList<>();
 		for(BorrowSlip s : bs) {
-			if(status.equals(s.getTrangThai())) {
+			if("Pending".equals(s.getTrangThai())||"Approved".equals(s.getTrangThai())) {
 				result.add(s);
 			}
 		}
@@ -86,10 +86,7 @@ public class FetchBE {
 		bs=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
 		List<BorrowSlip> result=new ArrayList<>();
 		for(BorrowSlip s: bs) {
-			if(s.getNgayTra().isBefore(LocalDate.now()) && s.getTrangThai().equals("Appproved")) {
-				s.setTrangThai("Expired");
-			}
-			if(s.getTrangThai().equals("Lost")||s.getTrangThai().equals("Expired")) {
+			if((s.getTrangThai().equals("Lost")||s.getTrangThai().equals("Expired"))) {
 				result.add(s);
 			}
 		}

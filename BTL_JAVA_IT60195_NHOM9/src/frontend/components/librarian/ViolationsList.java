@@ -31,6 +31,8 @@ public class ViolationsList extends JFrame {
 	public ViolationsList(JFrame parent) {
 		initialize(parent);
 	}
+	
+	//lấy toàn bộ phiếu vi phạm
 	private static void fetchViolations(DefaultTableModel m) {
 		m.setRowCount(0);
 		List<Violation> result=FetchBE.fetchViolation();
@@ -48,6 +50,7 @@ public class ViolationsList extends JFrame {
 		setResizable(false);
 		getContentPane().setLayout(null);
 		
+		//quay lại trang trước đo
 		JButton ql = new JButton("Quay lại");
 		ql.addMouseListener(new MouseAdapter() {
 			@Override
@@ -66,6 +69,8 @@ public class ViolationsList extends JFrame {
 		title.setBounds(551, 57, 474, 31);
 		getContentPane().add(title);
 		
+		
+		//tạo bảng
 		String v[]= {"Mã vi phạm","Mã phiếu mượn","Mã tài khoản", "Lý do","Số ngày vi phạm","Số tiền phạt"};
 		DefaultTableModel model=new DefaultTableModel(v,0);
 		fetchViolations(model);

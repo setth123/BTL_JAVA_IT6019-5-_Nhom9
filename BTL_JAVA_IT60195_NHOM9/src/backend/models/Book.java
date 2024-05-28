@@ -92,6 +92,9 @@ public class Book {
 			this.sl -= amount;
 		}
 	}
+	public void increaseQuantity(int amount) {
+		this.sl+=amount;
+	}
 	@Override
     public String toString() {
         return (this.getMaSach()+"|"+this.getTenSach()+"|"+this.getNXB()+"|"+this.getNph()+"|"+this.getTheLoai()+"|"+this.getSl()+"|"+this.getGia()+"|"+this.getBorrow());

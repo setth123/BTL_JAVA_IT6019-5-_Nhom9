@@ -61,6 +61,7 @@ public class SearchBook extends JFrame{
 		setResizable(false);
 		getContentPane().setLayout(null);
 		
+		//thanh tìm kiếm
 		searchBar=new JTextField();
 		searchBar.setText(keyword);
 		searchBar.setBounds(951, 21, 276, 35);
@@ -72,6 +73,7 @@ public class SearchBook extends JFrame{
 		btnNewButton.setBounds(1249, 20, 89, 30);
 		getContentPane().add(btnNewButton);
 
+		//kết quả tìm kiếm
 		String[] b= {"Mã sách","Tên sách","Nhà xuất bản","Ngày phát hành","Thể loại","Số lượng","Giá"};
 		DefaultTableModel model=new DefaultTableModel(b,0);
 		FetchData.fetchBook(keyword,model);
@@ -89,6 +91,7 @@ public class SearchBook extends JFrame{
 		sp.setBounds(39, 117, 1257, 597);
 		getContentPane().add(sp);
 		
+		//quay lại trang trước
 		ql = new JButton("Quay lại");
 		ql.addMouseListener(new MouseAdapter() {
 			@Override
@@ -109,6 +112,7 @@ public class SearchBook extends JFrame{
 		getContentPane().add(title);
 	}
 	
+	//tìm kiếm để thực hiện các hành động
 	//searchFor=2(edit),searchFor=3(delete)
 	private void initialize(JFrame parent,int searchFor) {
 		setTitle("Tìm kiếm");
@@ -117,23 +121,28 @@ public class SearchBook extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		getContentPane().setLayout(null);
+		
+		//thanh tìm kiếm
 		searchBar=new JTextField();
 		searchBar.setBounds(951, 21, 276, 35);
 		searchBar.setColumns(10);
-		
-		
 		getContentPane().add(searchBar);
-		
 		JButton search = new JButton("Tìm kiếm");
 		search.setBackground(new Color(0, 128, 255));
 		search.setBounds(1249, 20, 89, 30);
 		getContentPane().add(search);
 		
-		
+		//bảng kết quả
 		String[] b= {"Mã sách","Tên sách","Nhà xuất bản","Ngày phát hành","Thể loại","Số lượng","Giá"};
-
 		DefaultTableModel model=new DefaultTableModel(b,0);
 		FetchData.fetchBook(searchBar.getText(),model);
+		
+		table = new JTable(model);
+		JScrollPane sp=new JScrollPane(table);
+		sp.setBounds(39, 117, 1257, 533);
+		getContentPane().add(sp);
+		
+		//nhấn nút tìm kiếm
 		search.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				FetchData.fetchBook(searchBar.getText(),model);
@@ -142,13 +151,8 @@ public class SearchBook extends JFrame{
 					}
 			}
 		});
-
 		
-		table = new JTable(model);
-		JScrollPane sp=new JScrollPane(table);
-		sp.setBounds(39, 117, 1257, 533);
-		getContentPane().add(sp);
-		
+		//quay lại trang trước đó
 		ql = new JButton("Quay lại");
 		ql.addMouseListener(new MouseAdapter() {
 			@Override
@@ -172,6 +176,8 @@ public class SearchBook extends JFrame{
 			title.setText("TÌM KIẾM SÁCH CẦN SỬA");
 			table.addMouseListener(new MouseAdapter() {
 				@Override 
+				
+				//lấy thông tin sách cần sửa
 				public void mouseClicked(MouseEvent e) {
 					int selected=table.getSelectedRow();
 					String maSach=table.getValueAt(selected, 0).toString();
@@ -191,6 +197,7 @@ public class SearchBook extends JFrame{
 			break;
 		case 3:
 			title.setText("TÌM KIẾM SÁCH CẦN XOÁ");
+			//xoá sách
 			table.addMouseListener(new MouseAdapter() {
 				@Override 
 				public void mouseClicked(MouseEvent e) {

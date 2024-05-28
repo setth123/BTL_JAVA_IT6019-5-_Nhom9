@@ -48,6 +48,8 @@ public class ViolationForm extends JFrame {
 		Title.setBounds(84, 96, 354, 31);
 		getContentPane().add(Title);
 		
+		
+		//Quay lại trang trước
 		JButton ql = new JButton("Quay lại");
 		ql.addMouseListener(new MouseAdapter() {
 			@Override
@@ -60,6 +62,8 @@ public class ViolationForm extends JFrame {
 		ql.setBounds(25, 23, 89, 23);
 		getContentPane().add(ql);
 		
+		
+		//Nhập dữ liệu
 		JLabel pm = new JLabel("Mã phiếu mượn");
 		pm.setBounds(24, 189, 100, 14);
 		getContentPane().add(pm);
@@ -94,16 +98,28 @@ public class ViolationForm extends JFrame {
 		stp.setBounds(371, 254, 100, 14);
 		getContentPane().add(stp);
 		
+		
+		//Tạo phiếu vi phạm
 		JButton Submit = new JButton("Tạo");
 		Submit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if(!stp.getText().matches("-?\\\\d+(\\\\.\\\\d+)?")) {
-					JOptionPane.showMessageDialog(ViolationForm.this, "Số tiền phạt không hợp lệ");
-					return;
-				}
+				try {
+		            double stpValue = Double.parseDouble(stpInp.getText());
+		            if (stpValue <= 0) {
+		                JOptionPane.showMessageDialog(ViolationForm.this, "Số tiền phạt không hợp lệ");
+		                return;
+		            }
+		        } catch (NumberFormatException ex) {
+		            JOptionPane.showMessageDialog(ViolationForm.this, "Số tiền phạt không hợp lệ");
+		            return;
+		        }
 				if(FetchBE.findV(pminp.getText(), tkinp.getText())==false) {
 					JOptionPane.showMessageDialog(ViolationForm.this,"Mã phiếu mượn hoặc mã tài khoản không tồn tại");
+					return;
+				}
+				if(pminp.getText().equals("")||tkinp.getText().equals("")||lydoInp.getText().equals("")||stpInp.getText().equals("")) {
+					JOptionPane.showMessageDialog(ViolationForm.this,"Vui lòng điền đày đủ thông tin");
 					return;
 				}
 				if(LibrarianController.addViolation(pminp.getText(),tkinp.getText(),lydoInp.getText(),(Integer)songayInp.getValue(),stpInp.getText())) {
@@ -115,6 +131,7 @@ public class ViolationForm extends JFrame {
 		Submit.setBounds(382, 385, 89, 23);
 		getContentPane().add(Submit);
 		
+		//reset dữ liệu
 		JButton btnHu = new JButton("Huỷ");
 		btnHu.addMouseListener(new MouseAdapter() {
 			@Override
@@ -129,19 +146,6 @@ public class ViolationForm extends JFrame {
 		btnHu.setBounds(524, 385, 89, 23);
 		getContentPane().add(btnHu);
 		
-		JButton list = new JButton("Danh sách phiếu vi phạm");
-		list.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ViolationsList vs=new ViolationsList(ViolationForm.this);
-				vs.setVisible(true);
-				setVisible(false);
-				dispose();
-			}
-		});
-		list.setBounds(462, 23, 216, 23);
-		getContentPane().add(list);
-		
 		stpInp = new JTextField();
 		stpInp.setBounds(462, 251, 86, 20);
 		getContentPane().add(stpInp);
@@ -151,5 +155,19 @@ public class ViolationForm extends JFrame {
 		lydoInp.setBounds(134, 331, 436, 20);
 		getContentPane().add(lydoInp);
 		lydoInp.setColumns(10);
+		
+		//Chuyển hưởng đến danh sách phiếu vi phạm
+		JButton list = new JButton("Danh sách phiếu vi phạm");
+		list.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ViolationsList vs=new ViolationsList(ViolationForm.this);
+				vs.setVisible(true);
+				setVisible(false);
+				dispose();
+				}
+			});
+		list.setBounds(462, 23, 216, 23);
+		getContentPane().add(list);
 	}
 }

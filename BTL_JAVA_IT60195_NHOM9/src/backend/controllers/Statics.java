@@ -2,6 +2,7 @@ package backend.controllers;
 
 import backend.utils.ReadData;
 
+import java.time.LocalDate;
 import java.util.List;
 import backend.models.BorrowSlip;
 
@@ -30,7 +31,7 @@ public class Statics {
 		List<BorrowSlip> bs=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
 		int count=0;
 		for(BorrowSlip s: bs) {
-			if(s.getTrangThai().equals("Expired")) {
+			if(s.getNgayTra().isBefore(LocalDate.now())) {
 				count++;
 			}
 		}

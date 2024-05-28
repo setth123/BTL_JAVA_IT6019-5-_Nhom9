@@ -22,9 +22,9 @@ import java.awt.event.ActionEvent;
 public class ChangePassword extends JFrame{
 
 	private static final long serialVersionUID = 1L;
-	private JPasswordField passwordField;
-	private JPasswordField passwordField_1;
-	private JPasswordField passwordField_2;
+	private JPasswordField oldPassInp;
+	private JPasswordField newPassInp;
+	private JPasswordField rePassInp;
 
 
 
@@ -45,50 +45,53 @@ public class ChangePassword extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("Đổi mật khẩu");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblNewLabel.setForeground(new Color(128, 128, 128));
-		lblNewLabel.setBounds(136, 69, 162, 48);
-		getContentPane().add(lblNewLabel);
+		
+		//form đổi mật khẩu
+		JLabel title = new JLabel("Đổi mật khẩu");
+		title.setFont(new Font("Tahoma", Font.BOLD, 20));
+		title.setForeground(new Color(128, 128, 128));
+		title.setBounds(136, 69, 162, 48);
+		getContentPane().add(title);
 
-		JLabel lblNewLabel_1 = new JLabel("Nhập mật khẩu cũ");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNewLabel_1.setBounds(63, 132, 119, 14);
-		getContentPane().add(lblNewLabel_1);
+		JLabel oldPass = new JLabel("Nhập mật khẩu cũ");
+		oldPass.setFont(new Font("Tahoma", Font.BOLD, 11));
+		oldPass.setBounds(63, 132, 119, 14);
+		getContentPane().add(oldPass);
 
-		JLabel lblNewLabel_1_1 = new JLabel("Nhập mật khẩu mới");
-		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNewLabel_1_1.setBounds(63, 229, 119, 14);
-		getContentPane().add(lblNewLabel_1_1);
+		JLabel newPass = new JLabel("Nhập mật khẩu mới");
+		newPass.setFont(new Font("Tahoma", Font.BOLD, 11));
+		newPass.setBounds(63, 229, 119, 14);
+		getContentPane().add(newPass);
 
-		JLabel lblNewLabel_1_1_1 = new JLabel("Xác nhận mật khẩu");
-		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNewLabel_1_1_1.setBounds(63, 323, 119, 14);
-		getContentPane().add(lblNewLabel_1_1_1);
+		JLabel rePass = new JLabel("Xác nhận mật khẩu");
+		rePass.setFont(new Font("Tahoma", Font.BOLD, 11));
+		rePass.setBounds(63, 323, 119, 14);
+		getContentPane().add(rePass);
 
-		passwordField = new JPasswordField();
-		passwordField.setBounds(63, 177, 230, 20);
-		getContentPane().add(passwordField);
+		oldPassInp = new JPasswordField();
+		oldPassInp.setBounds(63, 177, 230, 20);
+		getContentPane().add(oldPassInp);
 
-		passwordField_1 = new JPasswordField();
-		passwordField_1.setBounds(63, 267, 230, 20);
-		getContentPane().add(passwordField_1);
+		newPassInp = new JPasswordField();
+		newPassInp.setBounds(63, 267, 230, 20);
+		getContentPane().add(newPassInp);
 
-		passwordField_2 = new JPasswordField();
-		passwordField_2.setBounds(63, 352, 230, 20);
-		getContentPane().add(passwordField_2);
+		rePassInp = new JPasswordField();
+		rePassInp.setBounds(63, 352, 230, 20);
+		getContentPane().add(rePassInp);
 
-		JButton btnNewButton = new JButton("Đổi mật khẩu");
-		btnNewButton.addActionListener(new ActionListener() {
+		//Đổi mật khẩu
+		JButton submit = new JButton("Đổi mật khẩu");
+		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton.addMouseListener(new MouseAdapter() {
+		submit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				String op=new String(passwordField.getPassword());
-				String np=new String(passwordField_1.getPassword());
-				String cnp=new String(passwordField_2.getPassword());
+				String op=new String(oldPassInp.getPassword());
+				String np=new String(newPassInp.getPassword());
+				String cnp=new String(rePassInp.getPassword());
 				if(op.equals("")||np.equals("")||cnp.equals("")) {
 					JOptionPane.showMessageDialog(ChangePassword.this,"Vui lòng nhập đầy đủ thông tin");
 					return;
@@ -107,17 +110,18 @@ public class ChangePassword extends JFrame{
 
 			}
 		});
-		btnNewButton.setForeground(new Color(0, 0, 0));
-		btnNewButton.setBackground(new Color(128, 255, 255));
-		btnNewButton.setBounds(147, 404, 113, 23);
-		getContentPane().add(btnNewButton);
+		submit.setForeground(new Color(0, 0, 0));
+		submit.setBackground(new Color(128, 255, 255));
+		submit.setBounds(147, 404, 113, 23);
+		getContentPane().add(submit);
 
-		JButton btnNewButton_1 = new JButton("Quay lại");
-		btnNewButton_1.addActionListener(new ActionListener() {
+		//Quay lại trang trước đo
+		JButton ql = new JButton("Quay lại");
+		ql.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton_1.addMouseListener(new MouseAdapter() {
+		ql.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				parent.setVisible(true);
@@ -125,7 +129,7 @@ public class ChangePassword extends JFrame{
 				dispose();
 			}
 		});
-		btnNewButton_1.setBounds(21, 27, 89, 23);
-		getContentPane().add(btnNewButton_1);
+		ql.setBounds(21, 27, 89, 23);
+		getContentPane().add(ql);
 	}
 }

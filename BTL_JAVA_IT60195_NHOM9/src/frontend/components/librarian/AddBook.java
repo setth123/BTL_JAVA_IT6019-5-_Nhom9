@@ -411,10 +411,18 @@ public class AddBook extends JFrame {
 					JOptionPane.showMessageDialog(AddBook.this,"Vui lòng nhập đầy đủ thông tin");
 					return;
 				}
-				if(!priceInp.getText().matches("-?\\\\d+(\\\\.\\\\d+)?")) {
-					JOptionPane.showMessageDialog(AddBook.this,"Giá thành không hợp lý");
-					return;
-				}
+				
+				try {
+		            double priceValue = Double.parseDouble(priceInp.getText());
+		            if (priceValue <= 0) {
+		                JOptionPane.showMessageDialog(AddBook.this, "Giá không hợp lệ");
+		                return;
+		            }
+		        } catch (NumberFormatException ex) {
+		            JOptionPane.showMessageDialog(AddBook.this, "Giá không hợp lệ");
+		            return;
+		        }
+				
 				LibrarianController.addBook(maSachInp.getText(),tenSachInp.getText(),nxbInp.getText(),year,month,(Integer)dayInp.getValue(),(String)categoryInp.getSelectedItem(),(Integer)slInp.getValue(),Double.parseDouble(priceInp.getText()));
 				JOptionPane.showMessageDialog(AddBook.this, "Thêm sách thành công");
 			}

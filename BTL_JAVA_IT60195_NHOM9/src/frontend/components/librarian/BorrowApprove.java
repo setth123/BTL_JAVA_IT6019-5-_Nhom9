@@ -9,6 +9,7 @@ import javax.swing.AbstractCellEditor;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -36,11 +37,12 @@ public class BorrowApprove extends JFrame {
     private static final long serialVersionUID = 1L;
     private JTable pm;
 
+    //Lấy dữ liệu phiếu mượn đang chờ
     public static void fetchBorrowSlipAdmin(DefaultTableModel m) {
         m.setRowCount(0);
-        List<BorrowSlip> result = FetchBE.findBSbyStatus("Pending");
+        List<BorrowSlip> result = FetchBE.findBSbyStatus();
         for (BorrowSlip bs : result) {
-            Object[] row = {bs.getMaPhieuMuon(), bs.getNgayMuon(),bs.getNgayTra(), bs.getMaTaiKhoan(), bs.getMaSach(), "Pending"};
+            Object[] row = {bs.getMaPhieuMuon(), bs.getNgayMuon(),bs.getNgayTra(), bs.getMaTaiKhoan(), bs.getMaSach(), bs.getTrangThai()};
             m.addRow(row);
         }
     }
@@ -57,12 +59,13 @@ public class BorrowApprove extends JFrame {
         getContentPane().setLayout(null);
         setTitle("Phê duyệt mượn sách");
 
-        JLabel Title = new JLabel("DANH SÁCH PHIẾU MƯỢN ĐANG CHỜ");
+        JLabel Title = new JLabel("DANH SÁCH PHIẾU MƯỢN");
         Title.setForeground(new Color(128, 128, 128));
         Title.setFont(new Font("Tahoma", Font.BOLD, 25));
         Title.setBounds(473, 65, 490, 31);
         getContentPane().add(Title);
 
+        //Quay lại trang trước
         JButton ql = new JButton("Quay lại");
         ql.addMouseListener(new MouseAdapter() {
         	@Override
@@ -75,8 +78,8 @@ public class BorrowApprove extends JFrame {
         ql.setBounds(42, 37, 89, 23);
         getContentPane().add(ql);
 
-        String[] column = {"Mã phiếu mượn", "Ngày mượn","Ngày trả","Mã tài khoản", "Mã sách mượn", "Phê duyệt"};
-
+        //Tạo bảng
+        String[] column = {"Mã phiếu mượn", "Ngày mượn","Ngày trả","Mã tài khoản", "Mã sách mượn", "Trạng thái"};
         DefaultTableModel model = new DefaultTableModel(column, 0);
         fetchBorrowSlipAdmin(model);
         pm = new JTable(model);
@@ -86,13 +89,14 @@ public class BorrowApprove extends JFrame {
         pm.getColumnModel().getColumn(2).setPreferredWidth(27); // Column1 width
         pm.getColumnModel().getColumn(3).setPreferredWidth(30);
         pm.getColumnModel().getColumn(4).setPreferredWidth(30);
-        pm.getColumn("Phê duyệt").setCellRenderer(new ButtonRenderer());
-        pm.getColumn("Phê duyệt").setCellEditor(new ButtonEditor(new JCheckBox()));
+        pm.getColumn("Trạng thái").setCellRenderer(new ButtonRenderer());
+        pm.getColumn("Trạng thái").setCellEditor(new ButtonEditor(new JCheckBox()));
 
         JScrollPane sp = new JScrollPane(pm);
         sp.setBounds(10, 132, 1319, 521);
         getContentPane().add(sp);
         
+        //Tải lại trang
         JButton ref = new JButton("");
         ref.addMouseListener(new MouseAdapter() {
         	@Override
@@ -109,54 +113,56 @@ public class BorrowApprove extends JFrame {
 
     // Renderer cho cột chứa các nút bấm
     class ButtonRenderer extends JPanel implements TableCellRenderer {
-        /**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-		private final JButton approveButton;
+        private static final long serialVersionUID = 1L;
+        private final JButton approveButton;
         private final JButton rejectButton;
+        private final JComboBox<String> returnComboBox;
 
         public ButtonRenderer() {
             setLayout(new FlowLayout(FlowLayout.CENTER));
             approveButton = new JButton("Chấp thuận");
             rejectButton = new JButton("Không chấp thuận");
-            add(approveButton);
-            add(rejectButton);
+            returnComboBox = new JComboBox<>(new String[] { "Trạng thái sách", "Trả sách","Mất sách" });
         }
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            removeAll();
+            String status = table.getValueAt(row, 5).toString(); // Trạng thái là cột thứ 6 (chỉ mục 5)
+            if ("Pending".equals(status)) {
+            	add(approveButton);
+                add(rejectButton);
+            } else {
+                add(returnComboBox);
+            }
             return this;
         }
     }
-
     class ButtonEditor extends AbstractCellEditor implements TableCellEditor {
-        /**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-		private int currentRow;
-		private final JPanel panel;
+        private static final long serialVersionUID = 1L;
+        private int currentRow;
+        private final JPanel panel;
         private final JButton approveButton;
         private final JButton rejectButton;
+        private final JComboBox<String> returnComboBox;
 
         public ButtonEditor(JCheckBox checkBox) {
             panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
             
-            approveButton = new JButton("Chấp thuận");            
+            approveButton = new JButton("Chấp thuận");
             rejectButton = new JButton("Không chấp thuận");
-            
+            returnComboBox = new JComboBox<>(new String[] { "Chọn hành động", "Trả sách","Mất sách" });
+
             approveButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     fireEditingStopped();
-                    int opt=JOptionPane.showConfirmDialog(BorrowApprove.this,"Xác nhận đồng ý");
-                    if(opt==JOptionPane.YES_OPTION) {
-                    	if(LibrarianController.approveBorrowSlip(pm.getValueAt(currentRow, 0).toString(),"Approved")) {
-                    		JOptionPane.showMessageDialog(BorrowApprove.this,"Phê duyệt thành công vui lòng tải lại trang");
-                    	}                    	
+                    int opt = JOptionPane.showConfirmDialog(BorrowApprove.this, "Xác nhận đồng ý");
+                    if (opt == JOptionPane.YES_OPTION) {
+                        if (LibrarianController.approveBorrowSlip(pm.getValueAt(currentRow, 0).toString(), "Approved")) {
+                            JOptionPane.showMessageDialog(BorrowApprove.this, "Phê duyệt thành công vui lòng tải lại trang");
+                        }
                     }
-                    
                 }
             });
 
@@ -164,23 +170,47 @@ public class BorrowApprove extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     fireEditingStopped();
-                    int opt=JOptionPane.showConfirmDialog(BorrowApprove.this,"Xác nhận không đồng ý");
-                    if(opt==JOptionPane.YES_OPTION) {
-                    	if(LibrarianController.approveBorrowSlip(pm.getValueAt(currentRow, 0).toString(),"Dissaprove")) {
-                    		JOptionPane.showMessageDialog(BorrowApprove.this,"Phê duyệt thành công vui lòng tải lại trang");
-                    	}                    	
+                    int opt = JOptionPane.showConfirmDialog(BorrowApprove.this, "Xác nhận không đồng ý");
+                    if (opt == JOptionPane.YES_OPTION) {
+                        if (LibrarianController.approveBorrowSlip(pm.getValueAt(currentRow, 0).toString(), "Dissaprove")) {
+                            JOptionPane.showMessageDialog(BorrowApprove.this, "Phê duyệt thành công vui lòng tải lại trang");
+                        }
                     }
+                }
+            });
 
+            returnComboBox.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    fireEditingStopped();
+                    String action = (String) returnComboBox.getSelectedItem();
+                    if ("Trả sách".equals(action)||"Mất sách".equals(action)) {
+                        int opt = JOptionPane.showConfirmDialog(BorrowApprove.this, "Xác nhận "+action );
+                        if (opt == JOptionPane.YES_OPTION) {
+                            if (LibrarianController.returnBook(pm.getValueAt(currentRow, 0).toString(),action)) {
+                                JOptionPane.showMessageDialog(BorrowApprove.this, "Cập nhật thành công vui lòng tải lại trang");
+                            }
+                        }
+                    }
                 }
             });
 
             panel.add(approveButton);
             panel.add(rejectButton);
+            panel.add(returnComboBox);
         }
 
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
             currentRow = row;
+            panel.removeAll();
+            String status = table.getValueAt(row, 5).toString(); // Trạng thái là cột thứ 6 (chỉ mục 5)
+            if ("Pending".equals(status)) {
+            	panel.add(approveButton);
+            	panel.add(rejectButton);
+            } else {
+                panel.add(returnComboBox);
+            }
             return panel;
         }
 
@@ -189,4 +219,7 @@ public class BorrowApprove extends JFrame {
             return "";
         }
     }
+
+
+    
 }
