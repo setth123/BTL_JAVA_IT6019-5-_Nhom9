@@ -128,17 +128,24 @@ public class LibrarianController {
 		    }
 		public static boolean approveBorrowSlip(String maPhieuMuon,String status){
 			borrowSlips=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
+			books=ReadData.readBook("/DemoDB/book.txt");
 			for(BorrowSlip bs: borrowSlips) {
 				if(bs.getMaPhieuMuon().equals(maPhieuMuon)) {
 					bs.setTrangThai(status);
 					if(bs.getTrangThai().equals("Approved")) {
-						Book b=Book.getBookByTitle(bs.getMaSach());
-						b.reduceQuantity(1);
-						if(b.getSl()==0)b.setBorrow(false);
+						for(Book b : books) {
+							if(bs.getMaSach().equals(b.getMaSach())) {
+								b.reduceQuantity(1);
+								if(b.getSl()==0) {
+									b.setBorrow(false);
+								}
+							}
+						}
 					}
 					break;
 				}
 			}
+			WriteData.writeBook(books, "/DemoDB/book.txt");
 			WriteData.writeBorrowSlip(borrowSlips, "/DemoDB/borrow-slip.txt");
 			return true;
 	}

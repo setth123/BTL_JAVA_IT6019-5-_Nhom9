@@ -102,9 +102,9 @@ public class Book {
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
             while ((line = br.readLine()) != null) {
-                line = line.substring(1, line.length() - 1);
+                //line = line.substring(1, line.length() - 1);
                 String[] parts = line.split("\\|");
-                if (parts.length >= 8 && parts[1].trim().equals(maSach)) {
+                if (parts.length >= 8 && parts[0].trim().equals(maSach)) {
                     String code = parts[0].trim();
                     String name = parts[1].trim();
                     String author = parts[2].trim();

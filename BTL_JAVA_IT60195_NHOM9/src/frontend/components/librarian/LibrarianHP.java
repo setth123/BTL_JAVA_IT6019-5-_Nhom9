@@ -327,7 +327,7 @@ public class LibrarianHP extends JFrame {
 				ChangePassword cp=new ChangePassword(l,LibrarianHP.this);
 				cp.setVisible(true);
 				//setVisible(false);
-				dispose();
+				//dispose();
 			}
 		});
 		changeP.setForeground(Color.WHITE);
@@ -343,7 +343,6 @@ public class LibrarianHP extends JFrame {
 		panel_3.setLayout(null);
 		
 		
-		System.out.println(Statics.books());
 		JLabel bookNo = new JLabel(String.valueOf(Statics.books()));
 		bookNo.setForeground(new Color(255, 255, 255));
 		bookNo.setFont(new Font("Tahoma", Font.BOLD, 50));
