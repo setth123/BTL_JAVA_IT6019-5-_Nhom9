@@ -128,6 +128,7 @@ public class Dashboard extends JFrame {
 
     private void handleViewPersonalInfo() {
         new PersonalInfoView(this);
+        setVisible(false);
         dispose();
     }
 
@@ -138,6 +139,7 @@ public class Dashboard extends JFrame {
         // Close the dashboard and show the login window
         MainF firstPage = new MainF();
         firstPage.getFrame().setVisible(true);
+        setVisible(false);
         dispose();
     }
     private JTable createCategoryTable() {
