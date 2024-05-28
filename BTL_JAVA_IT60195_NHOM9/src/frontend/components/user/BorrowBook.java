@@ -120,8 +120,7 @@ public class BorrowBook extends JFrame {
                     String trangThai = parts[5].trim();
 
                     borrowSlips.add(new BorrowSlip(maPhieuMuon, LocalDate.parse(ngayMuon), maNguoiDung, maSach, trangThai));
-
-                }
+                    }
             }
         } catch (IOException e) {
             e.printStackTrace(System.err);

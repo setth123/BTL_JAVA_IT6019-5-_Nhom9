@@ -141,7 +141,7 @@ public class Dashboard extends JFrame {
         dispose();
     }
     private JTable createCategoryTable() {
-        java.util.List<Category> categories = readCategory("/Demo/Category.txt");
+        java.util.List<Category> categories = readCategory("/DemoDB/Category.txt");
         String[] columnNames = {"ID", "Title"};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 

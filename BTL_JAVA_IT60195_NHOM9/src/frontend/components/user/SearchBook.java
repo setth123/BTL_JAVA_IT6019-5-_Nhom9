@@ -24,6 +24,9 @@ import java.util.Date;
 import java.util.List;
 
 public class SearchBook {
+    /**
+     * @wbp.parser.entryPoint
+     */
     public static void showSearchBookLayout(JFrame parentFrame) {
         // Tạo một JFrame cho layout tìm kiếm sách
         final JFrame searchFrame = new JFrame("Tìm kiếm sách");
@@ -31,7 +34,7 @@ public class SearchBook {
         searchFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         searchFrame.setSize(900, 600);
         searchFrame.setResizable(true);
-        searchFrame.setLayout(new BorderLayout());
+        searchFrame.getContentPane().setLayout(new BorderLayout());
         // Ensure JFrame displays at the center of the screen
         searchFrame.setLocationRelativeTo(null);
         searchFrame.setVisible(true);
@@ -85,11 +88,11 @@ public class SearchBook {
         table.getColumn("Thao tác").setCellEditor(new ButtonEditor(new JCheckBox(), table));
 
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setPreferredSize(new Dimension(800, 400)); // Set preferred size for the scroll pane
+        scrollPane.setPreferredSize(new Dimension(800, 800)); // Set preferred size for the scroll pane
 
         // Thêm các thành phần UI vào JFrame
-        searchFrame.add(topPanel, BorderLayout.NORTH);
-        searchFrame.add(scrollPane, BorderLayout.CENTER);
+        searchFrame.getContentPane().add(topPanel, BorderLayout.NORTH);
+        searchFrame.getContentPane().add(scrollPane, BorderLayout.WEST);
 
         // Method to adjust column widths
         adjustColumnWidths(table, new double[]{0.10, 0.10, 0.40, 0.30, 0.10});
@@ -147,7 +150,7 @@ public class SearchBook {
         try (BufferedReader br = new BufferedReader(new FileReader(ReadData.f_path("/DemoDB/Book.txt")))) {
             String line;
             while ((line = br.readLine()) != null) {
-                line = line.substring(1, line.length() - 1);
+                //line = line.substring(1, line.length() - 1);
                 String[] parts = line.split("\\|");
                 if (parts.length >= 8) {
                     String code = parts[0].trim();
@@ -157,9 +160,11 @@ public class SearchBook {
                     String category = parts[4].trim();
                     int quantity = Integer.parseInt(parts[5].trim());
                     double price = Double.parseDouble(parts[6].trim());
-
-                    if (name.toLowerCase().contains(keyword.toLowerCase()) || code.toLowerCase().contains(keyword.toLowerCase())) {
-                        books.add(new Book(code, name, author, LocalDate.parse(releaseDate), category, quantity, price));
+                    String status=parts[7].trim();
+                    if(status.equals("true")) {
+                    	if (name.toLowerCase().contains(keyword.toLowerCase()) || code.toLowerCase().contains(keyword.toLowerCase())) {
+                    		books.add(new Book(code, name, author, LocalDate.parse(releaseDate), category, quantity, price));
+                    	}                    	
                     }
                 }
             }
@@ -258,7 +263,7 @@ public class SearchBook {
         private void showBookDetails(Book book) {
             JFrame detailFrame = new JFrame("Chi tiết sách");
             detailFrame.setSize(400, 300);
-            detailFrame.setLayout(new GridLayout(10, 1));
+            detailFrame.getContentPane().setLayout(new GridLayout(10, 1));
 
             JLabel lblCode = new JLabel("Mã sách: " + book.getMaSach());
             JLabel lblName = new JLabel("Tên sách: " + book.getTenSach());
@@ -283,15 +288,15 @@ public class SearchBook {
                 }
             });
 
-            detailFrame.add(lblCode);
-            detailFrame.add(lblName);
-            detailFrame.add(lblPublisher);
-            detailFrame.add(lblReleaseDate);
-            detailFrame.add(lblCategory);
-            detailFrame.add(lblQuantity);
-            detailFrame.add(lblPrice);
-            detailFrame.add(btnBorrowBook);
-            detailFrame.add(btnBack);
+            detailFrame.getContentPane().add(lblCode);
+            detailFrame.getContentPane().add(lblName);
+            detailFrame.getContentPane().add(lblPublisher);
+            detailFrame.getContentPane().add(lblReleaseDate);
+            detailFrame.getContentPane().add(lblCategory);
+            detailFrame.getContentPane().add(lblQuantity);
+            detailFrame.getContentPane().add(lblPrice);
+            detailFrame.getContentPane().add(btnBorrowBook);
+            detailFrame.getContentPane().add(btnBack);
 
             detailFrame.setLocationRelativeTo(null);
             detailFrame.setVisible(true);
@@ -300,7 +305,7 @@ public class SearchBook {
         private void showDetailedBookInfo(Book book) {
             JFrame detailedFrame = new JFrame("Thông tin chi tiết sách");
             detailedFrame.setSize(400, 300);
-            detailedFrame.setLayout(new GridLayout(5, 1));
+            detailedFrame.getContentPane().setLayout(new GridLayout(5, 1));
 
             JLabel lblCode = new JLabel("Mã sách: " + book.getMaSach());
             JLabel lblName = new JLabel("Tên sách: " + book.getTenSach());
@@ -318,7 +323,7 @@ public class SearchBook {
 
             btnConfirm.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    book.reduceQuantity(1);
+                    //book.reduceQuantity(1);
 
                     // Write the borrow slip and get the generated ID
                     writeBorrowSlip(book);
@@ -333,11 +338,11 @@ public class SearchBook {
                 }
             });
 
-            detailedFrame.add(lblCode);
-            detailedFrame.add(lblName);
-            detailedFrame.add(lblCategory);
-            detailedFrame.add(btnConfirm);
-            detailedFrame.add(btnBack);
+            detailedFrame.getContentPane().add(lblCode);
+            detailedFrame.getContentPane().add(lblName);
+            detailedFrame.getContentPane().add(lblCategory);
+            detailedFrame.getContentPane().add(btnConfirm);
+            detailedFrame.getContentPane().add(btnBack);
 
             detailedFrame.setLocationRelativeTo(null);
             detailedFrame.setVisible(true);

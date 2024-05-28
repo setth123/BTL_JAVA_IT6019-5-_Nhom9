@@ -441,7 +441,7 @@ public class LibrarianHP extends JFrame {
 		getContentPane().add(panel_4_6);
 		panel_4_6.setLayout(null);
 		
-		JLabel expiredNo = new JLabel(String.valueOf(Statics.borrowingBook()));
+		JLabel expiredNo = new JLabel(String.valueOf(Statics.expiredBook()));
 		expiredNo.setForeground(Color.WHITE);
 		expiredNo.setFont(new Font("Tahoma", Font.BOLD, 50));
 		expiredNo.setBounds(10, 11, 151, 84);

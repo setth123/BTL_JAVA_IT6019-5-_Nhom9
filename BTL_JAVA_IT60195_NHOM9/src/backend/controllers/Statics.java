@@ -20,6 +20,7 @@ public class Statics {
 		List<BorrowSlip> bs=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
 		int count=0;
 		for(BorrowSlip s: bs) {
+			System.out.println(s.getTrangThai());
 			if(s.getTrangThai().equals("Approved")||s.getTrangThai().equals("Expired")||s.getTrangThai().equals("Lost")) {
 				count++;
 			}
@@ -30,6 +31,7 @@ public class Statics {
 		List<BorrowSlip> bs=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
 		int count=0;
 		for(BorrowSlip s: bs) {
+			System.out.println(s.getTrangThai());
 			if(s.getTrangThai().equals("Expired")) {
 				count++;
 			}

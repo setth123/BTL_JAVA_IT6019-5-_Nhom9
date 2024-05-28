@@ -1,5 +1,6 @@
 package backend.utils;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,6 +86,9 @@ public class FetchBE {
 		bs=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
 		List<BorrowSlip> result=new ArrayList<>();
 		for(BorrowSlip s: bs) {
+			if(s.getNgayTra().isBefore(LocalDate.now()) && s.getTrangThai().equals("Appproved")) {
+				s.setTrangThai("Expired");
+			}
 			if(s.getTrangThai().equals("Lost")||s.getTrangThai().equals("Expired")) {
 				result.add(s);
 			}

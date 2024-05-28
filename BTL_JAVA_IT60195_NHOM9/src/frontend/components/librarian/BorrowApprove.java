@@ -152,7 +152,7 @@ public class BorrowApprove extends JFrame {
                     fireEditingStopped();
                     int opt=JOptionPane.showConfirmDialog(BorrowApprove.this,"Xác nhận đồng ý");
                     if(opt==JOptionPane.YES_OPTION) {
-                    	if(LibrarianController.approveBorrowSlip(pm.getValueAt(currentRow, 0).toString(),"Approve")) {
+                    	if(LibrarianController.approveBorrowSlip(pm.getValueAt(currentRow, 0).toString(),"Approved")) {
                     		JOptionPane.showMessageDialog(BorrowApprove.this,"Phê duyệt thành công vui lòng tải lại trang");
                     	}                    	
                     }
