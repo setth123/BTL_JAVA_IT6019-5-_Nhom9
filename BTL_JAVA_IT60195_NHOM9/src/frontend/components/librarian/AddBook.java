@@ -290,6 +290,8 @@ public class AddBook extends JFrame {
 		title.setFont(new Font("Tahoma", Font.BOLD, 24));
 		getContentPane().add(title);
 		
+		
+		//Các trường nhập liệu
 		JLabel maSach = new JLabel("Mã sách");
 		maSach.setBounds(44, 139, 80, 14);
 		maSach.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -400,6 +402,8 @@ public class AddBook extends JFrame {
 		getContentPane().add(priceInp);
 		priceInp.setColumns(10);
 		
+		
+		//Thêm sách
 		JButton submit = new JButton("Thêm sách");
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -418,6 +422,7 @@ public class AddBook extends JFrame {
 		submit.setBounds(486, 386, 101, 23);
 		getContentPane().add(submit);
 		
+		//Reset dữ liệu đã nhập
 		JButton huy = new JButton("Huỷ");
 		huy.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -436,6 +441,7 @@ public class AddBook extends JFrame {
 		huy.setBounds(607, 386, 89, 23);
 		getContentPane().add(huy);
 		
+		//Quay lại trang trước đó
 		JButton ql = new JButton("Quay lại");
 		ql.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

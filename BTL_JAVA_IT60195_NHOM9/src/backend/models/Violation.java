@@ -1,9 +1,8 @@
 package backend.models;
 
-import backend.controllers.Statics;
+import java.lang.System;
 
 public class Violation {
-    private static int vpNo = 1;
     private String maViPham;
     private String maPhieuMuon;
     private String maTaiKhoan;
@@ -15,8 +14,7 @@ public class Violation {
     }
 
     public Violation(String maPhieuMuon, String maTaiKhoan, String lyDo, int soNgayViPham, double soTienPhat) {
-    	vpNo=Statics.violations()+1;
-        this.maViPham = "VP-" + vpNo;
+    	this.maViPham = "VP-" + System.currentTimeMillis();
         this.maPhieuMuon = maPhieuMuon;
         this.maTaiKhoan = maTaiKhoan;
         this.lyDo = lyDo;
@@ -35,13 +33,6 @@ public class Violation {
     }
 
 
-    public static int getVpNo() {
-        return vpNo;
-    }
-
-    public static void setVpNo(int vpNo) {
-        Violation.vpNo = vpNo;
-    }
 
     public String getMaViPham() {
         return maViPham;
