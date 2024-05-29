@@ -21,12 +21,12 @@ public class EditPersonalInfo extends JFrame {
 
         JLabel usernameLabel = new JLabel("Tên tài khoản:");
         JLabel fullNameLabel = new JLabel("Tên đầy đủ:");
-        JLabel emailLabel = new JLabel("Email:");
+        JLabel emailLabel = new JLabel("Địa chỉ:");
         JLabel phoneNumberLabel = new JLabel("Số điện thoại:");
 
         JTextField usernameField = new JTextField(currentUser.getTenDangNhap(), 20);
         JTextField fullNameField = new JTextField(currentUser.getTenNguoiDung(), 20);
-        JTextField emailField = new JTextField(currentUser.getDiaChi(), 20);
+        JTextField dcField = new JTextField(currentUser.getDiaChi(), 20);
         JTextField phoneField = new JTextField(currentUser.getSoDienThoai(), 20);
 
         JButton saveButton = new JButton("Lưu");
@@ -38,7 +38,7 @@ public class EditPersonalInfo extends JFrame {
             // Save the updated information
             currentUser.setTenDangNhap(usernameField.getText());
             currentUser.setTenNguoiDung(fullNameField.getText());
-            currentUser.setDiaChi(emailField.getText());
+            currentUser.setDiaChi(dcField.getText());
             currentUser.setSoDienThoai(phoneField.getText());
             // Save other updated information as needed
             // Update the session user details
@@ -89,7 +89,7 @@ public class EditPersonalInfo extends JFrame {
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addComponent(usernameField)
                                 .addComponent(fullNameField)
-                                .addComponent(emailField)
+                                .addComponent(dcField)
                                 .addComponent(phoneField)))
                 .addGroup(GroupLayout.Alignment.CENTER, layout.createSequentialGroup()
                         .addComponent(headerLabel))
@@ -110,7 +110,7 @@ public class EditPersonalInfo extends JFrame {
                         .addComponent(fullNameField))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(emailLabel)
-                        .addComponent(emailField))
+                        .addComponent(dcField))
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                         .addComponent(phoneNumberLabel)
                         .addComponent(phoneField))
