@@ -8,9 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class WriteData {
-	
-	
-	
+	//ghi dữ liệu
     public static void writeAccount(List<Account> accounts, String fileName) {
     	String path=ReadData.f_path(fileName);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {

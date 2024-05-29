@@ -98,7 +98,7 @@ public class LibrarianHP extends JFrame {
 		header.add(searchBar);
 		searchBar.setColumns(10);
 		
-		JComboBox<String> typeS = new JComboBox();
+		JComboBox<String> typeS = new JComboBox<String>();
 		typeS.setBounds(726, 47, 105, 22);
 		typeS.addItem("Sách");
 		typeS.addItem("Người dùng");

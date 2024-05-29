@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 
 public class Animation {
+	//di chuột vào panel
 	public static void onHoover(JPanel p,Color o,Color n) {
 		p.addMouseListener(new MouseAdapter() {
 			@Override

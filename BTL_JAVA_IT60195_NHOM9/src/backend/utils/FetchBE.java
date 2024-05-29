@@ -1,6 +1,5 @@
 package backend.utils;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +15,7 @@ public class FetchBE {
 	static List<BorrowSlip> bs=new ArrayList<>(); 
 	static List<Violation> violations=new ArrayList<>();
 	
+	//lấy tt sách theo từ khoá
 	public static List<Book> findB(String keyword){
 		books=ReadData.readBook("/DemoDB/Book.txt");
 		List<Book> result=new ArrayList<>();
@@ -26,6 +26,8 @@ public class FetchBE {
 		}
 		return result;
 	}
+	
+	//lấy tt người dùng theo từ khoá
 	public static List<Account> findA(String keyword){
 		accounts=ReadData.readAccount("/DemoDB/user-account.txt");
 		List<Account> result=new ArrayList<>();
@@ -36,6 +38,8 @@ public class FetchBE {
 		}
 		return result;
 	}
+	
+	//lấy tt phiếu mượn theo từ khoá
 	public static List<BorrowSlip> findBS(String keyword){
 		bs=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
 		List<BorrowSlip> result=new ArrayList<>();
@@ -46,6 +50,8 @@ public class FetchBE {
 		}
 		return result;
 	}
+	
+	//lấy toàn bộ phiếu vi phạm
 	public static List<Violation> fetchViolation(){
 		violations= ReadData.readViolation("/DemoDB/Violation.txt");
 		return violations;
@@ -59,6 +65,8 @@ public class FetchBE {
 		}
 		return false;
 	}
+	
+	//lấy số lượng phiếu vi phạm của 1 người dùng
 	public static int countV(String maTaiKhoan) {
 		violations=ReadData.readViolation("/DemoDB/Violation.txt");
 		int count=0;
@@ -67,6 +75,8 @@ public class FetchBE {
 		}
 		return count;
 	}
+	
+	//lấy tt phiếu mượn chưa được duyệt và phiếu mượn chưa trả
 	public static List<BorrowSlip> findBSbyStatus(){
 		bs=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
 		List<BorrowSlip> result=new ArrayList<>();
@@ -78,10 +88,12 @@ public class FetchBE {
 		return result;
 	}
 	
+	//lấy tt danh mục
 	public static List<Category> fetchCate() {
 		return ReadData.readCategory("DemoDB/Category.txt");
 	}
 	
+	//lấy tt phiếu mượn vi phạm
 	public static List<BorrowSlip> findViolatedBS(){
 		bs=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
 		List<BorrowSlip> result=new ArrayList<>();

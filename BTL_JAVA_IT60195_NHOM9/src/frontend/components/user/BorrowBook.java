@@ -18,7 +18,11 @@ import java.util.List;
 
 public class BorrowBook extends JFrame {
 
-    private JTable borrowedBooksTable;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JTable borrowedBooksTable;
     private JTable waitingBooksTable;
     private DefaultTableModel borrowedTableModel;
     private DefaultTableModel waitingTableModel;

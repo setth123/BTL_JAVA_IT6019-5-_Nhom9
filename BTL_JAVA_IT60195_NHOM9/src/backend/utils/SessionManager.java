@@ -4,7 +4,7 @@ import backend.models.Account;
 
 public class SessionManager {
     private static Account currentUser;
-
+    //phiên làm việc
     public static void login(Account user) {
         currentUser = user;
     }

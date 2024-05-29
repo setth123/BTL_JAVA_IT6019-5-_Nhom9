@@ -18,6 +18,7 @@ public class LibrarianController {
 	    public static List<Violation> violations;
 	    public static List<BorrowSlip> borrowSlips;
 	    
+	    //đăng nhập thủ thư
 		public static Librarian login(String l_accountName,String l_password) {
 		librarians=ReadData.readLibrarian("/DemoDB/Librarian.txt");
 		for(Librarian l : librarians) {
@@ -28,6 +29,7 @@ public class LibrarianController {
 		return null;
 	    }
 		
+		//đổi mật khẩu (thủ thư)
 		public static boolean changePassword(Librarian l,String n_password) {
 			librarians=ReadData.readLibrarian("/DemoDB/Librarian.txt");
 			for(Librarian ls : librarians) {
@@ -39,6 +41,8 @@ public class LibrarianController {
 			return true;
 		}
 		
+		
+		//thêm sách
 	    public static boolean addBook(String maSach, String tenSach,String nxb, int nam,int thang,int ngay, String theLoai, int soLuong, double gia) {
 	     LocalDate nph = LocalDate.of(nam,thang,ngay);
 	     books=ReadData.readBook("/DemoDB/Book.txt");
@@ -51,12 +55,13 @@ public class LibrarianController {
 	            }
 	        }
 	        if (!bookFound) {
-				books.add(new Book(maSach, tenSach, nxb, nph, theLoai, soLuong, gia,false));
+				books.add(new Book(maSach, tenSach, nxb, nph, theLoai, soLuong, gia,true));
 	        }
 	    WriteData.writeBook(books,"/DemoDB/Book.txt");
 	    return true;
 	    }
 	    
+	    //xoá sách
 		public static boolean delBook(String maSach) {
 			 books=ReadData.readBook("/DemoDB/Book.txt");
 			 boolean bookFound = false;
@@ -75,6 +80,7 @@ public class LibrarianController {
 		     return false;
 		}
 		
+		//sửa thông tin sách
 		public static boolean editBook(String maSach,String n_masach,String n_tenSach, String n_NXB, int year,int month,int day, String n_theLoai,int n_sl, double n_gia) {
 			LocalDate nph = LocalDate.of(year,month,day);
 			books=ReadData.readBook("/DemoDB/Book.txt");
@@ -99,6 +105,7 @@ public class LibrarianController {
 			return false;
 	}
 		
+		// khoá/mở khoá tài khoản
 		public static boolean changeAccStatus(String maTaiKhoan) {
 			accounts=ReadData.readAccount("/DemoDB/user-account.txt");
 			for(Account a : accounts) {
@@ -111,6 +118,7 @@ public class LibrarianController {
 			return true;
 		}
 		
+		//tạo phiếu vi phạm
 		public static boolean addViolation(String maPhieuMuon,String maTaiKhoan,String lydo,int soNgayViPham,String soTienPhat) {
 			 borrowSlips=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
 		     violations=ReadData.readViolation("/DemoDB/Violation.txt");
@@ -128,6 +136,8 @@ public class LibrarianController {
 		        }
 		        return false;
 		    }
+		
+		//phê duyệt mượn sách
 		public static boolean approveBorrowSlip(String maPhieuMuon,String status){
 			borrowSlips=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
 			books=ReadData.readBook("/DemoDB/book.txt");
@@ -139,7 +149,7 @@ public class LibrarianController {
 							if(bs.getMaSach().equals(b.getMaSach())) {
 								b.reduceQuantity(1);
 								if(b.getSl()==0) {
-									b.setBorrow(false);
+									b.setAvaiable(false);
 								}
 							}
 						}
@@ -151,6 +161,8 @@ public class LibrarianController {
 			WriteData.writeBorrowSlip(borrowSlips, "/DemoDB/borrow-slip.txt");
 			return true;
 	}
+		
+	//phê duyệt trả sách
 	public static boolean returnBook(String maPhieuMuon,String status) {
 		borrowSlips=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
 		books=ReadData.readBook("/DemoDB/book.txt");

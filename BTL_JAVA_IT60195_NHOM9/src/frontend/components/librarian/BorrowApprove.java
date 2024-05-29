@@ -114,8 +114,10 @@ public class BorrowApprove extends JFrame {
     // Renderer cho cột chứa các nút bấm
     class ButtonRenderer extends JPanel implements TableCellRenderer {
         private static final long serialVersionUID = 1L;
+        //phê duyệt mượn sách
         private final JButton approveButton;
         private final JButton rejectButton;
+        //phê duyệt trả sách
         private final JComboBox<String> returnComboBox;
 
         public ButtonRenderer() {
@@ -149,10 +151,12 @@ public class BorrowApprove extends JFrame {
         public ButtonEditor(JCheckBox checkBox) {
             panel = new JPanel(new FlowLayout(FlowLayout.CENTER));
             
+            //các nút bấm
             approveButton = new JButton("Chấp thuận");
             rejectButton = new JButton("Không chấp thuận");
             returnComboBox = new JComboBox<>(new String[] { "Chọn hành động", "Trả sách","Mất sách" });
-
+            
+            //đồng ý mượn sách
             approveButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -165,7 +169,8 @@ public class BorrowApprove extends JFrame {
                     }
                 }
             });
-
+            
+            //không đồng ý mượn sách
             rejectButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -178,7 +183,8 @@ public class BorrowApprove extends JFrame {
                     }
                 }
             });
-
+            
+            //chức năng trả sách
             returnComboBox.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -194,13 +200,14 @@ public class BorrowApprove extends JFrame {
                     }
                 }
             });
-
+            //thêm các nút vào panel
             panel.add(approveButton);
             panel.add(rejectButton);
             panel.add(returnComboBox);
         }
 
         @Override
+        //thêm component
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
             currentRow = row;
             panel.removeAll();

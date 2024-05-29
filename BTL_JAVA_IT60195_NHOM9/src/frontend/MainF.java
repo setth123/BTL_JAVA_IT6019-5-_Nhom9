@@ -16,7 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 
 public class MainF {
-
+	//giao diện chuyển hướng
 	private JFrame frame;
 
 	// Thêm getter để lấy frame chính và trở về sau khi đăng xuất

@@ -85,6 +85,7 @@ public class Account {
 
 	@Override
     public String toString() {
-        return (maTaiKhoan+"|"+tenNguoiDung+"|"+diaChi+"|"+soDienThoai+"|"+tenDangNhap+"|"+matKhau+"|"+isActive);
+        return String.format(" %-10s | %-30s | %-20s | %-10s | %-12s | %-10s | %8s ",
+                maTaiKhoan, tenNguoiDung, diaChi, soDienThoai, tenDangNhap, matKhau, isActive);
     }
 }

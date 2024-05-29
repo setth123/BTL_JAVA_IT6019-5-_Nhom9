@@ -81,10 +81,10 @@ public class Book {
 		this.gia = gia;
 	}
 	
-	public boolean getBorrow() {
+	public boolean getAvaiable() {
 		return isAvaiable;
 	}
-	public void setBorrow(boolean isBorrow) {
+	public void setAvaiable(boolean isBorrow) {
 		this.isAvaiable = isBorrow;
 	}
 	public void reduceQuantity(int amount) {
@@ -97,7 +97,8 @@ public class Book {
 	}
 	@Override
     public String toString() {
-        return (this.getMaSach()+"|"+this.getTenSach()+"|"+this.getNXB()+"|"+this.getNph()+"|"+this.getTheLoai()+"|"+this.getSl()+"|"+this.getGia()+"|"+this.getBorrow());
+        return String.format("%-10s | %-50s | %-15s | %-10s | %-15s | %-5d | %-10.2f | %-6s",
+                maSach, tenSach, NXB, nph, theLoai, sl, gia, isAvaiable);
     }
 	
 	public static Book getBookByTitle(String maSach) {

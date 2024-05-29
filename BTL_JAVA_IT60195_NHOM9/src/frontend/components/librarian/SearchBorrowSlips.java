@@ -112,6 +112,20 @@ public class SearchBorrowSlips extends JFrame{
 		title.setBounds(289, 59, 474, 31);
 		getContentPane().add(title);
 		
+		//danh sách phiếu vi phạm
+		JButton list = new JButton("Danh sách phiếu vi phạm");
+		list.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ViolationsList vl=new ViolationsList(SearchBorrowSlips.this);
+				vl.setVisible(true);
+				setVisible(false);
+				dispose();
+			}
+		});
+		list.setBounds(177, 27, 216, 23);
+		getContentPane().add(list);
+		
 		
 		//Nhấn vào hàng
 		table.addMouseListener(new MouseAdapter() {

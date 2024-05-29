@@ -38,7 +38,7 @@ public class Librarian {
 	
 	@Override
     public String toString() {
-        return (maTT+"|"+accountName+"|"+password);
+        return String.format("%-5s | %-15s | %-15s", maTT, accountName, password);
     }
 	
 }

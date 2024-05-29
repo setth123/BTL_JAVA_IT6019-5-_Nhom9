@@ -36,7 +36,6 @@ public class ViolationsList extends JFrame {
 	private static void fetchViolations(DefaultTableModel m) {
 		m.setRowCount(0);
 		List<Violation> result=FetchBE.fetchViolation();
-		System.out.println(result.get(0).getMaPhieuMuon());
 		for(Violation v: result) {
 			 Object[] row = {v.getMaViPham(),v.getMaPhieuMuon(),v.getMaTaiKhoan(),v.getLyDo(),v.getSoNgayViPham(),v.getSoTienPhat()};
 			 m.addRow(row);

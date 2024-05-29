@@ -12,13 +12,14 @@ import java.util.List;
 
 public class ReadData {
 	
-	//convert relative path to absolute path.Ex: fileName="/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Librarian.txt"
+	//chuyển đổi đường dẫn.Ex: fileName="/BTL_JAVA_IT60195_NHOM9/src/backend/DemoDB/Librarian.txt"
 	public static String f_path(String fileName) {
 		String projectDirectory = System.getProperty("user.dir");
         File file=new File(projectDirectory,fileName);
         return file.getAbsolutePath();
 	}
 	
+	//đọc dữ liệu
     public static List<Account> readAccount(String fileName) {
         List<Account> accounts = new ArrayList<>();
         String path=f_path(fileName);
@@ -28,7 +29,7 @@ public class ReadData {
                // line = line.substring(1, line.length() - 1);
                 String[] data = line.split("\\|");
                 boolean isActive;
-                if(data[6].equals("true"))isActive=true;
+                if(data[6].trim().equals("true"))isActive=true;
                 else isActive=false;
                 Account account = new Account(data[0].trim(), data[1].trim(), data[2].trim(), data[3].trim(), data[4].trim(), data[5].trim(),isActive);
                 accounts.add(account);

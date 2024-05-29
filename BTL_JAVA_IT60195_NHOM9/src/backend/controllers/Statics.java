@@ -7,31 +7,33 @@ import java.util.List;
 import backend.models.BorrowSlip;
 
 public class Statics {
+	//số sách
 	public static int books() {
 		return ReadData.readBook("/DemoDB/Book.txt").size();
 		
 	}
+	//số người dùng
 	public static int users() {
 		return ReadData.readAccount("/DemoDB/user-account.txt").size();
 	}
-	public static int violations() {
-		return ReadData.readViolation("/DemoDB/Violation.txt").size();
-	}
+
+	//số sang đang được mượn
 	public static int borrowingBook() {
 		List<BorrowSlip> bs=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
 		int count=0;
 		for(BorrowSlip s: bs) {
-			if(s.getTrangThai().equals("Approved")||s.getTrangThai().equals("Expired")) {
+			if(s.getTrangThai().equals("Approved")||(s.getTrangThai().equals("Approved")&&s.getNgayTra().isBefore(LocalDate.now()))) {
 				count++;
 			}
 		}
 		return count;
 	}
+	//số sách hết hạn
 	public static int expiredBook() {
 		List<BorrowSlip> bs=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
 		int count=0;
 		for(BorrowSlip s: bs) {
-			if(s.getNgayTra().isBefore(LocalDate.now())) {
+			if(s.getNgayTra().isBefore(LocalDate.now())&&s.getTrangThai().equals("Approved")) {
 				count++;
 			}
 		}

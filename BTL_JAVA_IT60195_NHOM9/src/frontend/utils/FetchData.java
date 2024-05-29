@@ -9,7 +9,7 @@ import backend.models.Book;
 import backend.utils.FetchBE;
 
 public class FetchData {
-	//fetch user
+	//lấy tt người dùng theo từ khoá và định dạng bảng 
 	public static void fetchUser(String keyword,DefaultTableModel m) {
 		m.setRowCount(0);
 		List<Account> result=FetchBE.findA(keyword);
@@ -21,6 +21,8 @@ public class FetchData {
 			m.addRow(row);
 		}
 	}
+	
+	//lấy toàn bộ người dùng và định dạng bảng
 	public static void fetchUser(DefaultTableModel m) {
 		m.setRowCount(0);
 		List<Account> result=FetchBE.findA("");
@@ -32,7 +34,7 @@ public class FetchData {
 		}
 	}
 	
-	//fetchBook
+	//lấy tt sach theo từ khoá và định dạng bảng 
 	public static void fetchBook(String keyword,DefaultTableModel m) {
 		System.out.println(keyword);
 		m.setRowCount(0);
@@ -43,6 +45,7 @@ public class FetchData {
 			m.addRow(row);
 		}
 	}
+	//lấy toàn bộ sách và định dạng bảng
 	public static void fetchBook(DefaultTableModel m) {
 		m.setRowCount(0);
 		List<Book> result = FetchBE.findB("");
