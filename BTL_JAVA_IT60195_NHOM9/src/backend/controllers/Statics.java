@@ -22,7 +22,7 @@ public class Statics {
 		List<BorrowSlip> bs=ReadData.readBorrowSlip("/DemoDB/borrow-slip.txt");
 		int count=0;
 		for(BorrowSlip s: bs) {
-			if(s.getTrangThai().equals("Approved")||(s.getTrangThai().equals("Approved")&&s.getNgayTra().isBefore(LocalDate.now()))) {
+			if(s.getTrangThai().equals("Approved")) {
 				count++;
 			}
 		}
