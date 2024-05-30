@@ -20,7 +20,7 @@ public class UserController {
 
     // đăng nhập user
     public static Account login(String username, String password) {
-        List<Account> users = ReadData.readAccount("../DemoDB/user-account.txt");
+        List<Account> users = ReadData.readAccount("/DemoDB/user-account.txt");
         for (Account a : users) {
             if (a.getTenDangNhap().equals(username) && a.getMatKhau().equals(password)) {
                 return a;
@@ -33,7 +33,7 @@ public class UserController {
     public static boolean changePassword(Account currentUser, String newPassword) {
         currentUser.setMatKhau(newPassword); // Assuming Account has a setPassword method
         SessionManager.login(currentUser); // Update the session
-        List<Account> accounts = ReadData.readAccount("../DemoDB/user-account.txt");
+        List<Account> accounts = ReadData.readAccount("/DemoDB/user-account.txt");
         // Find and update the current user's information
         for (int i = 0; i < accounts.size(); i++) {
             if (accounts.get(i).getMaTaiKhoan().equals(currentUser.getMaTaiKhoan())) {
@@ -41,14 +41,14 @@ public class UserController {
                 break;
             }
         }
-        WriteData.writeAccount(accounts, "../DemoDB/user-account.txt");
+        WriteData.writeAccount(accounts, "/DemoDB/user-account.txt");
         return true;
     }
 
     // Sửa thông tin cá nhân
     public static boolean editPersonalInfo(Account currentUser){
         SessionManager.login(currentUser);
-        List<Account> accounts = ReadData.readAccount("../DemoDB/user-account.txt");
+        List<Account> accounts = ReadData.readAccount("/DemoDB/user-account.txt");
         for (int i = 0; i < accounts.size(); i++) {
             if (currentUser.getMaTaiKhoan().equals(accounts.get(i).getMaTaiKhoan())) {
                 accounts.set(i, currentUser);
@@ -56,14 +56,14 @@ public class UserController {
             }
         }
 
-        WriteData.writeAccount(accounts, "../DemoDB/user-account.txt");
+        WriteData.writeAccount(accounts, "/DemoDB/user-account.txt");
         return true;
     }
 
     // Tìm kiếm sách
     public static List<Book> searchBooks(String keyword) {
         List<Book> books = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(ReadData.f_path("../DemoDB/Book.txt")))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(ReadData.f_path("/DemoDB/Book.txt")))) {
             String line;
             while ((line = br.readLine()) != null) {
                 //line = line.substring(1, line.length() - 1);
@@ -93,7 +93,7 @@ public class UserController {
     // Đặt sách mượn
     public static List<BorrowSlip> getBorrowedBooks(String userId) {
         List<BorrowSlip> borrowSlips = new ArrayList<>();
-        try (BufferedReader brSlip = new BufferedReader(new FileReader(ReadData.f_path("../DemoDB/borrow-slip.txt")))) {
+        try (BufferedReader brSlip = new BufferedReader(new FileReader(ReadData.f_path("/DemoDB/borrow-slip.txt")))) {
             String line;
             while ((line = brSlip.readLine()) != null) {
                 line = line.substring(1, line.length() - 1);
