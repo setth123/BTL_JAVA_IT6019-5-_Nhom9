@@ -144,7 +144,7 @@ public class Dashboard extends JFrame {
 
     // Tạo bảng danh sách
     private JTable createCategoryTable() {
-        java.util.List<Category> categories = readCategory("../DemoDB/Category.txt");
+        java.util.List<Category> categories = readCategory("/DemoDB/Category.txt");
         String[] columnNames = {"ID", "Title"};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 
@@ -158,7 +158,7 @@ public class Dashboard extends JFrame {
 
     // tạo bảng Vi phạm
     private JTable createViolationTable() {
-        java.util.List<Violation> violations = readViolation("../DemoDB/Violation.txt");
+        java.util.List<Violation> violations = readViolation("/DemoDB/Violation.txt");
         String[] columnNames = {"Mã Phiếu Mượn", "Lí Do", "Số Ngày Vi Phạm", "Số Tiền Phạt"};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 

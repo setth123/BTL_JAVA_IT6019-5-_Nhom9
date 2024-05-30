@@ -324,7 +324,7 @@ public class SearchBook {
 
         // Cập nhật file Book.txt
         private void updateBookFile(Book updatedBook) {
-            String filePath = ReadData.f_path("../DemoDB/Book.txt");
+            String filePath = ReadData.f_path("/DemoDB/Book.txt");
             List<String> fileContent = new ArrayList<>();
 
             // Đọc toàn bộ nội dung của tệp vào danh sách
@@ -369,7 +369,7 @@ public class SearchBook {
 
         public static void writeBorrowSlip(Book book) {
             String maPhieuMuon = generateBorrowSlipId();
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(ReadData.f_path("../DemoDB/borrow-slip.txt"), true))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(ReadData.f_path("/DemoDB/borrow-slip.txt"), true))) {
                 LocalDate ngayMuon = LocalDate.now();
 
                 // Use SessionManager to get the current user
