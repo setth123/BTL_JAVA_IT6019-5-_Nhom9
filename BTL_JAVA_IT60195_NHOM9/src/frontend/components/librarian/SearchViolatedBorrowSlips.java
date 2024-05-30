@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,9 +21,11 @@ import javax.swing.table.DefaultTableModel;
 
 import backend.models.BorrowSlip;
 import backend.utils.FetchBE;
+import frontend.utils.ImageProcess;
+
 import java.awt.Font;
 
-public class SearchBorrowSlips extends JFrame{
+public class SearchViolatedBorrowSlips extends JFrame{
 	private JTextField searchBar;
 	private JTable table;
 	
@@ -37,7 +40,7 @@ public class SearchBorrowSlips extends JFrame{
 	/**
 	 * Create the application.
 	 */
-	public SearchBorrowSlips(JFrame parent) {
+	public SearchViolatedBorrowSlips(JFrame parent) {
 		initialize(parent);
 	}
 
@@ -117,7 +120,7 @@ public class SearchBorrowSlips extends JFrame{
 		list.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ViolationsList vl=new ViolationsList(SearchBorrowSlips.this);
+				ViolationsList vl=new ViolationsList(SearchViolatedBorrowSlips.this);
 				vl.setVisible(true);
 				setVisible(false);
 				dispose();
@@ -125,6 +128,19 @@ public class SearchBorrowSlips extends JFrame{
 		});
 		list.setBounds(177, 27, 216, 23);
 		getContentPane().add(list);
+		
+		//tải lại trang
+		JButton ref = new JButton("");
+		ImageIcon reload=ImageProcess.scaled("Assets/reload.png",23,23);
+		ref.setIcon(reload);
+		ref.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				fetchViolatedBorrowSlip(model);
+			}
+		});
+		ref.setBounds(893, 27, 23, 23);
+		getContentPane().add(ref);
 		
 		
 		//Nhấn vào hàng
@@ -138,10 +154,8 @@ public class SearchBorrowSlips extends JFrame{
 				String maSach=table.getValueAt(selected, 4).toString();
 				String trangThai=table.getValueAt(selected, 5).toString();
 				BorrowSlip bs=new BorrowSlip(maPhieuMuon,ngayMuon,maTaiKhoan,maSach,trangThai);
-				ViolationForm vf=new ViolationForm(bs,SearchBorrowSlips.this);
+				ViolationForm vf=new ViolationForm(bs,SearchViolatedBorrowSlips.this);
 				vf.setVisible(true);
-				//setVisible(false);
-				//dispose();
 			}
 		});
 		

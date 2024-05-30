@@ -116,7 +116,7 @@ public class BorrowBook extends JFrame {
             while ((line = brSlip.readLine()) != null) {
                 line = line.substring(1, line.length() - 1);
                 String[] parts = line.split("\\|");
-                if (parts.length >= 6 && parts[3].trim().equals(userId) && "Approved".equals(parts[5].trim())) {
+                if (parts.length >= 6 && parts[3].trim().equals(userId) && (!"Dissaprove".equals(parts[5].trim())&&!"Pending".equals(parts[5].trim()))) {
                     String maPhieuMuon = parts[0].trim();
                     String ngayMuon = parts[1].trim();
                     String maNguoiDung = parts[3].trim();

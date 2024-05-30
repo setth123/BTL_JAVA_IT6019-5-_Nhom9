@@ -86,6 +86,11 @@ public class ViolationForm extends JFrame {
 		lydo.setBounds(25, 334, 89, 14);
 		getContentPane().add(lydo);
 		
+		lydoInp = new JTextField();
+		lydoInp.setBounds(134, 331, 436, 20);
+		getContentPane().add(lydoInp);
+		lydoInp.setColumns(10);
+		
 		JLabel songay = new JLabel("Số ngày vi phạm");
 		songay.setBounds(371, 189, 100, 14);
 		getContentPane().add(songay);
@@ -97,6 +102,11 @@ public class ViolationForm extends JFrame {
 		JLabel stp = new JLabel("Số tiền phạt");
 		stp.setBounds(371, 254, 100, 14);
 		getContentPane().add(stp);
+		
+		stpInp = new JTextField();
+		stpInp.setBounds(462, 251, 86, 20);
+		getContentPane().add(stpInp);
+		stpInp.setColumns(10);
 		
 		
 		//Tạo phiếu vi phạm
@@ -146,15 +156,6 @@ public class ViolationForm extends JFrame {
 		btnHu.setBounds(524, 385, 89, 23);
 		getContentPane().add(btnHu);
 		
-		stpInp = new JTextField();
-		stpInp.setBounds(462, 251, 86, 20);
-		getContentPane().add(stpInp);
-		stpInp.setColumns(10);
-		
-		lydoInp = new JTextField();
-		lydoInp.setBounds(134, 331, 436, 20);
-		getContentPane().add(lydoInp);
-		lydoInp.setColumns(10);
 		
 		//Chuyển hưởng đến danh sách phiếu vi phạm
 		JButton list = new JButton("Danh sách phiếu vi phạm");

@@ -37,7 +37,7 @@ public class BorrowApprove extends JFrame {
     private static final long serialVersionUID = 1L;
     private JTable pm;
 
-    //Lấy dữ liệu phiếu mượn đang chờ
+    //Lấy dữ liệu phiếu mượn đang chờ và phiếu mượn chưa trả
     public static void fetchBorrowSlipAdmin(DefaultTableModel m) {
         m.setRowCount(0);
         List<BorrowSlip> result = FetchBE.findBSbyStatus();

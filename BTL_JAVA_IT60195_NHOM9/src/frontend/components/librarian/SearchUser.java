@@ -161,10 +161,7 @@ public class SearchUser extends JFrame{
 		});
 		ql.setBounds(42, 20, 89, 23);
 		getContentPane().add(ql);
-		
-		
-		//title = new JLabel("TÌM KIẾM NGƯỜI DÙNG");
-		
+				
 		//khoá người dùng
 		switch(searchFor) {
 		case 1:

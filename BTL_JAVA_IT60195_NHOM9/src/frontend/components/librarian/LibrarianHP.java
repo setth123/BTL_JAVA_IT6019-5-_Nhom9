@@ -129,6 +129,7 @@ public class LibrarianHP extends JFrame {
 		search.setBounds(1044, 47, 89, 23);
 		header.add(search);
 		
+		//tải lại trang
 		ImageIcon reload=ImageProcess.scaled("Assets/reload.png",23,23);
 		JButton ref = new JButton("");
 		
@@ -136,6 +137,7 @@ public class LibrarianHP extends JFrame {
 		ref.setBounds(1143, 47, 23, 23);
 		header.add(ref);
 		
+		//logo admin
 		JLabel Admin = new JLabel("Xin chào, "+l.getAccountName());
 		Admin.setBounds(10, 100, 129, 19);
 		header.add(Admin);
@@ -147,7 +149,7 @@ public class LibrarianHP extends JFrame {
 		getContentPane().add(nav);
 		nav.setLayout(null);
 		
-		
+		//mục sách
 		JLabel sach = new JLabel("    Sách");
 		sach.setForeground(new Color(255, 255, 255));
 		sach.setBackground(new Color(192, 192, 192));
@@ -160,23 +162,13 @@ public class LibrarianHP extends JFrame {
 		ImageIcon delete=ImageProcess.scaled("Assets/delete-icon-1864x2048-bp2i0gor.png", 20, 20);
 		ImageIcon modify=ImageProcess.scaled("Assets/modify-icon-512x512-clqmeplb.png", 20, 20);
 		
-		JLabel useropt = new JLabel("    Người dùng");
-		useropt.setForeground(Color.WHITE);
-		useropt.setFont(new Font("Tahoma", Font.BOLD, 14));
-		useropt.setBackground(Color.LIGHT_GRAY);
-		useropt.setBounds(0, 241, 163, 27);
-		ImageIcon user=ImageProcess.scaled("Assets/1077063.png", 27, 27);
-		useropt.setIcon(user);
-		nav.add(useropt);
-		
+		//thêm sách
 		JPanel panel_2 = new JPanel();
 		panel_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				AddBook a=new AddBook(LibrarianHP.this);
 				a.setVisible(true);
-				//setVisible(false);
-				//dispose();
 			}
 		});
 		Animation.onHoover(panel_2, new Color(0,128,255), new Color(0,128,192));
@@ -191,6 +183,7 @@ public class LibrarianHP extends JFrame {
 		addb.setForeground(new Color(255, 255, 255));
 		addb.setIcon(add);
 		
+		//xoá sách
 		JPanel panel_2_1 = new JPanel();
 		panel_2_1.addMouseListener(new MouseAdapter() {
 			@Override
@@ -214,13 +207,14 @@ public class LibrarianHP extends JFrame {
 		delb.setBackground(new Color(0, 128, 255));
 		delb.setIcon(delete);
 		
+		//sửa thông tin sách
 		JPanel panel_2_2 = new JPanel();
 		Animation.onHoover(panel_2_2, new Color(0,128,255), new Color(0,128,192));
 		panel_2_2.setBackground(new Color(0, 128, 255));
 		panel_2_2.setBounds(0, 163, 163, 40);
 		nav.add(panel_2_2);
 		panel_2_2.setLayout(null);
-		
+	
 		JLabel modifyb = new JLabel("  Sửa thông tin sách");
 		panel_2_2.addMouseListener(new MouseAdapter() {
 			@Override
@@ -236,6 +230,17 @@ public class LibrarianHP extends JFrame {
 		modifyb.setForeground(new Color(255, 255, 255));
 		modifyb.setIcon(modify);
 		
+		//mục người dùng
+		JLabel useropt = new JLabel("    Người dùng");
+		useropt.setForeground(Color.WHITE);
+		useropt.setFont(new Font("Tahoma", Font.BOLD, 14));
+		useropt.setBackground(Color.LIGHT_GRAY);
+		useropt.setBounds(0, 241, 163, 27);
+		ImageIcon user=ImageProcess.scaled("Assets/1077063.png", 27, 27);
+		useropt.setIcon(user);
+		nav.add(useropt);
+		
+		// mượn/trả sách
 		JPanel panel_2_3 = new JPanel();
 		panel_2_3.setLayout(null);
 		panel_2_3.setBackground(new Color(0, 128, 255));
@@ -259,11 +264,12 @@ public class LibrarianHP extends JFrame {
 		borrowApp.setIcon(borrow);
 		panel_2_3.add(borrowApp);
 		
+		//phiếu vi phạm
 		JPanel panel_2_4 = new JPanel();
 		panel_2_4.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				SearchBorrowSlips sbs=new SearchBorrowSlips(LibrarianHP.this);
+				SearchViolatedBorrowSlips sbs=new SearchViolatedBorrowSlips(LibrarianHP.this);
 				sbs.setVisible(true);
 				setVisible(false);
 				dispose();
@@ -282,6 +288,8 @@ public class LibrarianHP extends JFrame {
 		violations.setIcon(vipham);
 		panel_2_4.add(violations);
 		
+		
+		//khoá tài khoản
 		JPanel panel_2_4_1 = new JPanel();
 		panel_2_4_1.setLayout(null);
 		panel_2_4_1.setBackground(new Color(0, 128, 255));
@@ -305,6 +313,7 @@ public class LibrarianHP extends JFrame {
 		lockacc.setIcon(banned);
 		panel_2_4_1.add(lockacc);
 		
+		//mục thủ thư
 		JLabel librarian = new JLabel("Thủ thư");
 		librarian.setForeground(Color.WHITE);
 		librarian.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -314,6 +323,7 @@ public class LibrarianHP extends JFrame {
 		librarian.setIcon(libra);
 		nav.add(librarian);
 		
+		//đổi mật khẩu
 		JPanel panel_2_4_1_1 = new JPanel();
 		panel_2_4_1_1.setLayout(null);
 		panel_2_4_1_1.setBackground(new Color(0, 128, 255));
@@ -337,6 +347,7 @@ public class LibrarianHP extends JFrame {
 		changeP.setIcon(change1);
 		panel_2_4_1_1.add(changeP);
 		
+		//thống kê
 		//số đầu sách
 		JPanel panel_3 = new JPanel();
 		panel_3.setBackground(new Color(255, 128, 64));
@@ -344,13 +355,11 @@ public class LibrarianHP extends JFrame {
 		getContentPane().add(panel_3);
 		panel_3.setLayout(null);
 		
-		
 		JLabel bookNo = new JLabel(String.valueOf(Statics.books()));
 		bookNo.setForeground(new Color(255, 255, 255));
 		bookNo.setFont(new Font("Tahoma", Font.BOLD, 50));
 		bookNo.setBounds(26, 11, 151, 84);
 		panel_3.add(bookNo);
-		
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(new Color(255, 0, 0));
