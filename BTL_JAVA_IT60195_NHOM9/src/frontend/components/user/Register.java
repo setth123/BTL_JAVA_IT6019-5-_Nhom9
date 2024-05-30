@@ -113,7 +113,7 @@ public class Register {
         btnRegister.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // Xử lý logic đăng ký ở đây
-                // kiểm tra xem các trường đã nhập đúng chưa và thực hiện đăng ký
+
                 String name = txtName.getText();
                 String address = txtAddress.getText();
                 String phoneNumber = txtPhoneNumber.getText();
@@ -121,19 +121,20 @@ public class Register {
                 String confirmPassword = new String(txtConfirmPassword.getPassword());
                 String userName = txtUsername.getText();
 
-                if (userName.isEmpty()) {
-                    lblMismatchMessage.setText("Tài khoản không được để trống");
+                // kiểm tra xem các trường đã nhập đúng chưa và thực hiện đăng ký
+                if (userName.isEmpty() || name.isEmpty() || address.isEmpty() || phoneNumber.isEmpty()) {
+                    lblMismatchMessage.setText("Vui lòng nhập đủ thông tin!");
                 } else if (!password.equals(confirmPassword)) {
                     lblMismatchMessage.setText("Mật khẩu không khớp");
                 } else if (!isValidPassword(password)) {
                     lblMismatchMessage.setText("Mật khẩu không hợp lệ");
                 } else {
-                    int total = ReadData.readAccount("/DemoDB/user-account.txt").size();
+                    int total = ReadData.readAccount("../DemoDB/user-account.txt").size();
                     lblMismatchMessage.setText("Đăng ký tài khoản thành công!");
                     Account a = new Account("DG" + (total + 1), name, address, phoneNumber, userName, password, true);
-                    java.util.List<Account> accounts = ReadData.readAccount("/DemoDB/user-account.txt");
+                    java.util.List<Account> accounts = ReadData.readAccount("../DemoDB/user-account.txt");
                     accounts.add(a);
-                    WriteData.writeAccount(accounts, "/DemoDB/user-account.txt");
+                    WriteData.writeAccount(accounts, "../DemoDB/user-account.txt");
                     Timer timer = new Timer(1000, new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -180,4 +181,5 @@ public class Register {
         }
         return hasUppercase && hasNumber;
     }
+
 }

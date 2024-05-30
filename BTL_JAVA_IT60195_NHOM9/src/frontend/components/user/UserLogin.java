@@ -10,11 +10,11 @@ import java.awt.*;
 public class UserLogin extends JFrame {
     public UserLogin(JFrame parent) {
 
-        // Set window title
+        // Đặt tiêu đề
         setTitle("Độc giả đăng nhập");
         setResizable(false);
 
-        // Create and configure components
+        // Tạo và cấu hình các thành phần
         JLabel headerLabel = new JLabel("Đăng nhập");
         headerLabel.setFont(new Font("Tahoma", Font.BOLD, 24));
         headerLabel.setForeground(Color.gray);
@@ -28,11 +28,12 @@ public class UserLogin extends JFrame {
         JButton loginButton = new JButton("Đăng nhập");
         JButton backButton = new JButton("Quay lại");
 
-        // Create a panel for the back button and align it to the left
+        // tạo bảng điều khiển nút quay lại
         JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         backButtonPanel.add(backButton);
 
-        // Create a panel for the main login form
+        //
+        //Tạo bảng điều khiển cho biểu mẫu đăng nhập chính
         JPanel loginPanel = new JPanel();
         GroupLayout layout = new GroupLayout(loginPanel);
         loginPanel.setLayout(layout);
@@ -60,12 +61,12 @@ public class UserLogin extends JFrame {
                         .addComponent(passwordField))
                 .addComponent(loginButton));
 
-        // Set the layout for the main content pane
+        //Đặt bố cục cho ngăn nội dung chính
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(backButtonPanel, BorderLayout.NORTH);
         getContentPane().add(loginPanel, BorderLayout.CENTER);
 
-        // Add action listener for login button
+        //  action nút "Đăng nhập"
         loginButton.addActionListener(e -> {
             String username = usernameField.getText();
             char[] passwordChars = passwordField.getPassword();
@@ -78,27 +79,27 @@ public class UserLogin extends JFrame {
                 } else {
                     SessionManager.login(loggedIn);
 
-                    // Open the main dashboard window
+                    // Mở cửa sổ sang Menu User
                     Dashboard dashboard = new Dashboard();
                     dashboard.setVisible(true);
 
-                    // Close the login window
+                    // Đóng cửa sổ đăng nhập
                     dispose();
                 }
             } else {
-                // Display error message or handle unsuccessful login
+                // Hiển thị lỗi
                 JOptionPane.showMessageDialog(this, "Đăng nhập không thành công", "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
 
         });
 
-        // Add action listener for back button
+        // action nút "Quay lại"
         backButton.addActionListener(e -> {
             parent.setVisible(true);
             dispose();
         });
 
-        // Set window size, close operation, and visibility
+        // Đặt kích thước
         setSize(500, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);

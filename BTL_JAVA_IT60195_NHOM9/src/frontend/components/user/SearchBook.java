@@ -1,5 +1,6 @@
 package frontend.components.user;
 
+import backend.controllers.UserController;
 import backend.models.Account;
 import backend.models.Book;
 import backend.models.BorrowSlip;
@@ -23,27 +24,25 @@ import java.util.Calendar;
 import java.util.List;
 
 public class SearchBook {
-    /**
-     * @wbp.parser.entryPoint
-     */
     public static void showSearchBookLayout(JFrame parentFrame) {
         // Tạo một JFrame cho layout tìm kiếm sách
         final JFrame searchFrame = new JFrame("Tìm kiếm sách");
         searchFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         searchFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        searchFrame.setSize(900, 600);
         searchFrame.setResizable(true);
         searchFrame.getContentPane().setLayout(new BorderLayout());
-        // Ensure JFrame displays at the center of the screen
+
+        // JFrame ở center
         searchFrame.setLocationRelativeTo(null);
         searchFrame.setVisible(true);
         parentFrame.setVisible(false);
 
         // Tạo các thành phần UI cho layout tìm kiếm sách
         JPanel topPanel = new JPanel(new BorderLayout());
-        JLabel lblSearch = new JLabel("Tìm kiếm:");
+        JLabel lblSearch = new JLabel("Tìm kiếm ");
         lblSearch.setFont(new Font("Arial", Font.BOLD, 16)); // Set larger font for label
-        JTextField txtSearch = new JTextField(30);
+        JTextField txtSearch = new JTextField();
+        txtSearch.setPreferredSize(new Dimension(300, 30));
         JButton btnSearch = new JButton("Tìm kiếm");
         JButton btnBack = new JButton("Quay lại");
 
@@ -58,10 +57,10 @@ public class SearchBook {
         topPanel.add(searchPanel, BorderLayout.WEST);
         topPanel.add(buttonPanel, BorderLayout.EAST);
 
-        // Bảng để hiển thị kết quả tìm kiếm
+        // Bảng xuất ra thông tin 1 phần của sách
         String[] columnNames = {"STT", "Mã sách", "Tên sách", "Thể loại", "Thao tác"};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
-        List<Book> allBooks = searchBooks("");
+        List<Book> allBooks = UserController.searchBooks("");
         if (allBooks.isEmpty()) {
             tableModel.setRowCount(0); // Clear existing rows
             tableModel.addRow(new Object[]{"", "", "No books found", "", ""});
@@ -83,11 +82,11 @@ public class SearchBook {
             }
         };
 
-        // Add button to "Thao tác" column
+        // Thêm  "Thao tác" column
         table.getColumn("Thao tác").setCellEditor(new ButtonEditor(new JCheckBox(), table));
 
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setPreferredSize(new Dimension(800, 800)); // Set preferred size for the scroll pane
+        scrollPane.setPreferredSize(new Dimension(1350, 800)); // Set preferred size for the scroll pane
 
         // Thêm các thành phần UI vào JFrame
         searchFrame.getContentPane().add(topPanel, BorderLayout.NORTH);
@@ -103,7 +102,7 @@ public class SearchBook {
                 if (keyword.isEmpty()) {
                     JOptionPane.showMessageDialog(searchFrame, "Vui lòng nhập từ khóa tìm kiếm", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 } else {
-                    List<Book> books = searchBooks(keyword);
+                    List<Book> books = UserController.searchBooks(keyword);
                     if (books.isEmpty()) {
                         tableModel.setRowCount(0); // Clear existing rows
                         tableModel.addRow(new Object[]{"", "", "No books found", "", ""});
@@ -134,6 +133,7 @@ public class SearchBook {
 
     }
 
+    // Điều chỉnh cột
     private static void adjustColumnWidths(JTable table, double[] percentages) {
         final int totalWidth = table.getWidth();
         TableColumnModel columnModel = table.getColumnModel();
@@ -143,36 +143,7 @@ public class SearchBook {
         }
     }
 
-
-    private static List<Book> searchBooks(String keyword) {
-        List<Book> books = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(ReadData.f_path("/DemoDB/Book.txt")))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                //line = line.substring(1, line.length() - 1);
-                String[] parts = line.split("\\|");
-                if (parts.length >= 8) {
-                    String code = parts[0].trim();
-                    String name = parts[1].trim();
-                    String author = parts[2].trim();
-                    String releaseDate = parts[3].trim();
-                    String category = parts[4].trim();
-                    int quantity = Integer.parseInt(parts[5].trim());
-                    double price = Double.parseDouble(parts[6].trim());
-                    String status=parts[7].trim();
-                    if(status.equals("true")) {
-                    	if (name.toLowerCase().contains(keyword.toLowerCase()) || code.toLowerCase().contains(keyword.toLowerCase())) {
-                    		books.add(new Book(code, name, author, LocalDate.parse(releaseDate), category, quantity, price));
-                    	}                    	
-                    }
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace(System.err);
-        }
-        return books;
-    }
-
+    // Cập nhật bảng khi nhập từ khóa tìm
     private static void updateTable(List<Book> books, DefaultTableModel tableModel) {
         tableModel.setRowCount(0); // Clear existing rows
         for (Book book : books) {
@@ -249,8 +220,9 @@ public class SearchBook {
             super.fireEditingStopped();
         }
 
+        // Tìm sách theo từ khóa
         private Book findBookByCode(String code) {
-            List<Book> books = searchBooks(""); // Load lại toàn bộ danh sách sách
+            List<Book> books = UserController.searchBooks(""); // Load lại toàn bộ danh sách sách
             for (Book book : books) {
                 if (book.getMaSach().equals(code)) {
                     return book;
@@ -259,6 +231,7 @@ public class SearchBook {
             return null;
         }
 
+        // chi tiết sách
         private void showBookDetails(Book book) {
             JFrame detailFrame = new JFrame("Chi tiết sách");
             detailFrame.setSize(400, 300);
@@ -301,6 +274,7 @@ public class SearchBook {
             detailFrame.setVisible(true);
         }
 
+        // Phiếu xác nhận sau khi chọn Đặt mượn sách
         private void showDetailedBookInfo(Book book) {
             JFrame detailedFrame = new JFrame("Thông tin chi tiết sách");
             detailedFrame.setSize(400, 300);
@@ -324,10 +298,10 @@ public class SearchBook {
                 public void actionPerformed(ActionEvent e) {
                     //book.reduceQuantity(1);
 
-                    // Write the borrow slip and get the generated ID
+                    // Viết phiếu mượn
                     writeBorrowSlip(book);
 
-                    // Update the Book.txt file to reflect the new quantity
+                    //Cập nhật tệp Book.txt để phản ánh số lượng mới
                     updateBookFile(book);
 
                     // Display a confirmation dialog
@@ -348,9 +322,9 @@ public class SearchBook {
         }
 
 
-
+        // Cập nhật file Book.txt
         private void updateBookFile(Book updatedBook) {
-            String filePath = ReadData.f_path("/DemoDB/Book.txt");
+            String filePath = ReadData.f_path("../DemoDB/Book.txt");
             List<String> fileContent = new ArrayList<>();
 
             // Đọc toàn bộ nội dung của tệp vào danh sách
@@ -395,7 +369,7 @@ public class SearchBook {
 
         public static void writeBorrowSlip(Book book) {
             String maPhieuMuon = generateBorrowSlipId();
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(ReadData.f_path("/DemoDB/borrow-slip.txt"), true))) {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(ReadData.f_path("../DemoDB/borrow-slip.txt"), true))) {
                 LocalDate ngayMuon = LocalDate.now();
 
                 // Use SessionManager to get the current user
@@ -411,7 +385,7 @@ public class SearchBook {
             }
         }
 
-
+        // Viết chi tiết phiếu mượn
         private void writeBorrowSlipDetail(Book book, String maPhieuMuon) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("borrow-slip-detail.txt", true))) {
                 String ngayTraDuKien = calculateDueDate(); // Implement this method to calculate the due date
@@ -427,7 +401,6 @@ public class SearchBook {
             }
         }
 
-
         // Sample method to generate a borrow slip ID
         private static String generateBorrowSlipId() {
             // Implement ID generation logic
@@ -441,6 +414,5 @@ public class SearchBook {
             return new SimpleDateFormat("dd/MM/yyyy").format(cal.getTime());
         }
     }
-
 }
 

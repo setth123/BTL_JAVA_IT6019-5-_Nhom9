@@ -1,5 +1,6 @@
 package frontend.components.user;
 
+import backend.controllers.UserController;
 import backend.models.Account;
 import backend.utils.ReadData;
 import backend.utils.SessionManager;
@@ -24,10 +25,10 @@ public class EditPersonalInfo extends JFrame {
         JLabel emailLabel = new JLabel("Địa chỉ:");
         JLabel phoneNumberLabel = new JLabel("Số điện thoại:");
 
-        JTextField usernameField = new JTextField(currentUser.getTenDangNhap(), 20);
-        JTextField fullNameField = new JTextField(currentUser.getTenNguoiDung(), 20);
-        JTextField dcField = new JTextField(currentUser.getDiaChi(), 20);
-        JTextField phoneField = new JTextField(currentUser.getSoDienThoai(), 20);
+        JTextField usernameField = new JTextField(currentUser.getTenDangNhap(), 21);
+        JTextField fullNameField = new JTextField(currentUser.getTenNguoiDung(), 21);
+        JTextField dcField = new JTextField(currentUser.getDiaChi(), 21);
+        JTextField phoneField = new JTextField(currentUser.getSoDienThoai(), 21);
 
         JButton saveButton = new JButton("Lưu");
         JButton changePasswordButton = new JButton("Đổi mật khẩu");
@@ -35,39 +36,41 @@ public class EditPersonalInfo extends JFrame {
 
         // Set button actions
         saveButton.addActionListener(e -> {
+
+            // Validate input fields
+            if (usernameField.getText().isEmpty() || fullNameField.getText().isEmpty() ||
+                    dcField.getText().isEmpty() || phoneField.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập đủ thông tin", "Thông báo", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
             // Save the updated information
             currentUser.setTenDangNhap(usernameField.getText());
             currentUser.setTenNguoiDung(fullNameField.getText());
             currentUser.setDiaChi(dcField.getText());
             currentUser.setSoDienThoai(phoneField.getText());
-            // Save other updated information as needed
             // Update the session user details
-            SessionManager.login(currentUser);
-            java.util.List<Account> accounts = ReadData.readAccount("/DemoDB/user-account.txt");
-            for (int i = 0; i < accounts.size(); i++) {
-                if (currentUser.getMaTaiKhoan().equals(accounts.get(i).getMaTaiKhoan())) {
-                    accounts.set(i, currentUser);
-                    break;
-                }
+
+            if(UserController.editPersonalInfo(currentUser)){
+                // Hiện thông báo thành công
+                JOptionPane.showMessageDialog(this, "Thông tin đã được cập nhật", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+
             }
-
-            WriteData.writeAccount(accounts, "/DemoDB/user-account.txt");
-            // Show success message
-            JOptionPane.showMessageDialog(this, "Thông tin đã được cập nhật", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-
-            // Return to personal info view
+            // Quay lại personal info view
             new Dashboard();
             dispose();
         });
 
+        // Đổi mật khẩu
         changePasswordButton.addActionListener(e -> {
-            // Open ChangePassword window
+            // Mở ChangePassword window
             new ChangePassword(this, currentUser);
             dispose();
         });
 
+        // Quay lại
         backButton.addActionListener(e -> {
-            // Return to personal info view
+            // quay lại personal info view
             new Dashboard();
             dispose();
         });
@@ -119,8 +122,7 @@ public class EditPersonalInfo extends JFrame {
                         .addComponent(changePasswordButton)
                         .addComponent(backButton)));
 
-        // Set window properties
-        setSize(900, 600);
+//        // Đặt thuộc tính cửa sổ
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);

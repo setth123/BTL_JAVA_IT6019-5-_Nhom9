@@ -1,5 +1,6 @@
 package frontend.components.user;
 
+import backend.controllers.UserController;
 import backend.models.Account;
 import backend.utils.ReadData;
 import backend.utils.SessionManager;
@@ -13,7 +14,7 @@ import java.awt.event.KeyEvent;
 public class ChangePassword extends JFrame {
 
     public ChangePassword(JFrame parent, Account currentUser) {
-        // Set window title
+        // Đặt tiêu đề
         setTitle("Đổi mật khẩu");
 
         // Create and configure components
@@ -36,7 +37,7 @@ public class ChangePassword extends JFrame {
         JButton saveButton = new JButton("Lưu");
         JButton backButton = new JButton("Quay lại");
 
-        // Password validation method
+        // Xét màu chỉnh yêu cầu nhập password
         boolean[] isValid = {false};
         newPasswordField.addKeyListener(new KeyAdapter() {
             @Override
@@ -53,7 +54,7 @@ public class ChangePassword extends JFrame {
 
         // Set button actions
         saveButton.addActionListener(e -> {
-            // Validate and save the new password
+            //Xác thực và lưu mật khẩu mới
             String currentPassword = new String(currentPasswordField.getPassword());
             String newPassword = new String(newPasswordField.getPassword());
             String confirmPassword = new String(confirmPasswordField.getPassword());
@@ -68,36 +69,24 @@ public class ChangePassword extends JFrame {
                 return;
             }
 
-            // Validate current password (Assuming validateCurrentPassword is a method that validates the password)
+            // Xác thực mật khẩu hiện tại (Giả sử validCurrentPassword là phương thức xác thực mật khẩu)
             if (!currentUser.validateCurrentPassword(currentPassword)) {
                 JOptionPane.showMessageDialog(this, "Mật khẩu hiện tại không đúng", "Lỗi", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // Update the password
-            currentUser.setMatKhau(newPassword); // Assuming Account has a setPassword method
-            SessionManager.login(currentUser); // Update the session
-            java.util.List<Account> accounts = ReadData.readAccount("/DemoDB/user-account.txt");
-            // Find and update the current user's information
-            for (int i = 0; i < accounts.size(); i++) {
-                if (accounts.get(i).getMaTaiKhoan().equals(currentUser.getMaTaiKhoan())) {
-                    accounts.set(i, currentUser);
-                    break;
-                }
+            if(UserController.changePassword(currentUser, newPassword))
+            {
+                JOptionPane.showMessageDialog(this, "Mật khẩu đã được cập nhật", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             }
 
-            WriteData.writeAccount(accounts, "/DemoDB/user-account.txt");
-
-            // Show success message
-            JOptionPane.showMessageDialog(this, "Mật khẩu đã được cập nhật", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-
-            // Return to dashboard
+            //Quay lại dashboard
             new Dashboard();
             dispose();
         });
 
         backButton.addActionListener(e -> {
-            // Return to edit personal info view
+            // Quay lại edit personal info view
             new Dashboard();
             dispose();
         });
@@ -142,7 +131,6 @@ public class ChangePassword extends JFrame {
                         .addComponent(backButton)));
 
         // Set window properties
-        setSize(900, 600);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -150,8 +138,11 @@ public class ChangePassword extends JFrame {
         setVisible(true);
     }
 
+    // kiểm tra password
     private boolean validatePassword(String password) {
-        if (password.length() < 5) return false;
+        if (password.length() < 5){
+            return false;
+        }
         boolean hasUpperCase = false;
         boolean hasDigit = false;
         for (char c : password.toCharArray()) {
@@ -160,4 +151,5 @@ public class ChangePassword extends JFrame {
         }
         return hasUpperCase && hasDigit;
     }
+
 }

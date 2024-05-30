@@ -1,5 +1,6 @@
 package frontend.components.user;
 
+import backend.controllers.UserController;
 import backend.models.Account;
 import backend.models.Book;
 import backend.models.BorrowSlip;
@@ -103,35 +104,14 @@ public class BorrowBook extends JFrame {
         loadWaitingBooks();
     }
 
+    // Load sách mượn
     public void loadBorrowedBooks() {
         String userId = SessionManager.getCurrentUser().getMaTaiKhoan();
-        List<BorrowSlip> borrowedBooks = getBorrowedBooks(userId);
+        List<BorrowSlip> borrowedBooks = UserController.getBorrowedBooks(userId);
         updateBorrowedTable(borrowedBooks);
     }
 
-    public static List<BorrowSlip> getBorrowedBooks(String userId) {
-        List<BorrowSlip> borrowSlips = new ArrayList<>();
-        try (BufferedReader brSlip = new BufferedReader(new FileReader(ReadData.f_path("/DemoDB/borrow-slip.txt")))) {
-            String line;
-            while ((line = brSlip.readLine()) != null) {
-                line = line.substring(1, line.length() - 1);
-                String[] parts = line.split("\\|");
-                if (parts.length >= 6 && parts[3].trim().equals(userId) && (!"Dissaprove".equals(parts[5].trim())&&!"Pending".equals(parts[5].trim()))) {
-                    String maPhieuMuon = parts[0].trim();
-                    String ngayMuon = parts[1].trim();
-                    String maNguoiDung = parts[3].trim();
-                    String maSach = parts[4].trim();
-                    String trangThai = parts[5].trim();
-
-                    borrowSlips.add(new BorrowSlip(maPhieuMuon, LocalDate.parse(ngayMuon), maNguoiDung, maSach, trangThai));
-                    }
-            }
-        } catch (IOException e) {
-            e.printStackTrace(System.err);
-        }
-        return borrowSlips;
-    }
-
+    // Cập nhật bảng
     private void updateBorrowedTable(List<BorrowSlip> borrowedBooks) {
         borrowedTableModel.setRowCount(0);
         for (int i = 0; i < borrowedBooks.size(); i++) {
@@ -141,6 +121,7 @@ public class BorrowBook extends JFrame {
         }
     }
 
+    // load sách Đợi duyệt
     private void loadWaitingBooks() {
         List<WaitingBook> waitingBooks = getWaitingBooks();
         updateWaitingTable(waitingBooks);
@@ -149,7 +130,7 @@ public class BorrowBook extends JFrame {
     private List<WaitingBook> getWaitingBooks() {
         Account a = SessionManager.getCurrentUser();
         List<WaitingBook> waitingBooks = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(ReadData.f_path("/DemoDB/borrow-slip.txt")))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(ReadData.f_path("../DemoDB/borrow-slip.txt")))) {
             String line;
             while ((line = br.readLine()) != null) {
                 if (!line.isEmpty()) {
@@ -179,7 +160,7 @@ public class BorrowBook extends JFrame {
     }
 
     private static Book getBookByCode(String bookCode) {
-        try (BufferedReader br = new BufferedReader(new FileReader(ReadData.f_path("/DemoDB/Book.txt")))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(ReadData.f_path("../DemoDB/Book.txt")))) {
             String line;
             while ((line = br.readLine()) != null) {
                 //line = line.substring(1, line.length() - 1);

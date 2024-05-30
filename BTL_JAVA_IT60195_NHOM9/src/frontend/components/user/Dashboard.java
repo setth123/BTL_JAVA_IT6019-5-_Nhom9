@@ -15,16 +15,16 @@ import static backend.utils.ReadData.readViolation;
 public class Dashboard extends JFrame {
     public Dashboard() {
         SwingUtilities.invokeLater(() -> {
-            // Get the username from SessionManager
+            // Lấy tên người dùng từ SessionManager
             String username = SessionManager.getCurrentUser().getTenDangNhap();
 
-            // Create the buttons
+            // Tạo nút
             JButton btnSearchBook = new JButton("Tìm kiếm sách");
             JButton btnRenewBook = new JButton("Xem chi tiết phiếu mượn");
             JButton btnViewPersonalInfo = new JButton("Xem thông tin cá nhân");
             JButton btnLogout = new JButton("Đăng xuất");
 
-            // Create a label to display the greeting message
+            // Tạo nhãn chào mừng
             JLabel greetingLabel = new JLabel("Xin chào, " + username + "!");
             greetingLabel.setFont(new Font("Segoe UI", Font.BOLD, 16)); // Set font and size
 
@@ -34,20 +34,20 @@ public class Dashboard extends JFrame {
             btnViewPersonalInfo.addActionListener(e -> handleViewPersonalInfo());
             btnLogout.addActionListener(e -> handleLogout());
 
-            // Create a panel to hold the left-aligned buttons
+            //Tạo bảng để giữ các nút căn trái
             JPanel leftButtonPanel = new JPanel();
             leftButtonPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10)); // Horizontal layout with gaps
             leftButtonPanel.add(btnSearchBook);
             leftButtonPanel.add(btnRenewBook);
             leftButtonPanel.add(btnViewPersonalInfo);
 
-            // Create a panel to hold the right-aligned logout button
+            //Tạo bảng giữ nút đăng xuất căn phải
             JPanel rightButtonPanel = new JPanel();
             rightButtonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 10)); // Horizontal layout with gaps
             rightButtonPanel.add(greetingLabel); // Add the greeting label
             rightButtonPanel.add(btnLogout);
 
-            // Create a panel to hold both button panels
+            //Tạo một bảng để giữ cả hai bảng nút
             JPanel mainButtonPanel = new JPanel();
             mainButtonPanel.setLayout(new BorderLayout());
             mainButtonPanel.add(leftButtonPanel, BorderLayout.WEST); // Left-aligned buttons
@@ -68,7 +68,7 @@ public class Dashboard extends JFrame {
             categoryHeader.setForeground(Color.GRAY);
             categoryHeader.setHorizontalAlignment(SwingConstants.CENTER);
 
-            // Create the category table panel
+            // Tạo bảng bảng danh mục
             JPanel categoryPanel = new JPanel(new BorderLayout());
             JTable categoryTable = createCategoryTable(); // Create category table
             JScrollPane categoryScrollPane = new JScrollPane(categoryTable); // Add scroll pane to category table
@@ -82,7 +82,7 @@ public class Dashboard extends JFrame {
             violationHeader.setForeground(Color.GRAY);
             violationHeader.setHorizontalAlignment(SwingConstants.CENTER);
 
-            // Create the violation table panel
+            // Tạo bảng violation
             JPanel violationPanel = new JPanel(new BorderLayout());
             JTable violationTable = createViolationTable(); // Create violation table
             JScrollPane violationScrollPane = new JScrollPane(violationTable); // Add scroll pane to violation table
@@ -105,7 +105,6 @@ public class Dashboard extends JFrame {
             this.setExtendedState(JFrame.MAXIMIZED_BOTH);
             this.setLocationRelativeTo(null);
             this.setLayout(new BorderLayout());
-//            this.setResizable(false);
             this.add(mainButtonPanel, BorderLayout.NORTH); // Add the main button panel
             this.add(contentPanel, BorderLayout.CENTER); // Add the category and violation panel
             this.setVisible(true);
@@ -136,14 +135,16 @@ public class Dashboard extends JFrame {
         // Invalidate the session
         SessionManager.logout();
 
-        // Close the dashboard and show the login window
+        // Đóng dashboard and hiển thị login window
         MainF firstPage = new MainF();
         firstPage.getFrame().setVisible(true);
         setVisible(false);
         dispose();
     }
+
+    // Tạo bảng danh sách
     private JTable createCategoryTable() {
-        java.util.List<Category> categories = readCategory("/DemoDB/Category.txt");
+        java.util.List<Category> categories = readCategory("../DemoDB/Category.txt");
         String[] columnNames = {"ID", "Title"};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 
@@ -155,8 +156,9 @@ public class Dashboard extends JFrame {
         return new JTable(tableModel);
     }
 
+    // tạo bảng Vi phạm
     private JTable createViolationTable() {
-        java.util.List<Violation> violations = readViolation("/DemoDB/Violation.txt");
+        java.util.List<Violation> violations = readViolation("../DemoDB/Violation.txt");
         String[] columnNames = {"Mã Phiếu Mượn", "Lí Do", "Số Ngày Vi Phạm", "Số Tiền Phạt"};
         DefaultTableModel tableModel = new DefaultTableModel(columnNames, 0);
 

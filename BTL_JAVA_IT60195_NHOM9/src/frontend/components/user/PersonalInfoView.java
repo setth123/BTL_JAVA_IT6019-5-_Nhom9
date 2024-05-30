@@ -9,13 +9,13 @@ import java.awt.*;
 public class PersonalInfoView extends JFrame {
 
     public PersonalInfoView(JFrame parent) {
-        // Set window title
+        // Đặt tiêu đề
         setTitle("Thông tin cá nhân");
 
         // Get current user details
         Account currentUser = SessionManager.getCurrentUser();
 
-        // Create and configure components
+        // Tạo
         JLabel headerLabel = new JLabel("Thông tin cá nhân");
         headerLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
         headerLabel.setForeground(Color.gray);
@@ -29,21 +29,23 @@ public class PersonalInfoView extends JFrame {
         JLabel fullNameLabel = new JLabel("Tên người dùng: ");
         JLabel fullNameValue = new JLabel(currentUser.getTenNguoiDung());
 
-        // Add other personal information fields as needed
+        // Thêm nút
 
         JButton editButton = new JButton("Chỉnh sửa thông tin cá nhân");
         JButton changePasswordButton = new JButton("Đổi mật khẩu");
         JButton backButton = new JButton("Quay lại");
 
         // Set button actions
+        //Nút "Chỉnh sửa thông tin cá nhân"
         editButton.addActionListener(e -> {
-            // Open EditPersonalInfo window
+            //Mở EditPersonalInfo window
             new EditPersonalInfo(this, currentUser);
             dispose();
         });
 
+        // Nút "Đổi mật khẩu"
         changePasswordButton.addActionListener(e -> {
-            // Open ChangePassword window
+            // Mở ChangePassword window
             new ChangePassword(this, currentUser);
             dispose();
         });
@@ -57,8 +59,7 @@ public class PersonalInfoView extends JFrame {
         // Create a top panel for the back button and header
         JPanel topPanel = new JPanel(new BorderLayout());
         // Add an empty border to the top panel to move the "Quay lại" button down slightly
-        topPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Adjust the top padding as needed
-
+        topPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         topPanel.add(backButton, BorderLayout.WEST);
         JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         headerPanel.add(headerLabel);
@@ -78,6 +79,7 @@ public class PersonalInfoView extends JFrame {
                                 .addComponent(fullNameLabel)
                                 .addComponent(addressLabel)
                                 .addComponent(phoneNumberLabel))
+                        .addGap(30)
                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addComponent(nameValue)
                                 .addComponent(fullNameValue)
@@ -111,7 +113,6 @@ public class PersonalInfoView extends JFrame {
         // Set window properties
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setResizable(true);
-        setSize(900, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
