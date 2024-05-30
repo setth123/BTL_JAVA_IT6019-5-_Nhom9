@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 
 public class MainF {
+
 	//giao diện chuyển hướng
 	private JFrame frame;
 
@@ -75,6 +76,7 @@ public class MainF {
 		signup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Register.showRegisterLayout(frame);
+				frame.dispose();
 			}
 		});
 		signup.setBounds(113, 146, 166, 23);
