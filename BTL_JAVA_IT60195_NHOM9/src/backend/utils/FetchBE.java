@@ -20,7 +20,7 @@ public class FetchBE {
 		books=ReadData.readBook("/DemoDB/Book.txt");
 		List<Book> result=new ArrayList<>();
 		for(Book b : books) {
-			if(b.getTenSach().toLowerCase().startsWith(keyword.toLowerCase())) {
+			if(b.getTenSach().toLowerCase().contains(keyword.toLowerCase())) {
 				result.add(b);
 			}
 		}
@@ -32,7 +32,7 @@ public class FetchBE {
 		accounts=ReadData.readAccount("/DemoDB/user-account.txt");
 		List<Account> result=new ArrayList<>();
 		for(Account a : accounts) {
-			if(a.getTenDangNhap().toLowerCase().startsWith(keyword.toLowerCase())) {
+			if(a.getTenDangNhap().toLowerCase().contains(keyword.toLowerCase())) {
 				result.add(a);
 			}
 		}

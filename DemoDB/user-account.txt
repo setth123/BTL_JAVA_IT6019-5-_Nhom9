@@ -1,6 +1,7 @@
-DG1        | tttttt         | t              | 0912222222   | t           | T2101     | true 
-DG2        | KT1            | Lol            | 0123456789   | Hihihi      | Hihi1     | true 
-DG3        | tt             | tt             | 9129128392   | tt          | P2012     | true 
-DG4        | Hihihihihihi   | Hihihihihihi   | 012222222    | hihi        | Hihi1     | true 
-DG5        | Hoho           | Hoho           | 0129009321   | Hoho        | Hoho1     | true 
-DG6        | Haha           | Haha           | 1212121212   | haha        | Haha1     | true 
+ DG1        | tttttt                         | t                    | 0912222222 | t            | T2101      |     true 
+ DG2        | KT1                            | Lol                  | 0123456789 | Hihihi       | Hihi1      |     true 
+ DG3        | tt                             | tt                   | 9129128392 | tt           | P2012      |     true 
+ DG4        | Hihihihihihi                   | Hihihihihihi         | 012222222  | hihi         | Hihi1      |     true 
+ DG5        | Hoho                           | Hoho                 | 0129009321 | Hoho         | Hoho1      |     true 
+ DG6        | Haha                           | Haha                 | 1212121212 | haha         | Haha1      |     true 
+ DG7        | adminn                         | admin                | 0123456789 | adminn       | Aadminn1   |     true 

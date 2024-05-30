@@ -36,7 +36,6 @@ public class FetchData {
 	
 	//lấy tt sach theo từ khoá và định dạng bảng 
 	public static void fetchBook(String keyword,DefaultTableModel m) {
-		System.out.println(keyword);
 		m.setRowCount(0);
 		List<Book> result=FetchBE.findB(keyword);
 		
