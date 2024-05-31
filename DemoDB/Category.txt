@@ -6,3 +6,13 @@ C5    | History
 C6    | Self-Help
 C7    | Religion and Spirituality
 C10   | Philosophy
+C11   | Action
+C12   | History
+C13   | Psychology
+C14   | Art
+C15   | Skill
+C16   | Memoir
+C17   | Science
+C18   | Medicine - Health
+C19   | Business
+C20   | Philosophy
